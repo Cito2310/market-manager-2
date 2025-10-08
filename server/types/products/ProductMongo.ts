@@ -1,4 +1,4 @@
-import { RotationType, SizeType, UnitType } from "./ProductTypes"
+import { RotationType, SizeType, UnitType } from "./ProductUtils"
 
 export interface ProductMongo {
     info: {
@@ -12,6 +12,7 @@ export interface ProductMongo {
         price: number,
         unitType: UnitType,
         imgUrl: string,
+        isActive: boolean,
     },
 
     extraInfo: {
