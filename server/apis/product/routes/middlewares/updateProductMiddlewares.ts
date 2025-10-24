@@ -3,7 +3,7 @@ import { checkFields } from "../../../../middlewares/checkFields";
 import { validateJWT } from "../../../../middlewares/validateJWT";
 import { compareWithValid, dateValid, uniqueBarcode, uniqueId } from "../../../../helpers/validationProduct";
 import { basicValidationsString } from "../../../../helpers/basicValidationsString";
-import { attachProduct } from "../../../../middlewares/attachProduct";
+import { attachProduct } from "./attachProduct";
 
 export const updateProductMiddlewares = [
     validateJWT,
@@ -125,14 +125,14 @@ export const updateProductMiddlewares = [
       .exists().withMessage("lowStockAlert is required when hasStockControl is true")
       .isNumeric().withMessage("lowStockAlert must be number")
       .isLength({ max: 24 }).withMessage("lowStockAlert length can only be less than 24 characters")
-      .custom( compareWithValid("<", "stock.mediumStockAlert") ).withMessage("lowStockAlert must be less than mediumStockAlert"),
+      .custom( compareWithValid("<", "product.stock.mediumStockAlert") ).withMessage("lowStockAlert must be less than mediumStockAlert"),
 
     check("stock.veryLowStockAlert")
       .if((_: any, { req }: any) => Boolean(req.body?.options?.hasStockControl))
       .exists().withMessage("veryLowStockAlert is required when hasStockControl is true")
       .isNumeric().withMessage("veryLowStockAlert must be number")
       .isLength({ max: 24 }).withMessage("veryLowStockAlert length can only be less than 24 characters")
-      .custom( compareWithValid("<", "stock.lowStockAlert") ).withMessage("veryLowStockAlert must be less than lowStockAlert"),
+      .custom( compareWithValid("<", "product.stock.lowStockAlert") ).withMessage("veryLowStockAlert must be less than lowStockAlert"),
 
 
 

@@ -1,3 +1,4 @@
+import { HydratedDocument } from "mongoose";
 import { ProductMongo } from "./ProductMongo";
 
 export interface CreateProductRequest extends ProductMongo {
@@ -8,4 +9,5 @@ export interface CreateProductRequest extends ProductMongo {
 export interface UpdateProductRequest extends Partial<ProductMongo> {
     _id?: unknown
     __V?: unknown
+    product: HydratedDocument<ProductMongo>
 }

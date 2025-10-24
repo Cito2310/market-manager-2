@@ -6,7 +6,7 @@ export const updateProductById = async( req: Request<{}, {}, UpdateProductReques
     try {
         // CODIGO AQUI - INICIO
         let { id } = req.params as { id: string };
-        const { __V, _id, ...updateProductData } = req.body;
+        const { __V, _id, product: oldProduct, ...updateProductData } = req.body;
 
         const product = await Product.findOneAndUpdate({ _id: id }, updateProductData, { new: true });
 
