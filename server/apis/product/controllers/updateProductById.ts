@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { UpdateProductRequest } from "../../../types/products/ProductRequest";
-import { Product } from "../productModels";
+import { Product } from "../models/productModels";
+
 
 export const updateProductById = async( req: Request<{}, {}, UpdateProductRequest>, res: Response ) => {
     try {

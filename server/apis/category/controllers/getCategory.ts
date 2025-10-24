@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { Product } from "../models/productModels";
+import { Category } from "../models/categoryModels";
 
-export const getProduct = async( req: Request, res: Response ) => {
+export const getCategory = async( req: Request, res: Response ) => {
     try {
         // CODIGO AQUI - INICIO
-        const products = await Product.find()
+        const categories = await Category.find();
 
-        return res.status(200).json(products);
+        return res.status(200).json(categories);
         // CODIGO AQUI - FIN
 
     } catch (error) { console.log(error); return res.status(500).json({ msg: "1500 - unexpected server error" }) }
