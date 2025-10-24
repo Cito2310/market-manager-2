@@ -1,6 +1,6 @@
 import bcryptjs from 'bcryptjs';
 
-import { User } from '../users_api/userModels';
+import { User } from '../apis/user/models/userModels';
 import { CustomValidator } from 'express-validator';
 
 // check username exist
