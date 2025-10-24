@@ -4,13 +4,15 @@ import { ProductMongo } from "../../types/products/ProductMongo";
 
 const productSchema = new Schema<ProductMongo>({
     extraInfo: {
-        historialPrice: { type: [{ date: String, price: Number }], default: [] },
+        priceHistory: { type: [{ date: String, price: Number }], default: [] },
         costPrice: { type: Number },
     },
 
     options: {
-        hasExpirationControl: { type: Boolean, required: true },
-        hasStockControl: { type: Boolean, required: true },
+        hasExpirationControl: { type: Boolean, default: false },
+        hasStockControl: { type: Boolean, default: false },
+        isActive: { type: Boolean, default: true },
+        hasImg: { type: Boolean, default: false },
     },
 
     info: {
@@ -23,17 +25,16 @@ const productSchema = new Schema<ProductMongo>({
         sizeType: { type: String, enum: ["kg", "g", "oz", "cm3", "l", "ml", "u", "cc"], required: true },
         price: { type: Number, required: true },
         unitType: { type: String, enum: ["unit", "weight"], required: true },
-        imgUrl: { type: String, required: true },
-        isActive: { type: Boolean, default: true },
+        imgUrl: { type: String },
+        
     },
 
     expiration: {
-        expirationDate: { type: String },
+        batches: { type: [{ expirationDate: String, initialQuantity: String, quantity: Number, addedAt: String }], default: [] },
         alertExpiration: { type: Number },
     },
 
     stock: {
-        hasStockControl: { type: Boolean },
         currentStock: { type: Number },
         rotationType: { type: String, enum: ["high", "low"] },
         mediumStockAlert: { type: Number },

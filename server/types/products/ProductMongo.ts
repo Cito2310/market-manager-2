@@ -11,23 +11,29 @@ export interface ProductMongo {
         sizeType: SizeType,
         price: number,
         unitType: UnitType,
-        imgUrl: string,
-        isActive: boolean,
+        imgUrl?: string,
     },
 
     extraInfo: {
-        historialPrice?: { date: string, price: number }[],
+        priceHistory?: { date: string, price: number }[],
         costPrice?: number,
     },
 
     options: {
         hasExpirationControl: boolean,
         hasStockControl: boolean,
+        isActive: boolean,
+        hasImg: boolean,
     },
 
     expiration?: {
-        expirationDate: string,
-        alertExpiration: number,
+        batches: { 
+            expirationDate: string, 
+            initialQuantity: string, 
+            quantity: number,
+            addedAt: string
+        }[],
+        alertExpiration?: number,
     }
 
     stock?: {
