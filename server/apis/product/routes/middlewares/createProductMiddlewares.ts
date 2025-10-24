@@ -1,7 +1,7 @@
 import { check } from "express-validator";
 import { checkFields } from "../../../../middlewares/checkFields";
 import { validateJWT } from "../../../../middlewares/validateJWT";
-import { compareWithValid, dateValid, uniqueBarcode } from "../../../../helpers/validationProduct";
+import { compareWithValid, dateValid } from "../../../../helpers/validationProduct";
 import { basicValidationsString } from "../../../../helpers/basicValidationsString";
 
 export const createProductMiddlewares = [
@@ -13,7 +13,6 @@ export const createProductMiddlewares = [
     check("info.name").custom(basicValidationsString("info.name")),
 
     check("info.barcode").custom(basicValidationsString("info.barcode", { maxLength: 20 })),
-    check("info.barcode").custom( uniqueBarcode ).withMessage("barcode already exist"),
 
     check("info.category").custom(basicValidationsString("info.category")),
 
