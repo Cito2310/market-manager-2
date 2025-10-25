@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    .transition-base {
+        transition: all 100ms linear
+    }
+}
+
+
+color-font-primary {
+    text: "#93aaaa"
+}
+
+color-font-secondary {
+    text: "#7e9292"
+}
+
+bg-color-budget {
+    text: "#d5e0e0"
+}
+
+bg-color-primary {
+    text: "#008080"
+}
