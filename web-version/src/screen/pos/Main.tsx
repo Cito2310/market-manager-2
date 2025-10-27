@@ -1,6 +1,6 @@
 import { SectionSidebar } from "./components/SectionSidebar"
 import { SectionSumProduct } from "./components/SectionSumProduct"
-import { Topbar } from "./components/Topbar"
+import { Topbar } from "../../components/Topbar"
 
 export const POScreen = () => {
     return (

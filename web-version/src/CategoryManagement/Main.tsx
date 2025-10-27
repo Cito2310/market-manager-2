@@ -1,4 +1,4 @@
-import { Topbar } from "../POScreen/components/Topbar"
+import { Topbar } from "../components/Topbar"
 import { ButtonFilter } from "../ProductManagement/components/ButtonFilter"
 import { ListItemCategory } from "./components/ListItemCategory"
 
