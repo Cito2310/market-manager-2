@@ -5,10 +5,9 @@ import { ButtonLogin } from "./components/ButtonLogin";
 
 export const LoginScreen = () => {
     const {
-        user, password,
-        setUser, setPassword,
+        register, getValues,
         errors, loading,
-        handleSubmit
+        onSubmit
     } = useLoginScreen();
 
   return (
@@ -25,24 +24,20 @@ export const LoginScreen = () => {
           <h1 className="text-2xl font-semibold text-slate-800">Iniciar sesión</h1>
         </header>
 
-        <form className="flex flex-col gap-4" onSubmit={handleSubmit} noValidate>
+        <form className="flex flex-col gap-4" onSubmit={onSubmit} noValidate>
             <InputLogin
+                register={register("user")}
                 label="Usuario"
-                name="user"
                 type="text"
-                value={user}
-                onChange={(e) => setUser(e.target.value)}
-                error={errors.user}
+                error={errors.user?.message}
                 placeholder="nombre@ejemplo.com"
             />
 
             <InputLogin
+                register={register("password")}
                 label="Contraseña"
-                name="password"
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                error={errors.password}
+                error={errors.password?.message}
                 placeholder="••••••••"
             />
 

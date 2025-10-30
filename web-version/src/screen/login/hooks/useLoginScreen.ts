@@ -1,39 +1,42 @@
 import React, { useState } from 'react'
+import { startLogin } from './../../../../store/auth/thunks';
+import { useAppDispatch, useAppSelector } from '../../../../store/store';
+import { useForm } from 'react-hook-form';
+import { authSlice } from '../../../../store/auth';
 
 export const useLoginScreen = () => {
-    const [user, setUser] = useState("");
-    const [password, setPassword] = useState("");
-    const [errors, setErrors] = useState<{ user?: string; password?: string }>(
-        {}
-    );
+    const dispatch = useAppDispatch();
+    const { token, status, errorMsg } = useAppSelector( state => state.auth );
+    const { register, handleSubmit, getValues, formState: { errors } } = useForm({ defaultValues: { user: "", password: "" } });
     const [loading, setLoading] = useState(false);
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        const nextErrors: typeof errors = {};
-        if (!user.trim()) nextErrors.user = "El usuario es requerido";
-        if (!password) nextErrors.password = "La contraseña es requerida";
+    const onSubmit = handleSubmit( ( { password, user } ) => {
+        // Validaciones iniciales
+        if ( !user.trim()) errors.user!.message = "El usuario es requerido";
+        if ( !password ) errors.password!.message = "La contraseña es requerida";
+        if ( Object.keys( errors ).length > 0 ) return;
 
-        setErrors(nextErrors);
-        if (Object.keys(nextErrors).length > 0) return;
 
         setLoading(true);
+
         try {
-        // TODO: llamar API de login
-        await new Promise((r) => setTimeout(r, 700));
-        // ejemplo: redirect o actualizar contexto/auth
-        console.log("login ok", { user, password });
-        } catch (err) {
-        console.error(err);
-        } finally {
-        setLoading(false);
+            dispatch( startLogin( user, password ) );
+
+            console.log( "Login exitoso",  token  );
+        } catch (error) {
+            dispatch( authSlice.actions.setError("Error al iniciar sesión") );
+            console.error( "Error en login", error );
         }
-    };
+
+        setLoading(false);
+
+        console.log( { user, password } );
+    } );
+
 
     return {
-        user, password,
-        setUser, setPassword,
+        register, getValues,
         errors, loading,
-        handleSubmit
+        onSubmit
     }
 }

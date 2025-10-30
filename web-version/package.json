@@ -13,8 +13,12 @@
     "update-major": "npm version --force --no-git-tag-version major"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.9.2",
+    "axios": "^1.13.1",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "react-hook-form": "^7.65.0",
+    "react-redux": "^9.2.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.16",
