@@ -14,4 +14,4 @@ routeUser.post("/register", createUserMiddlewares, createUser);
 
 routeUser.delete("/",[ validateJWT ], deleteUser);
 
-routeUser.get("/login", loginUserMiddlewares, loginUser);
+routeUser.post("/login", loginUserMiddlewares, loginUser);
