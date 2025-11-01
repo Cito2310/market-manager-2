@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { LoginScreen } from "./screen/login/LoginScreen";
 import { Topbar } from "./components/Topbar";
 import { useAppSelector } from "../store/store";
+import { CategoryScreen } from "./screen/category/CategoryScreen";
 
 export default function App() {
     const { auth } = useAppSelector( state => state );
@@ -13,7 +14,7 @@ export default function App() {
             {
                 token === null 
                 ? <LoginScreen />
-                : <div>{/* Other authenticated screens go here */}</div>
+                : <CategoryScreen />
             }
         </div>
     )

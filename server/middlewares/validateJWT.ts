@@ -19,6 +19,8 @@ export const validateJWT = async (
     ) => {
 
     const token = req.header("token");
+    console.log(req.body)
+
 
     if (!token) {
         return res.status(401).json([{

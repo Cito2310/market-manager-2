@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 
 
 import { authSlice } from './auth';
+import { categorySlice } from './category';
 // import { categorySlice } from './category';
 // import { modalSlice } from './modal';
 // import { productSlice } from './product';
@@ -12,7 +13,7 @@ import { authSlice } from './auth';
 
 export const store = configureStore({
     reducer: {
-        // category: categorySlice.reducer,
+        category: categorySlice.reducer,
         auth: authSlice.reducer,
         // modal: modalSlice.reducer,
         // product: productSlice.reducer,
