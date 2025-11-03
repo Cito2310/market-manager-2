@@ -8,7 +8,7 @@ interface props {
     type?: "button" | "submit";
 }
 
-export const ItemFooterButton = ({ label, onClick, disabled, className, variant, type }: props) => {
+export const ItemFooterButton = ({ label, onClick, disabled, className, variant, type, loading }: props) => {
 
     const base = `
         w-[200px] transition-base font-
@@ -17,8 +17,8 @@ export const ItemFooterButton = ({ label, onClick, disabled, className, variant,
         ring-2 ring-inset
         `;
 
-    const state = disabled
-        ? 'disabled:opacity-60 cursor-default'
+    const state = disabled || loading
+        ? 'disabled:opacity-[.60] cursor-default text-opacity-0'
         : `active:brightness-[.90]
             hover:brightness-95 hover:shadow-none
             cursor-pointer`;
@@ -33,8 +33,16 @@ export const ItemFooterButton = ({ label, onClick, disabled, className, variant,
 
 
     return (
-        <button type={type || "button"} onClick={onClick} className={classes}>
-            {label}
+        <button disabled={disabled} type={type || "button"} onClick={onClick} className={classes}>
+            {
+                loading
+                ? <>
+                    <span className="invisible">I</span>
+                    <i className="fa-solid fa-spinner animate-spin text-xl"/>
+                    <span className="invisible">I</span>
+                </>
+                : <>{label}</>
+            }
         </button>
     )
 }

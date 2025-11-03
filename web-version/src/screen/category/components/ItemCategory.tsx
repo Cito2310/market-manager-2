@@ -3,49 +3,54 @@ import { useItemCategory } from "../hooks/useItemCategory";
 import { InputNameCategory } from "./ItemCategory/InputNameCategory";
 import { SelectSection } from "./ItemCategory/SelectSection";
 import { Category } from "../../../../types/category/Category";
-import { IconButton } from "./ItemCategory/IconButton";
+import { IconButton } from "../../../components/IconButton";
 import { ContainerSubcategory } from "./ContainerSubcategory";
 import { ItemFooter } from "./ItemCategory/ItemFooter";
 
 interface props {
     category: Category;
+    isOpen: boolean;
+    onToggleOpen: () => void;
 }
 
 
-export const ListItemCategory = ({ category }: props) => {
+export const ItemCategory = ({ category, isOpen, onToggleOpen }: props) => {
     const { 
-        height, toggleDetailsMenu, 
+        height, toggleDetailsMenu,  
         subcategories, name, primary,
         getValues, register,
-        onSubmit, 
-        removeSubcategory, appendSubcategory, control, fields } = useItemCategory({ category });
+        onDeleteCategory, onEditCategory, 
+        removeSubcategory, appendSubcategory, control, fields } = useItemCategory({ category, onToggleOpen });
+
+        useEffect(() => {
+            if (typeof isOpen === "boolean") {
+                if (isOpen && height === 0) toggleDetailsMenu();
+                if (!isOpen && height !== 0) toggleDetailsMenu();
+            }
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            }, [isOpen]);
+
 
     return <>
         <tr className={`${ height ? null : "border-b" } border-[#7e9292]`}>
-            <td className="px-4 py-4 font-medium">{name}</td>
-            <td className="font-medium mx-2 text-[#7e9292]">{primary}</td>
-            <td>
-                <button 
-                onClick={toggleDetailsMenu}
-                className="
-                rounded-full bg-[#f7f7f7] flex aspect-square p-3 justify-center
-                hover:shadow hover:brightness-90 transition-base
-                "><i className="fa-solid fa-ellipsis"></i></button>
-            </td>
+            <td className="px-4 py-4 font-medium capitalize">{name}</td>
+            <td className="font-medium mx-2 text-[#7e9292] capitalize">{primary}</td>
+            <td><IconButton onClick={toggleDetailsMenu} variant="D" icon="ellipsis" /></td>
         </tr>
 
         <tr className="">
             <td colSpan={10}>
-                <div style={{height}} className={`
+                <form onSubmit={onEditCategory} style={{height}} className={`
                     ${height !== 0 ? "px-6 py-5" : ""}
                     bg-white transition-base overflow-hidden flex flex-col shadow-md shadow-[#8f8f8f] rounded-b-md gap-4`}>
 
 
                     <div className="flex gap-4 items-center justify-between">
                         <div className="flex gap-4">
-                            <InputNameCategory register={ register("name") } placeholder="Nombre de la categoria" />
+                            <InputNameCategory forHtml={category._id} register={ register("name") } placeholder="Nombre de la categoria" />
 
                             <SelectSection 
+                                forHtml={category._id + "-primary"}
                                 label="Sección"
                                 register={ register("primary") }
                                 defaultValue={ getValues("primary")}
@@ -71,8 +76,8 @@ export const ListItemCategory = ({ category }: props) => {
                     }
 
 
-                    <ItemFooter submitLabel="Guardar" cancelFunction={onSubmit} removeFunction={onSubmit} />
-                </div>
+                    <ItemFooter submitLabel="Guardar" cancelFunction={onToggleOpen} removeFunction={onDeleteCategory} />
+                </form>
             </td>
         </tr>
     </>

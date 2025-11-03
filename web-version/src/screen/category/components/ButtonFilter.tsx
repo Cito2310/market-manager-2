@@ -42,8 +42,9 @@ export const ButtonFilter = ({ label, options }: props) => {
                 >{selectedOption ? selectedOption : label} <i className="fa-solid fa-angle-down text-sm"></i></button>
             {
                 isActive ?
-                <div className="absolute min-w-[200px] mt-0 bg-[#f3f3f3] flex flex-col rounded shadow-md">{options.map((data)=>
+                <div className="absolute min-w-[200px] mt-0 bg-[#f3f3f3] flex flex-col rounded shadow-md">{options.map((data, index)=>
                     <button 
+                        key={index+data}
                         onClick={()=>onSelectOption(data)} 
                         className={styleButtonSelect(data)}>{data}</button>)}
                 </div> : null

@@ -1,5 +1,5 @@
 import { UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
-import { IconButton } from "./IconButton";
+import { IconButton } from "../../../../components/IconButton";
 
 interface props {
     register: UseFormRegisterReturn<any> | UseFormRegister<any>;

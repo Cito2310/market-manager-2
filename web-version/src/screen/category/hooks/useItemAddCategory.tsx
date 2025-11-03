@@ -13,9 +13,14 @@ const defaultValuesForm: FormCategory = {
     }]
 }
 
-export const useItemAddCategory = () => {
+interface props {
+    onToggleCreatingMode: () => void;
+}
+
+export const useItemAddCategory = ({ onToggleCreatingMode }: props) => {
     const dispatch = useAppDispatch();
     const { register, watch, getValues, handleSubmit, control } = useForm<FormCategory>({defaultValues: defaultValuesForm});
+    const { status, messageError } = useAppSelector( state => state.category );
 
     const { fields, append, remove } = useFieldArray({ control, name: "subcategories" });
 
@@ -23,15 +28,19 @@ export const useItemAddCategory = () => {
     const name = watch("name");
     const primary = watch("primary");
 
-    const onSubmit = handleSubmit((data) => {
+    const onSubmit = handleSubmit(async (data) => {
+        try {
+            await dispatch(startCreateCategory(data));
+            if (status.hasError) return;
+            onToggleCreatingMode();
+        } catch (error) {}
         console.log(data); //remover
-        dispatch(startCreateCategory(data));
     });
 
     const appendSubcategory = () => { append({ name: "", brands: [""] }) }
 
     return {
-        register, getValues, onSubmit, 
+        register, getValues, onSubmit, messageError, status,
         name, primary,
         fields, appendSubcategory, removeSubcategory: remove, control
     }

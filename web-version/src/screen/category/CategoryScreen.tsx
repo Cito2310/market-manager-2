@@ -2,17 +2,17 @@ import { useForm } from "react-hook-form"
 import { ButtonFilter } from "./components/ButtonFilter"
 import { ButtonTab } from "./components/ButtonTab"
 import { InputSearch } from "./components/InputSearch"
-import { ListItemCategory } from "./components/ListItemCategory"
+import { ItemCategory } from "./components/ItemCategory"
 import { ItemCategoryAdd } from "./components/ItemCategoryAdd"
 import { useCategoryScreen } from "./hooks/useCategoryScreen"
 
 export const CategoryScreen = () => {
-    const { register } = useForm();
-    const { data, messageError, status, wasCalledOnce } = useCategoryScreen();
+    const { data, messageError, status, wasCalledOnce, handleSubmit, register, onSetCategoryId, openCategoryId, onToggleCreatingMode, isCreatingCategory, onCloseCategory } = useCategoryScreen();
 
 
     return (
         <div className="mt-8 p-2 px-10 font-[Montserrat]">
+            
                 <div className="flex w-full border-b-2 border-[#c4c4c4]">
                     <ButtonTab label="Productos" />
                     <ButtonTab label="Categorias" active />
@@ -23,36 +23,37 @@ export const CategoryScreen = () => {
                 <div className="flex items-center my-3 justify-between">
 
                     <div className="flex gap-3">
-                        <InputSearch register={register} placeholder="Buscar" />
+                        <InputSearch register={register("search")} placeholder="Buscar" />
                         <ButtonFilter label="Seccion" options={["Alimentos", "Bebidas", "Producto de Limpieza"]} />
                     </div>
 
-                    <p className="font-medium text-[#008080] transition-base hover:brightness-90 active:brightness-[.80] cursor-pointer mr-2"><i className="fa-solid fa-plus text-[0.8em]"/> Añadir Categoria</p>
+                    <p onClick={onToggleCreatingMode} className="font-medium text-[#008080] transition-base hover:brightness-90 active:brightness-[.80] cursor-pointer mr-2"><i className="fa-solid fa-plus text-[0.8em]"/> Añadir Categoria</p>
                 </div>
 
 
                 <table className="w-full rounded-lg">
-                    <tr className="">
+                    <thead>
+                        <tr>
+                            <th className="p-4 text-left font-medium py-1.5 text-[#004C4C] bg-[#CDECEC] rounded-l-lg">
+                                Nombre de la Categoria <i className="fa-solid fa-sort text-xs p-1"/>
+                            </th>
 
-                        <th className="p-4 text-left font-medium py-1.5 text-[#004C4C] bg-[#CDECEC] rounded-l-lg">
-                            Nombre de la Categoria <i className="fa-solid fa-sort text-xs p-1"/>
-                        </th>
+                            <th className="text-left font-medium py-1.5 text-[#004C4C] bg-[#CDECEC] ">
+                                Seccion <i className="fa-solid fa-sort text-xs p-1"/>
+                            </th>
 
-                        <th className="text-left font-medium py-1.5 text-[#004C4C] bg-[#CDECEC] ">
-                            Seccion <i className="fa-solid fa-sort text-xs p-1"/>
-                        </th>
+                            <th className="text-left font-medium py-1.5 text-[#004C4C] bg-[#CDECEC] rounded-r-lg"></th>
+                        </tr>
+                    </thead>
 
-                        <th className="text-left font-medium py-1.5 text-[#004C4C] bg-[#CDECEC] rounded-r-lg"></th>
-                    </tr>
-
-                    <ItemCategoryAdd />
-                    {
-                        data.map( category => (
-                            <ListItemCategory key={category._id} category={category} />
-                        ))
-                    }
-                    {/* <ListItemCategory name="Aceite" section="Alimentos" subcategories={[{name: "Aceite de Girasol", brands: ["Marolio", "Cañuelas", "Natura", "Legitimo"]}, {name: "Aceite de Oliva", brands: ["Natura", "Cañuelas"]}]} /> */}
-                    {/* <ListItemCategory name="Alcohol" section="Bebidas" subcategories={[{name: "Vino Tinto", brands: ["Termidor", "Toro", "Viñas de Balbo"]}, { name: "Fernet", brands:["Vittone", "Branca"] }]} /> */}
+                    <tbody>
+                        { isCreatingCategory && <ItemCategoryAdd onToggleCreatingMode={onToggleCreatingMode} />}
+                        {
+                            data.map( category => (
+                                <ItemCategory key={category._id} category={category} isOpen={openCategoryId === category._id} onToggleOpen={() => onSetCategoryId(category._id)} />
+                            ))
+                        }
+                    </tbody>
                 </table>
             </div>
     )

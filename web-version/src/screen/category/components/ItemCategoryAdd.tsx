@@ -1,14 +1,17 @@
 import { ItemFooter } from "./ItemCategory/ItemFooter";
 import { SelectSection } from "./ItemCategory/SelectSection";
 import { InputNameCategory } from "./ItemCategory/InputNameCategory";
-import { IconButton } from "./ItemCategory/IconButton";
+import { IconButton } from "../../../components/IconButton";
 import { useItemAddCategory } from "../hooks/useItemAddCategory";
 import { ContainerSubcategory } from "./ContainerSubcategory";
 
 
+interface props {
+    onToggleCreatingMode: () => void;
+}
 
-export const ItemCategoryAdd = () => {
-    const { register, getValues, name, primary, onSubmit, fields, appendSubcategory, removeSubcategory, control } = useItemAddCategory();
+export const ItemCategoryAdd = ({ onToggleCreatingMode }: props) => {
+    const { register, getValues, name, primary, onSubmit, fields, appendSubcategory, removeSubcategory, control, messageError, status } = useItemAddCategory({onToggleCreatingMode});
 
     return <>
         <tr className={`border-[#7e9292]`}>
@@ -23,9 +26,10 @@ export const ItemCategoryAdd = () => {
 
                         <div className="flex gap-4 items-center justify-between">
                             <div className="flex gap-4">
-                                <InputNameCategory register={ register("name") } placeholder="Nombre de la categoria" />
+                                <InputNameCategory forHtml="name" autofocus register={ register("name") } placeholder="Nombre de la categoria" />
 
                                 <SelectSection 
+                                    forHtml="primary"
                                     label="Sección"
                                     register={ register("primary") }
                                     defaultValue={ getValues("primary")}
@@ -41,6 +45,12 @@ export const ItemCategoryAdd = () => {
                             <IconButton onClick={ appendSubcategory } variant="A" icon="plus" />
                         </div>
 
+                        {
+                            messageError && (
+                                <div className="text-right w-full bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative" role="alert">
+                                    <strong className="font-bold">Error!</strong> {messageError}
+                                </div>
+                        )}
 
                         {/* CONTIENE LOS CONTAINES DE SUBCATEGORIAS */}
                         {
@@ -50,7 +60,8 @@ export const ItemCategoryAdd = () => {
                         }
 
 
-                        <ItemFooter submitLabel="Guardar" cancelFunction={onSubmit} hiddenButtonDelete={true} />
+                        <ItemFooter submitLabel="Guardar" cancelFunction={onToggleCreatingMode} hiddenButtonDelete={true} />
+
                 </form>
             </td>
         </tr>

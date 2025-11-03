@@ -27,8 +27,9 @@ export const categorySlice = createSlice({
     initialState,
     reducers: {
 
-        setCategories: ( state, action: { payload: Category[] } ) => {
-            state.data = action.payload
+        setCategories: ( state, action: { payload: { categories: Category[]; hidden?: boolean } } ) => {
+            if (!!action.payload.hidden === true) { state.data = action.payload.categories }
+            if (!!action.payload.hidden === false) { console.log(state.data); state.data = action.payload.categories.filter(category => category.isActive === true) } 
         },
 
         createCategory: ( state, action: { payload: Category } ) => {
@@ -49,10 +50,14 @@ export const categorySlice = createSlice({
         initLoading: ( state ) => { state.status.isLoading = true },
         stopLoading: ( state ) => { state.status.isLoading = false },
         setError: ( state, action: { payload: string } ) => {
+            console.log(action.payload);
             state.status.hasError = true,
             state.messageError = action.payload
         },
-
+        clearError: ( state ) => {
+            state.status.hasError = false,
+            state.messageError = null
+        }
     }
 });
 
@@ -63,6 +68,7 @@ export const {
     initLoading,
     setError,
     stopLoading,
-    updateCategory
+    updateCategory,
+    clearError,
 
 } = categorySlice.actions;
