@@ -11,28 +11,28 @@ interface props {
 }
 
 export const ItemCategoryAdd = ({ onToggleCreatingMode }: props) => {
-    const { register, getValues, name, primary, onSubmit, fields, appendSubcategory, removeSubcategory, control, messageError, status } = useItemAddCategory({onToggleCreatingMode});
+    const { data, field, form } = useItemAddCategory({onToggleCreatingMode});
 
     return <>
         <tr className={`border-[#7e9292]`}>
-            { name ? <td className="px-4 py-4 font-medium">{name}</td> : <td className="px-4 py-4 font- text-[#7e9292] italic">Nueva Categoria</td> }
-            <td className="font-medium mx-2 text-[#7e9292] capitalize">{primary}</td>
+            { data.name ? <td className="px-4 py-4 font-medium">{data.name}</td> : <td className="px-4 py-4 font- text-[#7e9292] italic">Nueva Categoria</td> }
+            <td className="font-medium mx-2 text-[#7e9292] capitalize">{data.primary}</td>
         </tr>
 
         <tr className="">
             <td colSpan={10}>
-                <form onSubmit={onSubmit} style={{height:"auto"}} className={`
+                <form onSubmit={form.onCreateCategory} style={{height:"auto"}} className={`
                     px-6 py-5 bg-white transition-base overflow-hidden flex flex-col shadow-md shadow-[#8f8f8f] rounded-b-md gap-4`}>
 
                         <div className="flex gap-4 items-center justify-between">
                             <div className="flex gap-4">
-                                <InputNameCategory forHtml="name" autofocus register={ register("name") } placeholder="Nombre de la categoria" />
+                                <InputNameCategory forHtml="name" autofocus register={ form.register("name") } placeholder="Nombre de la categoria" />
 
                                 <SelectSection 
                                     forHtml="primary"
                                     label="Sección"
-                                    register={ register("primary") }
-                                    defaultValue={ getValues("primary")}
+                                    register={ form.register("primary") }
+                                    defaultValue={ form.getValues("primary")}
                                     options={[
                                         {value: "alimentos", label: "Alimentos"},
                                         {value: "higiene personal", label: "Higiene Personal"},
@@ -42,25 +42,25 @@ export const ItemCategoryAdd = ({ onToggleCreatingMode }: props) => {
                                 />
                             </div>
 
-                            <IconButton onClick={ appendSubcategory } variant="A" icon="plus" />
+                            <IconButton onClick={ field.appendSubcategory } variant="A" icon="plus" />
                         </div>
 
                         {
-                            messageError && (
+                            data.messageError && (
                                 <div className="text-right w-full bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative" role="alert">
-                                    <strong className="font-bold">Error!</strong> {messageError}
+                                    <strong className="font-bold">Error!</strong> {data.messageError}
                                 </div>
                         )}
 
                         {/* CONTIENE LOS CONTAINES DE SUBCATEGORIAS */}
                         {
-                            fields.map((field, index) => (
-                                <ContainerSubcategory control={control} key={field.id} index={index} register={register} removeSubcategory={removeSubcategory} />
+                            field.fields.map((fieldChild, index) => (
+                                <ContainerSubcategory control={field.control} key={fieldChild.id} index={index} register={form.register} removeSubcategory={field.removeSubcategory} />
                             ))
                         }
 
 
-                        <ItemFooter loading={status.isLoading} submitLabel="Guardar" cancelFunction={onToggleCreatingMode} hiddenButtonDelete={true} />
+                        <ItemFooter loading={data.status.isLoading} submitLabel="Guardar" cancelFunction={onToggleCreatingMode} hiddenButtonDelete={true} />
 
                 </form>
             </td>
