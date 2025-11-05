@@ -1,6 +1,8 @@
 import { ItemFooterButton } from "./ItemFooterButton"
 
 interface props {
+    loading?: boolean
+
     hiddenCancelButton?: boolean 
     hiddenButtonDelete?: boolean
 
@@ -10,10 +12,11 @@ interface props {
 
     submitLabel: string
     submitDisabled?: boolean
-    submitLoading?: boolean
 }
 
 export const ItemFooter = ({ 
+    loading,
+
     hiddenCancelButton, 
     hiddenButtonDelete, 
 
@@ -22,16 +25,15 @@ export const ItemFooter = ({
 
     submitLabel, 
     submitDisabled, 
-    submitLoading
 }: props) => {
     return (
         <div className="flex gap-4 flex-wrap justify-end">
 
-            { !hiddenCancelButton && <ItemFooterButton label="Cancelar" variant="secondary" onClick={cancelFunction} /> }
+            { !hiddenCancelButton && <ItemFooterButton label="Cancelar" variant="secondary" onClick={cancelFunction} loading={loading} /> }
 
-            { !hiddenButtonDelete && <ItemFooterButton label="Eliminar Categoria" variant="danger" onClick={removeFunction} /> }
+            { !hiddenButtonDelete && <ItemFooterButton label="Eliminar Categoria" variant="danger" loading={loading} onClick={removeFunction} /> }
 
-            <ItemFooterButton label={submitLabel} variant="primary" type="submit" disabled={submitDisabled} loading={submitLoading} />
+            <ItemFooterButton label={submitLabel} variant="primary" type="submit" disabled={submitDisabled} loading={loading} />
 
         </div>
     )

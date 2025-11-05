@@ -16,6 +16,7 @@ interface props {
 
 export const ItemCategory = ({ category, isOpen, setOpen }: props) => {
     const { 
+        loading,
         height, toggleDetailsMenu,  
         subcategories, name, primary,
         getValues, register,
@@ -23,13 +24,10 @@ export const ItemCategory = ({ category, isOpen, setOpen }: props) => {
         removeSubcategory, appendSubcategory, control, fields } = useItemCategory({ category, setOpen });
 
         useEffect(() => {
-            console.log("isOpen changed:", isOpen, "name:", name);
-            // console.log("isOpen changed:", isOpen);
             if (typeof isOpen === "boolean") {
                 if (isOpen && height === 0) toggleDetailsMenu();
                 if (!isOpen && height !== 0) toggleDetailsMenu();
             }
-            // eslint-disable-next-line react-hooks/exhaustive-deps
             }, [isOpen]);
 
 
@@ -78,7 +76,7 @@ export const ItemCategory = ({ category, isOpen, setOpen }: props) => {
                     }
 
 
-                    <ItemFooter submitLabel="Guardar" cancelFunction={() => setOpen(null)} removeFunction={onDeleteCategory} />
+                    <ItemFooter loading={loading} submitLabel="Guardar" cancelFunction={() => setOpen(null)} removeFunction={onDeleteCategory} />
                 </form>
             </td>
         </tr>

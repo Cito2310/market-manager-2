@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { Category } from "../../../../types/category/Category";
 import { useFieldArray, useForm } from "react-hook-form";
-import { useAppDispatch } from "../../../../store/store";
+import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { FormCategory } from "../../../../types/category/FormCategory";
 import { startCreateCategory, startDeleteCategoryById, startUpdateCategoryById } from "../../../../store/category";
 
@@ -26,23 +26,30 @@ export const useItemCategory = ({ category, setOpen }: props) => {
 
     const { fields, append, remove } = useFieldArray({ control, name: "subcategories" });
 
+    const { status } = useAppSelector(state => state.category);
 
     const name = watch("name");
     const primary = watch("primary");
     const subcategories = watch("subcategories");
 
-    const onEditCategory = handleSubmit((data) => {
-        console.log(data); //remover
-        dispatch(startUpdateCategoryById(category._id, data));
+    const onEditCategory = handleSubmit(async (data) => {
+        try {
+            await dispatch(startUpdateCategoryById(category._id, data));
+            setOpen(null);
+        } catch (error) {}
     });
 
-    const onDeleteCategory = () => {
-        dispatch(startDeleteCategoryById(category._id));
+    const onDeleteCategory = async() => {
+        try {
+            await dispatch(startDeleteCategoryById(category._id));
+            setOpen(null);
+        } catch (error) {}
     }
 
     const appendSubcategory = () => { append({ name: "", brands: [""] }) }
 
     return {
+        loading: status.isLoading,
         toggleDetailsMenu, height,
         register, getValues, 
         onEditCategory, onDeleteCategory,

@@ -27,7 +27,9 @@ export const CategoryScreen = () => {
                         <InputSelect name="primary" select={form.select} setSelect={form.setSelect} label="Seccion" options={["Alimentos", "Bebidas", "Producto de Limpieza"]} />
                     </div>
 
-                    <p onClick={open.onToggleCreatingMode} className="font-medium text-[#008080] transition-base hover:brightness-90 active:brightness-[.80] cursor-pointer mr-2"><i className="fa-solid fa-plus text-[0.8em]"/> Añadir Categoria</p>
+                    <button onClick={open.onToggleCreatingMode} disabled={open.isOpen === "create"} className="font-medium text-[#008080] disabled:pointer-events-none disabled:opacity-60 transition-base hover:brightness-90 active:brightness-[.50] cursor-pointer mr-2">
+                        <i className="fa-solid fa-plus text-[0.8em]"/> Añadir Categoria
+                    </button>
                 </div>
 
 

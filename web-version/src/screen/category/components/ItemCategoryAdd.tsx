@@ -60,7 +60,7 @@ export const ItemCategoryAdd = ({ onToggleCreatingMode }: props) => {
                         }
 
 
-                        <ItemFooter submitLabel="Guardar" cancelFunction={onToggleCreatingMode} hiddenButtonDelete={true} />
+                        <ItemFooter loading={status.isLoading} submitLabel="Guardar" cancelFunction={onToggleCreatingMode} hiddenButtonDelete={true} />
 
                 </form>
             </td>

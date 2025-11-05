@@ -8,7 +8,6 @@ import { joinData } from "../../../helpers/joinData";
 export const useCategoryScreen = () => {
     // Manage open state for categories and creating mode
     const [isOpen, setOpen] = useState<null | "create" | string>(null);
-    console.log(isOpen)
 
     const toggleCreating = useCallback(() => { setOpen( m => m === "create" ? null : "create" ) }, []);
     const closeAll = useCallback(() => { setOpen(null) }, []);

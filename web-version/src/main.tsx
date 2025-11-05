@@ -9,9 +9,9 @@ import { store } from '../store/store'
 // import { App } from './App.tsx'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  // <React.StrictMode>
+  <React.StrictMode>
     <Provider store={store}>
       <App />
     </Provider>
-  // </React.StrictMode>,
+  </React.StrictMode>,
 )

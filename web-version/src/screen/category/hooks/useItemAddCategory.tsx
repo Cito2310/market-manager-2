@@ -31,10 +31,8 @@ export const useItemAddCategory = ({ onToggleCreatingMode }: props) => {
     const onSubmit = handleSubmit(async (data) => {
         try {
             await dispatch(startCreateCategory(data));
-            if (status.hasError) return;
             onToggleCreatingMode();
         } catch (error) {}
-        console.log(data); //remover
     });
 
     const appendSubcategory = () => { append({ name: "", brands: [""] }) }

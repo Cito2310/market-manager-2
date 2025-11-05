@@ -28,19 +28,28 @@ export const categorySlice = createSlice({
     reducers: {
 
         setCategories: ( state, action: { payload: { categories: Category[]; hidden?: boolean } } ) => {
+            state.wasCalledOnce = true;
+            clearError()
+
             if (!!action.payload.hidden === true) { state.data = action.payload.categories }
             if (!!action.payload.hidden === false) { console.log(state.data); state.data = action.payload.categories.filter(category => category.isActive === true) } 
         },
 
         createCategory: ( state, action: { payload: Category } ) => {
+            clearError()
+
             state.data.push( action.payload );
         },
 
         deleteCategoryById: ( state, action: { payload: string } ) => {
+            clearError()
+
             state.data = state.data.filter( category => category._id !== action.payload );
         },
 
         updateCategory: ( state, action: { payload: Category } ) => {
+            clearError()
+
             state.data = state.data.map( category => {
                 if ( category._id === action.payload._id ) return action.payload;
                 return category;
