@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form"
-import { ButtonFilter } from "./components/ButtonFilter"
+import { InputSelect } from "./components/InputSelect"
 import { ButtonTab } from "./components/ButtonTab"
 import { InputSearch } from "./components/InputSearch"
 import { ItemCategory } from "./components/ItemCategory"
@@ -7,7 +7,7 @@ import { ItemCategoryAdd } from "./components/ItemCategoryAdd"
 import { useCategoryScreen } from "./hooks/useCategoryScreen"
 
 export const CategoryScreen = () => {
-    const { data, messageError, status, wasCalledOnce, handleSubmit, register, onSetCategoryId, openCategoryId, onToggleCreatingMode, isCreatingCategory, onCloseCategory } = useCategoryScreen();
+    const { category, form, open } = useCategoryScreen();
 
 
     return (
@@ -23,11 +23,11 @@ export const CategoryScreen = () => {
                 <div className="flex items-center my-3 justify-between">
 
                     <div className="flex gap-3">
-                        <InputSearch register={register("search")} placeholder="Buscar" />
-                        <ButtonFilter label="Seccion" options={["Alimentos", "Bebidas", "Producto de Limpieza"]} />
+                        <InputSearch register={form.register("search")} placeholder="Buscar" />
+                        <InputSelect name="primary" select={form.select} setSelect={form.setSelect} label="Seccion" options={["Alimentos", "Bebidas", "Producto de Limpieza"]} />
                     </div>
 
-                    <p onClick={onToggleCreatingMode} className="font-medium text-[#008080] transition-base hover:brightness-90 active:brightness-[.80] cursor-pointer mr-2"><i className="fa-solid fa-plus text-[0.8em]"/> Añadir Categoria</p>
+                    <p onClick={open.onToggleCreatingMode} className="font-medium text-[#008080] transition-base hover:brightness-90 active:brightness-[.80] cursor-pointer mr-2"><i className="fa-solid fa-plus text-[0.8em]"/> Añadir Categoria</p>
                 </div>
 
 
@@ -47,10 +47,10 @@ export const CategoryScreen = () => {
                     </thead>
 
                     <tbody>
-                        { isCreatingCategory && <ItemCategoryAdd onToggleCreatingMode={onToggleCreatingMode} />}
+                        { open.isOpen === "create" && <ItemCategoryAdd onToggleCreatingMode={open.onToggleCreatingMode} /> }
                         {
-                            data.map( category => (
-                                <ItemCategory key={category._id} category={category} isOpen={openCategoryId === category._id} onToggleOpen={() => onSetCategoryId(category._id)} />
+                            category.data.map( category => (
+                                <ItemCategory key={category._id} category={category} isOpen={open.isOpen === category._id} setOpen={open.setOpen} />
                             ))
                         }
                     </tbody>

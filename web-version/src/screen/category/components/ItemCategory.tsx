@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useItemCategory } from "../hooks/useItemCategory";
 import { InputNameCategory } from "./ItemCategory/InputNameCategory";
 import { SelectSection } from "./ItemCategory/SelectSection";
@@ -10,19 +10,21 @@ import { ItemFooter } from "./ItemCategory/ItemFooter";
 interface props {
     category: Category;
     isOpen: boolean;
-    onToggleOpen: () => void;
+    setOpen: Dispatch<SetStateAction<string | null>>;
 }
 
 
-export const ItemCategory = ({ category, isOpen, onToggleOpen }: props) => {
+export const ItemCategory = ({ category, isOpen, setOpen }: props) => {
     const { 
         height, toggleDetailsMenu,  
         subcategories, name, primary,
         getValues, register,
         onDeleteCategory, onEditCategory, 
-        removeSubcategory, appendSubcategory, control, fields } = useItemCategory({ category, onToggleOpen });
+        removeSubcategory, appendSubcategory, control, fields } = useItemCategory({ category, setOpen });
 
         useEffect(() => {
+            console.log("isOpen changed:", isOpen, "name:", name);
+            // console.log("isOpen changed:", isOpen);
             if (typeof isOpen === "boolean") {
                 if (isOpen && height === 0) toggleDetailsMenu();
                 if (!isOpen && height !== 0) toggleDetailsMenu();
@@ -76,7 +78,7 @@ export const ItemCategory = ({ category, isOpen, onToggleOpen }: props) => {
                     }
 
 
-                    <ItemFooter submitLabel="Guardar" cancelFunction={onToggleOpen} removeFunction={onDeleteCategory} />
+                    <ItemFooter submitLabel="Guardar" cancelFunction={() => setOpen(null)} removeFunction={onDeleteCategory} />
                 </form>
             </td>
         </tr>

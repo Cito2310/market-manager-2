@@ -1,35 +1,59 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { startGetCategories } from "../../../../store/category";
 import { useForm } from "react-hook-form";
+import { joinData } from "../../../helpers/joinData";
 
 
 export const useCategoryScreen = () => {
-    const [isCreatingCategory, setIsCreatingCategory] = useState<boolean>(false);
-    const [openCategoryId, setOpenCategoryId] = useState<string | null>(null);
+    // Manage open state for categories and creating mode
+    const [isOpen, setOpen] = useState<null | "create" | string>(null);
+    console.log(isOpen)
 
-    const onSetCategoryId = ( id: string ) => setOpenCategoryId(openCategoryId === id ? null : id);
-    const onToggleCreatingMode = () => { setIsCreatingCategory(!isCreatingCategory); setOpenCategoryId(null); };
-    const onCloseCategory = () => setOpenCategoryId(null);
-
-    const { register, handleSubmit } = useForm({ defaultValues: { search: "" } });
+    const toggleCreating = useCallback(() => { setOpen( m => m === "create" ? null : "create" ) }, []);
+    const closeAll = useCallback(() => { setOpen(null) }, []);
 
 
+    // Manage form search and filters select
+    const { register, watch } = useForm({ defaultValues: { search: "" } });
+    const search = watch("search").trim().toLowerCase();
 
+    const [select, setSelect] = useState<{primary: string}>({primary: ""});
+
+    
+    // Manage load categories and show data
     const dispatch = useAppDispatch();
     const { data, messageError, status, wasCalledOnce } = useAppSelector( state => state.category );
 
-    useEffect(() => {
-        dispatch( startGetCategories() )
-    }, []);
 
+    // Filter data and sort
+    const splitTermSearch = search.split(/\s+/).map( str => RegExp(str, "i") );
+    const filteredData = data // Aqui abajo añadir los flitros y los sorts
+        .filter( category => splitTermSearch.every( regex => regex.test(joinData("category", category)) ) )
+        .filter( category => select.primary ? category.primary === select.primary.toLocaleLowerCase() : true )
+
+
+    useEffect( () => {
+        if (!wasCalledOnce) dispatch( startGetCategories() );
+    }, [wasCalledOnce])
+
+
+    // RETURN VALUES AND FUNCTIONS
     return {
-        openCategoryId, onSetCategoryId, onToggleCreatingMode, isCreatingCategory, onCloseCategory,
-        register,
-        handleSubmit,
-        data,
-        messageError,
-        status,
-        wasCalledOnce
+        open: {
+            isOpen,
+            setOpen,
+            onToggleCreatingMode: toggleCreating,
+            onCloseCategory: closeAll
+        },
+        form: {
+            register, select, setSelect
+        },
+        category: {
+            data: filteredData,
+            messageError,
+            status,
+            wasCalledOnce
+        }
     }
 }
