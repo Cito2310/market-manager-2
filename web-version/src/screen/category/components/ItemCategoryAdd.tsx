@@ -26,12 +26,12 @@ export const ItemCategoryAdd = ({ onToggleCreatingMode }: props) => {
 
                         <div className="flex gap-4 items-center justify-between">
                             <div className="flex gap-4">
-                                <InputNameCategory forHtml="name" autofocus register={ form.register("name") } placeholder="Nombre de la categoria" />
+                                <InputNameCategory forHtml="name" autofocus register={ form.registerName } placeholder="Nombre de la categoria" />
 
                                 <SelectSection 
                                     forHtml="primary"
                                     label="Sección"
-                                    register={ form.register("primary") }
+                                    register={ form.registerPrimary }
                                     defaultValue={ form.getValues("primary")}
                                     options={[
                                         {value: "alimentos", label: "Alimentos"},

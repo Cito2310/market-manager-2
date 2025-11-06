@@ -20,7 +20,7 @@ export const useItemCategory = ({ category, setOpen, isOpen }: props) => {
     const [height, setHeight] = useState<number | string>(0)
     const toggleDetailsMenu = () => {
         if ( height === 0 ) { setHeight("auto") ; setOpen(category._id) }
-        if ( height !== 0 ) { setHeight(0)      ; setOpen(prev => prev === category._id ? null : prev) }
+        if ( height !== 0 ) { setHeight(0)      ; setOpen(prev => prev === category._id ? null : prev); reset() }
     }
 
     useEffect(() => {
@@ -32,7 +32,7 @@ export const useItemCategory = ({ category, setOpen, isOpen }: props) => {
 
 
     // Form and field array
-    const { register, watch, getValues, handleSubmit, control } = useForm<FormCategory>({defaultValues: {
+    const { register, watch, getValues, handleSubmit, control, formState: { errors }, reset } = useForm<FormCategory>({defaultValues: {
         name: category.name,
         primary: category.primary,
         subcategories: category.subcategories
@@ -41,6 +41,7 @@ export const useItemCategory = ({ category, setOpen, isOpen }: props) => {
     const { fields, append, remove } = useFieldArray({ control, name: "subcategories" });
     const removeSubcategory = (index: number) => { remove(index) };
     const appendSubcategory = () => { append({ name: "", brands: [""] }) };
+
 
     // Validations
     const registerName = register("name", {
@@ -53,11 +54,6 @@ export const useItemCategory = ({ category, setOpen, isOpen }: props) => {
         required: "La seccion de la categoria es obligatoria",
     })
 
-    const getRegisterSubcategoryName = (index: number) => register(`subcategories.${index}.name` as const, {
-        required: "El nombre de la subcategoria es obligatorio",
-        minLength: { value: 2, message: "El nombre de la subcategoria debe tener al menos 2 caracteres" },
-        maxLength: { value: 100, message: "El nombre de la subcategoria no debe exceder los 100 caracteres" },
-    });
 
     // Function edit category and delete category
     const onEditCategory = handleSubmit(async (data) => {
@@ -86,13 +82,16 @@ export const useItemCategory = ({ category, setOpen, isOpen }: props) => {
             height, toggleDetailsMenu
         },
         form: {
-            register, getValues, onEditCategory, onDeleteCategory, registerName, registerPrimary, getRegisterSubcategoryName
+            register, getValues, onEditCategory, onDeleteCategory, registerName, registerPrimary
         },
         field: {
             fields, appendSubcategory, removeSubcategory, control
         },
         data: {
-            messageError, status, name, primary
+            hasError: Object.keys(errors).length > 0 || status.hasError,
+            // @ts-ignore
+            messageError: errors[Object.keys(errors)[0]]?.message || messageError,
+            status, name, primary
         }
     }
 }
