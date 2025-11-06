@@ -5,7 +5,7 @@ interface props {
     loading?: boolean;
     className?: string;
     variant: "A" | "B" | "C" | "D";
-    icon: "plus" | "trash" | "ellipsis";
+    icon: "plus" | "trash" | "ellipsis" | "print";
     type?: "button" | "submit";
 }
 
@@ -32,6 +32,7 @@ export const IconButton = ({ onClick, disabled, loading, className, variant, typ
         "plus": "fa-solid fa-plus",
         "trash": "fa-solid fa-trash",
         "ellipsis": "fa-solid fa-ellipsis",
+        "print": "fa-solid fa-print"
     };
 
     return (

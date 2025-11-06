@@ -41,6 +41,10 @@ export const updateProductMiddlewares = [
     check("info.imgUrl").optional().trim().isURL().withMessage("imgUrl must be a valid URL"),
     check("info.imgUrl").optional().trim().isLength({max: 2048}).withMessage("imgUrl max length 2048"),
 
+    check("info.location").optional().custom(basicValidationsString("info.location")),
+
+    check("info.primary").optional().custom(basicValidationsString("info.primary")),
+
 
 
     // VALIDACIONES OPTIONS

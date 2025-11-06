@@ -26,6 +26,8 @@ const productSchema = new Schema<ProductMongo>({
         price: { type: Number, required: true },
         unitType: { type: String, enum: ["unit", "weight"], required: true },
         imgUrl: { type: String },
+        location: { type: String, required: true },
+        primary: { type: String, required: true },
         
     },
 

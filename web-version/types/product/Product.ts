@@ -1,6 +1,7 @@
 import { RotationType, SizeType, UnitType } from "./ProductUtils"
 
-export interface ProductMongo {
+export interface Product {
+    _id: string,
     info: {
         name: string,
         barcode: string,
@@ -11,9 +12,9 @@ export interface ProductMongo {
         sizeType: SizeType,
         price: number,
         unitType: UnitType,
-        location: string,
-        primary: string,
         imgUrl?: string,
+        location: string,
+        primary: string
     },
 
     extraInfo: {
