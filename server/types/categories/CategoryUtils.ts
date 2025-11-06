@@ -9,7 +9,7 @@ export type PrimaryCategory =
     "polleria" | 
     "fiambreria" | 
     "panaderia" | 
-    "fruteria" | 
+    "verduleria" | 
     "carniceria" | 
     "otros";
 

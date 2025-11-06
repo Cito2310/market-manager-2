@@ -20,7 +20,7 @@ export const updateCategoryMiddlewares = [
         "polleria",
         "fiambreria",
         "panaderia",
-        "fruteria",
+        "verduleria",
         "carniceria",
         "otros"
     ]).withMessage("primary category invalid"),

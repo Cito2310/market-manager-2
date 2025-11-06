@@ -34,18 +34,28 @@ export const ItemCategory = ({ category, isOpen, setOpen }: props) => {
 
                     <div className="flex gap-4 items-center justify-between">
                         <div className="flex gap-4">
-                            <InputNameCategory forHtml={category._id} register={ form.register("name") } placeholder="Nombre de la categoria" />
+                            <InputNameCategory forHtml={category._id} register={ form.registerName } placeholder="Nombre de la categoria" />
 
                             <SelectSection 
                                 forHtml={category._id + "-primary"}
                                 label="Sección"
-                                register={ form.register("primary") }
-                                defaultValue={ form.getValues("primary")}
+                                register={ form.registerPrimary }
+                                defaultValue={ form.getValues("primary") }
                                 options={[
-                                    {value: "alimentos", label: "Alimentos"},
-                                    {value: "higiene personal", label: "Higiene Personal"},
+
+                                    {value: "almacen", label: "Almacén"},
+                                    {value: "limpieza", label: "Limpieza"},
+                                    {value: "perfumeria", label: "Perfumería"},
+                                    {value: "lacteos", label: "Lácteos"},
                                     {value: "bebidas", label: "Bebidas"},
-                                    {value: "verduleria", label: "Verduleria"},
+                                    {value: "congelados", label: "Congelados"},
+                                    {value: "bazar", label: "Bazar"},
+                                    {value: "polleria", label: "Pollería"},
+                                    {value: "fiambreria", label: "Fiambrería"},
+                                    {value: "panaderia", label: "Panadería"},
+                                    {value: "carniceria", label: "Carnicería"},
+                                    {value: "verduleria", label: "Verdulería"},
+                                    {value: "otros", label: "Otros"},
                                 ]}
                             />
                         </div>
@@ -53,7 +63,12 @@ export const ItemCategory = ({ category, isOpen, setOpen }: props) => {
                         <IconButton onClick={ field.appendSubcategory } variant="A" icon="plus" />
                     </div>
 
-
+                    {
+                        data.messageError && (
+                            <div className="text-right w-full bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative" role="alert">
+                                <strong className="font-bold">Error!</strong> {data.messageError}
+                            </div>
+                    )}
 
                     {/* CONTIENE LOS CONTAINES DE SUBCATEGORIAS */}
                     {

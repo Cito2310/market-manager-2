@@ -42,6 +42,22 @@ export const useItemCategory = ({ category, setOpen, isOpen }: props) => {
     const removeSubcategory = (index: number) => { remove(index) };
     const appendSubcategory = () => { append({ name: "", brands: [""] }) };
 
+    // Validations
+    const registerName = register("name", {
+        required: "El nombre de la categoria es obligatorio",
+        minLength: { value: 2, message: "El nombre de la categoria debe tener al menos 2 caracteres" },
+        maxLength: { value: 100, message: "El nombre de la categoria no debe exceder los 100 caracteres" },
+    })
+
+    const registerPrimary = register("primary", {
+        required: "La seccion de la categoria es obligatoria",
+    })
+
+    const getRegisterSubcategoryName = (index: number) => register(`subcategories.${index}.name` as const, {
+        required: "El nombre de la subcategoria es obligatorio",
+        minLength: { value: 2, message: "El nombre de la subcategoria debe tener al menos 2 caracteres" },
+        maxLength: { value: 100, message: "El nombre de la subcategoria no debe exceder los 100 caracteres" },
+    });
 
     // Function edit category and delete category
     const onEditCategory = handleSubmit(async (data) => {
@@ -70,7 +86,7 @@ export const useItemCategory = ({ category, setOpen, isOpen }: props) => {
             height, toggleDetailsMenu
         },
         form: {
-            register, getValues, onEditCategory, onDeleteCategory
+            register, getValues, onEditCategory, onDeleteCategory, registerName, registerPrimary, getRegisterSubcategoryName
         },
         field: {
             fields, appendSubcategory, removeSubcategory, control

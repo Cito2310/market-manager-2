@@ -56,7 +56,6 @@ export const startDeleteCategoryById = ( id:string ) => {
         dispatch( initLoading() );
 
         const { token } = getState().auth;
-        console.log(id);
         try {
             await fetchApi({
                 method: "delete",

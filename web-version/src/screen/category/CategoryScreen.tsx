@@ -6,7 +6,7 @@ import { ItemCategoryAdd } from "./components/ItemCategoryAdd"
 import { useCategoryScreen } from "./hooks/useCategoryScreen"
 
 export const CategoryScreen = () => {
-    const { category, form, open } = useCategoryScreen();
+    const { category, form, open, sort } = useCategoryScreen();
 
 
     return (
@@ -36,11 +36,29 @@ export const CategoryScreen = () => {
                     <thead>
                         <tr>
                             <th className="p-4 text-left font-medium py-1.5 text-[#004C4C] bg-[#CDECEC] rounded-l-lg">
-                                Nombre de la Categoria <i className="fa-solid fa-sort text-xs p-1"/>
+                                <button className={`hover:brightness-50 cursor-pointer transition-base ${sort.sortSelected?.[0] === "name" ? "font-medium" : "font-normal"}`} onClick={()=>sort.toggleSortSelected("name")}>
+                                    Nombre de la Categoria
+                                    {
+                                    sort.sortSelected?.[0] === "name" ? 
+                                        (sort.sortSelected[1] === "asc" 
+                                            ? <i className="pl-3 fa-solid fa-sort-up text-xs p-1"/> : // Se activa al estar seleccionado y es ascendente
+                                            <i className="pl-3 fa-solid fa-sort-down text-xs p-1"/> // Se activa al estar seleccionado y es descendente
+                                        ) : <i className="pl-3 fa-solid fa-sort text-xs p-1"/> // Se activa al no estar seleccionado
+                                    }
+                                </button>
                             </th>
 
                             <th className="text-left font-medium py-1.5 text-[#004C4C] bg-[#CDECEC] ">
-                                Seccion <i className="fa-solid fa-sort text-xs p-1"/>
+                                <button className={`hover:brightness-50 cursor-pointer transition-base ${sort.sortSelected?.[0] === "primary" ? "font-medium" : "font-normal"}`} onClick={()=>sort.toggleSortSelected("primary")}>
+                                    Sección
+                                    {
+                                    sort.sortSelected?.[0] === "primary" ? 
+                                        (sort.sortSelected[1] === "asc" 
+                                            ? <i className="pl-3 fa-solid fa-sort-up text-xs p-1"/> : // Se activa al estar seleccionado y es ascendente
+                                            <i className="pl-3 fa-solid fa-sort-down text-xs p-1"/> // Se activa al estar seleccionado y es descendente
+                                        ) : <i className="pl-3 fa-solid fa-sort text-xs p-1"/> // Se activa al no estar seleccionado
+                                    }
+                                </button>
                             </th>
 
                             <th className="text-left font-medium py-1.5 text-[#004C4C] bg-[#CDECEC] rounded-r-lg"></th>

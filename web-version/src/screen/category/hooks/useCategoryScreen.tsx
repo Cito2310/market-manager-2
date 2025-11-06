@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { startGetCategories } from "../../../../store/category";
 import { useForm } from "react-hook-form";
@@ -19,6 +19,18 @@ export const useCategoryScreen = () => {
 
     const [select, setSelect] = useState<{primary: string}>({primary: ""});
 
+
+    // Manage sort selected
+    const [sortSelected, setSortSelected] = useState<[string, "asc" | "desc"] | null >(null);
+    const toggleSortSelected = useCallback( ( field: string ) => {
+        setSortSelected( current => {
+            if (current === null) return [field, "asc"];
+            if (current[0] !== field) return [field, "asc"];
+            if (current[1] === "asc") return [field, "desc"];
+            if (current[1] === "desc") return null;
+            return null;
+        })}, []);
+
     
     // Manage load categories and show data
     const dispatch = useAppDispatch();
@@ -27,9 +39,19 @@ export const useCategoryScreen = () => {
 
     // Filter data and sort
     const splitTermSearch = search.split(/\s+/).map( str => RegExp(str, "i") );
-    const filteredData = data // Aqui abajo añadir los flitros y los sorts
+    const filteredData = useMemo(() => data
         .filter( category => splitTermSearch.every( regex => regex.test(joinData("category", category)) ) )
         .filter( category => select.primary ? category.primary === select.primary.toLocaleLowerCase() : true )
+        .sort( (a, b) => {
+            if (!sortSelected) return 0;
+            const [field, order] = sortSelected;
+            const fieldA = (a as any)[field];
+            const fieldB = (b as any)[field];
+            if (fieldA < fieldB) return order === "asc" ? -1 : 1;
+            if (fieldA > fieldB) return order === "asc" ? 1 : -1;
+            return 0;
+        })
+    , [data, search, select, sortSelected]);
 
 
     useEffect( () => {
@@ -39,6 +61,10 @@ export const useCategoryScreen = () => {
 
     // RETURN VALUES AND FUNCTIONS
     return {
+        sort: {
+            sortSelected,
+            toggleSortSelected
+        },
         open: {
             isOpen,
             setOpen,

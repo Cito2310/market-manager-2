@@ -2,7 +2,7 @@ export const joinData = (type: "category" | "product", data: any): string => {
     let result = "";
    
     if (type === "category") {
-        result = `${data.name} ${data._id} ${data.subcategories} ${data.primary} `;
+        result = `${data.name} ${data._id} ${JSON.stringify(data.subcategories)} ${data.primary} `;
     }
 
     if (type === "product") {
