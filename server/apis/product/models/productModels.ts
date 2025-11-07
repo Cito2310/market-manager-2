@@ -28,6 +28,7 @@ const productSchema = new Schema<ProductMongo>({
         imgUrl: { type: String },
         location: { type: String, required: true },
         primary: { type: String, required: true },
+        type: { type: String, enum: ["units", "granel"], required: true },
         
     },
 

@@ -15,6 +15,7 @@ export interface Product {
         imgUrl?: string,
         location: string,
         primary: string
+        type: "units" | "granel"
     },
 
     extraInfo: {

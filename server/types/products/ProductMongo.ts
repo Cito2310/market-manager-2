@@ -14,6 +14,7 @@ export interface ProductMongo {
         location: string,
         primary: string,
         imgUrl?: string,
+        type: "units" | "granel",
     },
 
     extraInfo: {

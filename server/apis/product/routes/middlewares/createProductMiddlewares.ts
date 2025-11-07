@@ -25,7 +25,10 @@ export const createProductMiddlewares = [
 
     check("info.sizeType").isString().trim().notEmpty().withMessage("sizeType is required"),
     check("info.sizeType").trim().isIn(["kg", "g", "oz", "cm3", "l", "ml", "u", "cc"]).withMessage("sizeType invalid [kg, g, oz, cm3, l, ml, cc, u]"),
-    
+
+    check("info.type").isString().trim().notEmpty().withMessage("type is required"),
+    check("info.type").trim().isIn(["units", "granel"]).withMessage("type invalid [units, granel]"),
+
     check("info.price").isNumeric().withMessage("price is required"),
     check("info.price").trim().isLength({max: 24}).withMessage("price length can only be less than 24 characters"),
 

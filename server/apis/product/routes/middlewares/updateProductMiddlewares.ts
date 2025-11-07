@@ -32,6 +32,9 @@ export const updateProductMiddlewares = [
     check("info.sizeType").optional().isString().trim().notEmpty().withMessage("sizeType is required"),
     check("info.sizeType").optional().trim().isIn(["kg", "g", "oz", "cm3", "l", "ml", "u", "cc"]).withMessage("sizeType invalid [kg, g, oz, cm3, l, ml, cc, u]"),
 
+    check("info.type").optional().isString().trim().notEmpty().withMessage("type is required"),
+    check("info.type").optional().trim().isIn(["units", "granel"]).withMessage("type invalid [units, granel]"),
+
     check("info.price").optional().isNumeric().withMessage("price is required"),
     check("info.price").optional().trim().isLength({max: 24}).withMessage("price length can only be less than 24 characters"),
 

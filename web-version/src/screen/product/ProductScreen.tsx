@@ -66,7 +66,7 @@ export const ProductScreen = () => {
                 <tbody>
                     {
                         fakeProducts.map( product => (
-                            <ItemProduct key={product._id} product={product} height={0} />
+                            <ItemProduct key={product._id} product={product} height={"auto"} />
                         ))
                     }
                 </tbody>
