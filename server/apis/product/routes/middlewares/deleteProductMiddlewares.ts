@@ -10,8 +10,5 @@ export const deleteProductMiddlewares = [
         .isMongoId().withMessage("Invalid product ID")
         .not().custom( uniqueId ).withMessage("Product with this ID does not exist"),
 
-    check("forceDelete")
-        .optional().isBoolean().withMessage("forceDelete must be boolean"),
-
     checkFields
 ]

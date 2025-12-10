@@ -32,9 +32,6 @@ export const updateProductMiddlewares = [
     check("info.sizeType").optional().isString().trim().notEmpty().withMessage("sizeType is required"),
     check("info.sizeType").optional().trim().isIn(["kg", "g", "oz", "cm3", "l", "ml", "u", "cc"]).withMessage("sizeType invalid [kg, g, oz, cm3, l, ml, cc, u]"),
 
-    check("info.type").optional().isString().trim().notEmpty().withMessage("type is required"),
-    check("info.type").optional().trim().isIn(["units", "granel"]).withMessage("type invalid [units, granel]"),
-
     check("info.price").optional().isNumeric().withMessage("price is required"),
     check("info.price").optional().trim().isLength({max: 24}).withMessage("price length can only be less than 24 characters"),
 
@@ -44,29 +41,12 @@ export const updateProductMiddlewares = [
     check("info.imgUrl").optional().trim().isURL().withMessage("imgUrl must be a valid URL"),
     check("info.imgUrl").optional().trim().isLength({max: 2048}).withMessage("imgUrl max length 2048"),
 
-    check("info.location").optional().custom(basicValidationsString("info.location")),
-
-    check("info.primary").optional().custom(basicValidationsString("info.primary")),
-
 
 
     // VALIDACIONES OPTIONS
     check("options.hasExpirationControl").optional().isBoolean().withMessage("hasExpirationControl must be boolean"),
     check("options.hasStockControl").optional().isBoolean().withMessage("hasStockControl must be boolean"),
     check("options.isActive").optional().isBoolean().withMessage("isActive must be boolean"),
-    check("options.hasImg").optional().isBoolean().withMessage("hasImg must be boolean"),
-
-
-
-    // VALIDACIONES EXTRA INFO
-    check("extraInfo.costPrice").optional().isNumeric().withMessage("costPrice must be number"),
-    check("extraInfo.costPrice").optional().isLength({max: 24}).withMessage("costPrice length can only be less than 24 characters"),
-
-    check("extraInfo.priceHistory").optional().isArray().withMessage("priceHistory must be array"),
-    check("extraInfo.priceHistory.*.date").optional().isString().withMessage("priceHistory date must be string"),
-    check("extraInfo.priceHistory.*.date").optional().custom(dateValid).withMessage("date not valid"),
-    check("extraInfo.priceHistory.*.price").optional().isNumeric().withMessage("priceHistory price must be number"),
-    check("extraInfo.priceHistory.*.price").optional().isLength({max: 24}).withMessage("priceHistory price length can only be less than 24 characters"),
 
 
 
@@ -113,12 +93,6 @@ export const updateProductMiddlewares = [
       .exists().withMessage("currentStock is required when hasStockControl is true")
       .isNumeric().withMessage("currentStock must be number")
       .isLength({ max: 24 }).withMessage("currentStock length can only be less than 24 characters"),
-
-    check("stock.rotationType")
-      .if((_: any, { req }: any) => Boolean(req.body?.options?.hasStockControl))
-      .exists().withMessage("rotationType is required when hasStockControl is true")
-      .isString().withMessage("rotationType must be string")
-      .isIn(["high", "low"]).withMessage("rotationType invalid [ high | low ]"),
 
     check("stock.mediumStockAlert")
       .if((_: any, { req }: any) => Boolean(req.body?.options?.hasStockControl))

@@ -1,4 +1,4 @@
-import { RotationType, SizeType, UnitType } from "./ProductUtils"
+import { SizeType, UnitType } from "./ProductUtils"
 
 export interface Product {
     _id: string,
@@ -13,21 +13,12 @@ export interface Product {
         price: number,
         unitType: UnitType,
         imgUrl?: string,
-        location: string,
-        primary: string
-        type: "units" | "granel"
-    },
-
-    extraInfo: {
-        priceHistory?: { date: string, price: number }[],
-        costPrice?: number,
     },
 
     options: {
         hasExpirationControl: boolean,
         hasStockControl: boolean,
         isActive: boolean,
-        hasImg: boolean,
     },
 
     expiration?: {
@@ -42,7 +33,6 @@ export interface Product {
 
     stock?: {
         currentStock: number,
-        rotationType: RotationType,
         mediumStockAlert: number,
         lowStockAlert: number,
         veryLowStockAlert: number,

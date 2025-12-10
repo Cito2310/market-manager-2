@@ -6,6 +6,7 @@ import { useCallback, useState } from "react"
 import { ButtonHeadTable } from "../../components/ButtonHeadTable"
 import fakeProducts from "./FakeProducts"
 import { ItemProduct } from "./components/ItemProduct"
+import { ItemAddProduct } from "./components/ItemAddProduct"
 
 export const ProductScreen = () => {
     const { register } = useForm();
@@ -55,7 +56,6 @@ export const ProductScreen = () => {
                         <ButtonHeadTable label="Nombre de la Categoria" name="name" sortSelected={sortSelected} toggleSortSelected={toggleSortSelected} start />
                         <ButtonHeadTable label="Categoría" name="category" sortSelected={sortSelected} toggleSortSelected={toggleSortSelected} />
                         <ButtonHeadTable label="Sección" name="primary" sortSelected={sortSelected} toggleSortSelected={toggleSortSelected} />
-                        <ButtonHeadTable label="Ubicación" name="location" sortSelected={sortSelected} toggleSortSelected={toggleSortSelected} />
                         <ButtonHeadTable label="Precio" name="price" sortSelected={sortSelected} toggleSortSelected={toggleSortSelected} />
                         <ButtonHeadTable label="Stock" name="stock" sortSelected={sortSelected} toggleSortSelected={toggleSortSelected} />
 
@@ -65,9 +65,13 @@ export const ProductScreen = () => {
 
                 <tbody>
                     {
-                        fakeProducts.map( product => (
-                            <ItemProduct key={product._id} product={product} height={"auto"} />
-                        ))
+                        isOpen === "create" ? <ItemAddProduct /> : null
+                    }
+
+                    {
+                        // fakeProducts.map( product => (
+                        //     <ItemProduct key={product._id} product={product} height={"auto"} />
+                        // ))
                     }
                 </tbody>
             </table>

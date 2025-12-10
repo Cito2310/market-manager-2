@@ -1,12 +1,22 @@
+import { UseFormRegisterReturn } from "react-hook-form/dist/types/form";
+
 interface props {
     label: string;
     type: "text" | "select" | "number" | "size" | "date";
     prefix?: string;
     subfix?: string;
     padding?: number;
+    register?: UseFormRegisterReturn<string>;
+    placeholder?: string;
+    sizeConfig?: {
+        options: {value: string; label: string}[];
+        registerNumber: UseFormRegisterReturn<string>;
+        registerSizeType: UseFormRegisterReturn<string>;
+    }
+    options?: {value: string; label: string}[];
 }
 
-export const InputProduct = ({ label, type, prefix, subfix, padding }: props) => {
+export const InputProduct = ({ label, type, prefix, subfix, padding, register, placeholder, options, sizeConfig }: props) => {
     const base = "bg-white text-[#023b3b] font-normal border-b-2 border-[#d5e0e0] px-3 py-2 rounded-md outline-none focus:border-[#008080] transition-base";
 
     const baseSize = "w-full bg-white text-[#023b3b] font-normal border-b-2 border-[#d5e0e0] rounded-l-md outline-none focus:border-[#008080] transition-base px py-2 text-right";
@@ -15,9 +25,9 @@ export const InputProduct = ({ label, type, prefix, subfix, padding }: props) =>
     if (type === "text") return (
         <label className="font-medium px-1 flex flex-col w-full text-[#537e7e]">&nbsp;&nbsp;{label}
             <input
-                onChange={() => { }}
-                value={"Aceite de Girasol"}
+                {...register}
                 className={base}
+                placeholder={placeholder}
             />
         </label>
     )
@@ -28,13 +38,12 @@ export const InputProduct = ({ label, type, prefix, subfix, padding }: props) =>
             <select
                 id="select-ejemplo"
                 className={base}
-                defaultValue="debit"
-            >
-                <option value="" disabled>{label}</option>
-                <option value="cash">Efectivo</option>
-                <option value="credit">Credito</option>
-                <option value="qr">QR</option>
-                <option value="transference">Transferencia</option>
+                {...register}>
+                {
+                    options!.map( option => (
+                        <option key={option.value} value={option.value}>{option.label}</option>
+                    ))
+                }
             </select>
         </label>
     )
@@ -48,9 +57,9 @@ export const InputProduct = ({ label, type, prefix, subfix, padding }: props) =>
                     style={{paddingLeft: prefix && `${padding}rem`, paddingRight: subfix && `${padding}rem`}}
                     className={base + " w-full"}
                     type="number"
+                    {...register}
                     min={0}
                     placeholder="0"
-                    value={"20000"}
                 />
                 {subfix && <span className="font-normal absolute right-8 text-[#7e9292] text-lg select-none">{subfix}</span>}
             </div>
@@ -61,12 +70,13 @@ export const InputProduct = ({ label, type, prefix, subfix, padding }: props) =>
     if (type === "size") return (
         <label className="font-medium px-1 flex flex-col w-full text-[#537e7e]">&nbsp;&nbsp;{label}
             <div className="flex w-full">
-                <input onChange={()=>{}} style={{borderLeftWidth: "none"}} className={baseSize} value={"100"}/>
-                <select defaultValue={"g"} className={baseSizeSelect}>
-                    <option value={"g"}>g</option>
-                    <option value={"kg"}>kg</option>
-                    <option value={"l"}>l</option>
-                    <option value={"u"}>u</option>
+                <input style={{borderLeftWidth: "none"}} className={baseSize} {...sizeConfig!.registerNumber}/>
+                <select className={baseSizeSelect} {...sizeConfig!.registerSizeType}>
+                    {
+                        sizeConfig!.options.map( option => (
+                            <option key={option.value} value={option.value}>{option.label}</option>
+                        ))
+                    }
                 </select>
             </div>
         </label>

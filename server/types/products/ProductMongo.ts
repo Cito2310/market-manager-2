@@ -1,32 +1,23 @@
-import { RotationType, SizeType, UnitType } from "./ProductUtils"
+import { SizeType, UnitType } from "./ProductUtils"
 
 export interface ProductMongo {
     info: {
         name: string,
-        barcode: string,
         category: string,
         subcategory: string,
         brand: string,
+        barcode: string,
         size: number,
         sizeType: SizeType,
         price: number,
         unitType: UnitType,
-        location: string,
-        primary: string,
         imgUrl?: string,
-        type: "units" | "granel",
-    },
-
-    extraInfo: {
-        priceHistory?: { date: string, price: number }[],
-        costPrice?: number,
     },
 
     options: {
         hasExpirationControl: boolean,
         hasStockControl: boolean,
         isActive: boolean,
-        hasImg: boolean,
     },
 
     expiration?: {
@@ -41,7 +32,6 @@ export interface ProductMongo {
 
     stock?: {
         currentStock: number,
-        rotationType: RotationType,
         mediumStockAlert: number,
         lowStockAlert: number,
         veryLowStockAlert: number,
