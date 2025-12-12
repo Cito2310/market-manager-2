@@ -2,6 +2,7 @@ import { IconButton } from "../../../../components/IconButton"
 
 interface props {
     mode: "add" | "edit",
+    register: any,
     controls: {
         append: () => void,
         remove: (index: number) => void,
@@ -9,7 +10,7 @@ interface props {
     }
 }
 
-export const TableExpiration = ({ mode, controls }: props) => {
+export const TableExpiration = ({ mode, controls, register }: props) => {
     return (
         <table className="bg-white text-[#023b3b] border-b-2 border-[#d5e0e0] px-3 py-2 rounded-md ">
             <thead>
@@ -26,6 +27,7 @@ export const TableExpiration = ({ mode, controls }: props) => {
                                 <td className="py-2">
                                     <input 
                                         type="date" 
+                                        {...register(`expiration.batches.${index}.expirationDate`)}
                                         className={`
                                             mx-auto px-4 block rounded-md text-center no-spin py-1 
                                             border-b-2 border-white outline-none 
@@ -36,6 +38,7 @@ export const TableExpiration = ({ mode, controls }: props) => {
                                 <td>
                                     <input 
                                         type="number" value={0} 
+                                        {...register(`expiration.batches.${index}.currentQuantity`)}
                                         className={`
                                             mx-auto px-4 block rounded-md text-center no-spin py-1
                                             border-b-2 border-white outline-none transition-base focus:border-[#008080]`

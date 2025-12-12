@@ -15,11 +15,16 @@ export const initialFormProduct: FormProduct = {
 
     options: {
         hasExpirationControl: false,
-        hasStockControl: false,
+        hasStockControl: true,
     },
 
     expiration: {
-        batches: [{ addedAt: new Date().getTime()+"", expirationDate: new Date().getTime()+"", initialQuantity: "0", quantity: 0 }],
+        batches: [{ 
+            addedAt: new Date().getTime()+"", 
+            expirationDate: new Date().toISOString().slice(0,10), 
+            initialQuantity: "0", 
+            quantity: 0
+        }],
         alertExpiration: 0,
     },
 

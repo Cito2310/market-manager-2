@@ -1,7 +1,7 @@
-import { FormCategory } from './../../types/category/FormCategory';
 import { AppDispatch, RootState } from "../store";
 import { fetchApi } from "../../src/helpers/fecthApi";
 import { clearError, setError, setProducts, createProduct, deleteProductById, initLoading, stopLoading, updateProduct } from './productSlice';
+import { FormProduct } from '../../types/product/FormProduct';
 
 export const startGetProducts = () => {
     return async( dispatch: AppDispatch, getState: () => RootState ) => {
@@ -25,7 +25,7 @@ export const startGetProducts = () => {
 
 
 
-export const startUpdateProductById = ( id: string, dataForm: FormCategory ) => {
+export const startUpdateProductById = ( id: string, dataForm: FormProduct ) => {
     return async( dispatch: AppDispatch, getState: () => RootState ) => {
         dispatch( clearError() );
         dispatch( initLoading() );
@@ -73,7 +73,7 @@ export const startDeleteProductById = ( id:string ) => {
 
 
 
-export const startCreateProduct = (dataForm: { name: string }) => {
+export const startCreateProduct = (dataForm: FormProduct) => {
     return async( dispatch: AppDispatch, getState: () => RootState ) => {
         dispatch( clearError() );
         dispatch( initLoading() );

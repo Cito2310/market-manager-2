@@ -4,6 +4,7 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import { authSlice } from './auth';
 import { categorySlice } from './category';
+import { productSlice } from './productSlice.ts/productSlice';
 // import { categorySlice } from './category';
 // import { modalSlice } from './modal';
 // import { productSlice } from './product';
@@ -15,6 +16,7 @@ export const store = configureStore({
     reducer: {
         category: categorySlice.reducer,
         auth: authSlice.reducer,
+        product: productSlice.reducer,
         // modal: modalSlice.reducer,
         // product: productSlice.reducer,
         // cashRegister: cashRegisterSlice.reducer,

@@ -95,7 +95,11 @@ export const ItemAddProduct = () => {
                                     data.hasExpirationControl && (
                                         <ContainerData label="Vencimiento">
                                             <Layout.Column>
-                                                <TableExpiration mode="add" controls={{ append: field.appendExpiration, fields: field.fields, remove: field.removeExpiration }} />
+                                                <TableExpiration 
+                                                    register={ form.register } 
+                                                    mode="add" 
+                                                    controls={{ append: field.appendExpiration, fields: field.fields, remove: field.removeExpiration }}
+                                                />
 
                                                 <InputProduct register={form.register("expiration.alertExpiration")} type="number" label="Alerta de Vencimiento" subfix="Dias" padding={5} />
                                             </Layout.Column>
@@ -122,6 +126,8 @@ export const ItemAddProduct = () => {
                         </div>
 
                         <ItemFooter 
+                            messageError={ data.messageError }
+                            loading={ data.status.isLoading }
                             cancelFunction={()=>{}}
                             hiddenButtonDelete
                             submitLabel="Guardar Producto"

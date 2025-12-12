@@ -1,16 +1,23 @@
-import { useCallback, useMemo } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
-import { useAppSelector } from "../../../../store/store";
-import { initialFormProduct } from "../utils/InitialFormProduct";
+import { startCreateProduct } from './../../../../store/productSlice.ts/thunks';
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useFieldArray, useForm, useFormState } from "react-hook-form";
+import { useAppDispatch, useAppSelector } from "../../../../store/store";
+import { initialFormProduct } from "../utils/initialFormProduct";
+import { productAddValidations } from '../utils/productAddValidations';
 
 export const useItemAddProduct = () => {
+    const dispatch = useAppDispatch();
+    const { status, messageError } = useAppSelector( state => state.product );
+    const [lastErrorForm, setLastErrorForm] = useState<any | null>(null)
+
+
     // Form and field array
-    const { register, handleSubmit, formState: { errors }, watch, control } = useForm({ defaultValues: initialFormProduct });
-    
+    const { register, handleSubmit, formState, watch, control, getValues } = useForm({ defaultValues: initialFormProduct });
+    console.log(getValues())
+
     const { fields, append, remove } = useFieldArray({ control, name: "expiration.batches" });
     const appendExpiration = useCallback(() => { append({ addedAt: new Date().getTime()+"", expirationDate: new Date().getTime()+"", initialQuantity: "0", quantity: 0 }) }, [append]);
     const removeExpiration = useCallback((index: number) => { remove(index) }, [remove]);
-
 
     // Watched data
     const name = watch("info.name");
@@ -26,9 +33,16 @@ export const useItemAddProduct = () => {
 
 
     // Function onAddProduct
-    const onAddProduct = handleSubmit( data => {
-        console.log(data);
-    });
+    const onAddProduct = handleSubmit( async data => {
+            try {
+                await dispatch( startCreateProduct(data) );
+            } catch (error) {}
+        }, (error) => { setLastErrorForm(error); }
+    );
+
+
+    // Validations
+    productAddValidations({ register });
 
 
     // Options for selects
@@ -48,6 +62,34 @@ export const useItemAddProduct = () => {
     const typeSizeObj = ["kg", "g", "oz", "cm3", "l", "ml", "u", "cc"]
     const typeSizeOptions = typeSizeObj.map( t => ({ label: t, value: t }) );
 
+
+    // Message error form
+    const getObjectsWithMsg = (obj: Record<string, any>): Record<string, any>[] => {
+        const objectsWithMsg: Record<string, any>[] = [];
+
+        const recursiveGetObjectWithMsg = (current: Record<string, any>) => {
+            if (current && typeof current === 'object') {
+                if (Object.prototype.hasOwnProperty.call(current, 'message')) {
+                    objectsWithMsg.push(current);
+                    return;
+                }
+
+                Object.values(current).forEach(value => {
+                    if (typeof value === 'object' && value !== null) {
+                    recursiveGetObjectWithMsg(value);
+                }
+                });
+            }
+        };
+
+        recursiveGetObjectWithMsg(obj);
+
+        return objectsWithMsg;
+    };
+
+    const messageErrorForm = useMemo(() => getObjectsWithMsg(lastErrorForm)[0]?.message, [lastErrorForm] );
+
+
     
     // RETURN VALUES AND FUNCTIONS
     return {
@@ -61,7 +103,11 @@ export const useItemAddProduct = () => {
             categoriesOptions, subcategoriesOptions, brandsOptions, unitTypeOptions, typeSizeOptions
         },
         data: {
-            errors, name, brand, size, sizeType, category, subcategory, price, hasExpirationControl, hasStockControl, primaryData
+            hasError: Object.keys(formState.errors).length > 0 || status.hasError,
+            // @ts-ignore
+            messageError: messageErrorForm || messageError,
+            status,
+            name, brand, size, sizeType, category, subcategory, price, hasExpirationControl, hasStockControl, primaryData
         }
     }
 }
