@@ -5,6 +5,7 @@ import { dbConnection } from './database/config';
 import { routeProduct } from "./apis/product/routes/routesProduct";
 import { routeUser } from "./apis/user/routes/routesUser";
 import { routeCategory } from "./apis/category/routes/routeCategory";
+import { routeImage } from "./apis/image/routes/routeImage";
 
 export class Server {
     private app = express()
@@ -12,6 +13,7 @@ export class Server {
         user : "/api/user",
         product : "/api/product",
         category : "/api/category",
+        image: "/api/image",
     }
 
     constructor(){
@@ -24,6 +26,7 @@ export class Server {
         this.app.use( this.paths.user, routeUser )
         this.app.use( this.paths.product, routeProduct )
         this.app.use( this.paths.category, routeCategory )
+        this.app.use( this.paths.image, routeImage )
     }
 
     private connectDB() {dbConnection()}

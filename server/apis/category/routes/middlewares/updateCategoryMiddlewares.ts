@@ -2,9 +2,15 @@ import { check } from "express-validator";
 import { checkFields } from "../../../../middlewares/checkFields";
 import { validateJWT } from "../../../../middlewares/validateJWT";
 import { basicValidationsString } from "../../../../helpers/basicValidationsString";
+import { uniqueCategoryId } from "../../../../helpers/validationCategory";
 
 export const updateCategoryMiddlewares = [
     validateJWT,
+
+    check("id")
+        .isMongoId().withMessage("Invalid category ID")
+        .not().custom( uniqueCategoryId ).withMessage("Category with this ID does not exist"),
+
 
     check("name").optional().custom(basicValidationsString("name")),
     
