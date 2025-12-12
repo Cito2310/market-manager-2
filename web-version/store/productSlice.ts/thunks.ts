@@ -11,7 +11,7 @@ export const startGetProducts = () => {
         try {
             const data = await fetchApi({
                 method: "get",
-                path: "api/products",
+                path: "api/product",
                 token: token!
             });
 
@@ -35,7 +35,7 @@ export const startUpdateProductById = ( id: string, dataForm: FormProduct ) => {
         try {
             const data = await fetchApi({
                 method: "put",
-                path: `api/products/${ id }`,
+                path: `api/product/${ id }`,
                 token: token!,
                 body: dataForm,
             })
@@ -59,7 +59,7 @@ export const startDeleteProductById = ( id:string ) => {
         try {
             await fetchApi({
                 method: "delete",
-                path: `api/products/${ id }`,
+                path: `api/product/${ id }`,
                 token: token!,
             });
 
@@ -83,7 +83,7 @@ export const startCreateProduct = (dataForm: FormProduct) => {
     
             const data = await fetchApi({
                 method: "post",
-                path: `api/products`,
+                path: `api/product`,
                 token: token!,
                 body: dataForm
             })

@@ -20,7 +20,7 @@ export const initialFormProduct: FormProduct = {
 
     expiration: {
         batches: [{ 
-            addedAt: new Date().getTime()+"", 
+            addedAt: new Date().toISOString().slice(0,10), 
             expirationDate: new Date().toISOString().slice(0,10), 
             initialQuantity: "0", 
             quantity: 0

@@ -11,7 +11,7 @@ export const updateProductMiddlewares = [
     // VALIDACIONES ID - AÑADIR PRODUCTO EXISTENTE
     check("id")
         .isMongoId().withMessage("Invalid product ID")
-        .custom(uniqueId).withMessage("Product with this ID does not exist"),
+        .not().custom(uniqueId).withMessage("Product with this ID does not exist"),
 
     attachProduct,
 

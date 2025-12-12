@@ -2,11 +2,13 @@ import { useForm } from "react-hook-form"
 import { ButtonTab } from "../category/components/ButtonTab"
 import { InputSearch } from "../category/components/InputSearch"
 import { InputSelect } from "../category/components/InputSelect"
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { ButtonHeadTable } from "../../components/ButtonHeadTable"
 import fakeProducts from "./FakeProducts"
 import { ItemProduct } from "./components/ItemProduct"
 import { ItemAddProduct } from "./components/ItemAddProduct"
+import { useAppDispatch, useAppSelector } from "../../../store/store"
+import { startGetProducts } from "../../../store/productSlice.ts/thunks"
 
 export const ProductScreen = () => {
     const { register } = useForm();
@@ -26,6 +28,12 @@ export const ProductScreen = () => {
             return null;
         })}, []);
 
+        const dispatch = useAppDispatch();
+        const { data, wasCalledOnce } = useAppSelector( state => state.product );
+
+        useEffect( () => {
+            if (!wasCalledOnce) dispatch( startGetProducts() );
+        }, [wasCalledOnce])
 
     return (
         <div className="mt-8 p-2 px-10 font-[Montserrat]">
@@ -68,6 +76,11 @@ export const ProductScreen = () => {
                         isOpen === "create" ? <ItemAddProduct /> : null
                     }
 
+                    {
+                        data.map( product => (
+                            <ItemProduct key={product._id} product={product} />
+                        ))
+                    }
                     {
                         // fakeProducts.map( product => (
                         //     <ItemProduct key={product._id} product={product} height={"auto"} />

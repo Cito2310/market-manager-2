@@ -1,18 +1,20 @@
-import { startCreateProduct } from './../../../../store/productSlice.ts/thunks';
+import { startCreateProduct, startUpdateProductById } from './../../../../store/productSlice.ts/thunks';
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useFieldArray, useForm, useFormState } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { initialFormProduct } from "../utils/initialFormProduct";
 import { productAddValidations } from '../utils/productAddValidations';
+import { Product } from '../../../../types/product/Product';
+import { FormProduct } from '../../../../types/product/FormProduct';
 
-export const useItemAddProduct = () => {
+export const useItemProduct = (product: Product) => {
     const dispatch = useAppDispatch();
     const { status, messageError } = useAppSelector( state => state.product );
     const [lastErrorForm, setLastErrorForm] = useState<any | null>(null)
 
 
     // Form and field array
-    const { register, handleSubmit, formState, watch, control, getValues } = useForm({ defaultValues: initialFormProduct });
+    const { register, handleSubmit, formState, watch, control, getValues } = useForm<FormProduct>({ defaultValues: product });
 
     const { fields, append, remove } = useFieldArray({ control, name: "expiration.batches" });
     const appendExpiration = useCallback(() => { append({
@@ -38,9 +40,9 @@ export const useItemAddProduct = () => {
 
 
     // Function onAddProduct
-    const onAddProduct = handleSubmit( async data => {
+    const onSaveData = handleSubmit( async data => {
             try {
-                await dispatch( startCreateProduct(data) );
+                await dispatch( startUpdateProductById(product._id, data) );
             } catch (error) {}
         }, (error) => { setLastErrorForm(error); }
     );
@@ -99,7 +101,7 @@ export const useItemAddProduct = () => {
     // RETURN VALUES AND FUNCTIONS
     return {
         form: {
-            register, onAddProduct
+            register, onSaveData
         },
         field: {
             fields, appendExpiration, removeExpiration, control
