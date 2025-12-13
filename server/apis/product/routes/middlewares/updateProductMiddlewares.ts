@@ -105,14 +105,14 @@ export const updateProductMiddlewares = [
       .exists().withMessage("lowStockAlert is required when hasStockControl is true")
       .isNumeric().withMessage("lowStockAlert must be number")
       .isLength({ max: 24 }).withMessage("lowStockAlert length can only be less than 24 characters")
-      .custom( compareWithValid("<", "product.stock.mediumStockAlert") ).withMessage("lowStockAlert must be less than mediumStockAlert"),
+      .custom( compareWithValid("<", "stock.mediumStockAlert") ).withMessage("lowStockAlert must be less than mediumStockAlert"),
 
     check("stock.veryLowStockAlert")
       .if((_: any, { req }: any) => Boolean(req.body?.options?.hasStockControl))
       .exists().withMessage("veryLowStockAlert is required when hasStockControl is true")
       .isNumeric().withMessage("veryLowStockAlert must be number")
       .isLength({ max: 24 }).withMessage("veryLowStockAlert length can only be less than 24 characters")
-      .custom( compareWithValid("<", "product.stock.lowStockAlert") ).withMessage("veryLowStockAlert must be less than lowStockAlert"),
+      .custom( compareWithValid("<", "stock.lowStockAlert") ).withMessage("veryLowStockAlert must be less than lowStockAlert"),
 
 
 

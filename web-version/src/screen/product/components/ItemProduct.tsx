@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Product } from "../../../../types/product/Product"
 import { IconButton } from "../../../components/IconButton";
 import { ItemFooter } from "../../category/components/ItemCategory/ItemFooter";
@@ -12,21 +12,15 @@ import { TableExpiration } from "./ItemProduct/TableExpiration";
 
 interface props {
     product: Product;
+    setOpen: Dispatch<SetStateAction<string | null>>;
+    isOpen?: boolean;
 }
 
-export const ItemProduct = ({ product }: props) => {
-    const { data, field, form, option } = useItemProduct(product);
-
-    const [height, setHeight] = useState<number | string>(0)
-    const toggleDetailsMenu = () => {
-        if ( height === 0 ) { setHeight("auto") }
-        if ( height !== 0 ) { setHeight(0) }
-        // if ( height === 0 ) { setHeight("auto") ; setOpen(category._id) }
-        // if ( height !== 0 ) { setHeight(0)      ; setOpen(prev => prev === category._id ? null : prev); reset() }
-    }
+export const ItemProduct = ({ product, setOpen, isOpen }: props) => {
+    const { data, field, form, option, detailsMenu } = useItemProduct({ product, setOpen, isOpen });
 
     return <>
-        <tr className={`${ height ? null : "border-b" } border-slate-400/50 even:bg-slate-50/40 hover:bg-slate-50 transition-colors`}>
+        <tr className={`${ detailsMenu.height ? null : "border-b" } border-slate-400/50 even:bg-slate-50/40 hover:bg-slate-50 transition-colors`}>
                 <td className="px-4 py-4 font-medium text-[#023b3b]">
                     {data.brand} {data.name} 
                     <span className="text-[#537e7e]"> {data.size}{data.sizeType}</span>
@@ -44,20 +38,20 @@ export const ItemProduct = ({ product }: props) => {
                 <td className="px-2 tabular-nums font-semibold text-[#023b3b]">${product.info.price.toLocaleString("es-AR")}</td>
                 
                 
-                { product.stock ? <StockBar currentStock={product.stock.currentStock} lowStock={product.stock.lowStockAlert} /> : null }
+                { product.options.hasStockControl ? <StockBar currentStock={product.stock!.currentStock} lowStock={product.stock!.lowStockAlert} /> : <td className="text-center">-</td> }
                 
                 <td className="px-2">
                     <div className="flex gap-2 justify-end pr-4">
                         <IconButton icon="print" variant="D"  />
-                        <IconButton onClick={toggleDetailsMenu} icon="ellipsis" variant="D"  />
+                        <IconButton onClick={detailsMenu.toggleDetailsMenu} icon="ellipsis" variant="D"  />
                     </div>
                 </td>
         </tr>
 
         <tr className="">
             <td colSpan={10}>
-                <form onSubmit={form.onSaveData} style={{height}} className={`
-                    ${height !== 0 ? "px-6 py-5" : ""}
+                <form onSubmit={form.onSaveData} style={{height: detailsMenu.height}} className={`
+                    ${detailsMenu.height !== 0 ? "px-6 py-5" : ""}
                     bg-white transition-base overflow-hidden flex flex-col shadow-md shadow-[#8f8f8f] rounded-b-md gap-8`}>
 
                         <div className="flex gap-8">

@@ -1,39 +1,13 @@
-import { useForm } from "react-hook-form"
 import { ButtonTab } from "../category/components/ButtonTab"
 import { InputSearch } from "../category/components/InputSearch"
 import { InputSelect } from "../category/components/InputSelect"
-import { useCallback, useEffect, useState } from "react"
 import { ButtonHeadTable } from "../../components/ButtonHeadTable"
-import fakeProducts from "./FakeProducts"
 import { ItemProduct } from "./components/ItemProduct"
 import { ItemAddProduct } from "./components/ItemAddProduct"
-import { useAppDispatch, useAppSelector } from "../../../store/store"
-import { startGetProducts } from "../../../store/productSlice.ts/thunks"
+import { useProductScreen } from "./hooks/useProductScreen"
 
 export const ProductScreen = () => {
-    const { register } = useForm();
-    const [select, setSelect] = useState<{primary: string}>({primary: ""});
-
-    const [isOpen, setOpen] = useState<null | "create" | string>(null);
-
-    const toggleCreating = useCallback(() => { setOpen( m => m === "create" ? null : "create" ) }, []);
-
-    const [sortSelected, setSortSelected] = useState<[string, "asc" | "desc"] | null >(null);
-    const toggleSortSelected = useCallback( ( field: string ) => {
-        setSortSelected( current => {
-            if (current === null) return [field, "asc"];
-            if (current[0] !== field) return [field, "asc"];
-            if (current[1] === "asc") return [field, "desc"];
-            if (current[1] === "desc") return null;
-            return null;
-        })}, []);
-
-        const dispatch = useAppDispatch();
-        const { data, wasCalledOnce } = useAppSelector( state => state.product );
-
-        useEffect( () => {
-            if (!wasCalledOnce) dispatch( startGetProducts() );
-        }, [wasCalledOnce])
+    const { form, open, product, sort } = useProductScreen();
 
     return (
         <div className="mt-8 p-2 px-10 font-[Montserrat]">
@@ -47,12 +21,12 @@ export const ProductScreen = () => {
 
             <div className="flex items-center my-3 justify-between">
                 <div className="flex gap-3">
-                    <InputSearch register={register("search")} placeholder="Buscar" />
-                    <InputSelect name="category" select={select} setSelect={setSelect} label="Categoria" options={["Alimentos", "Bebidas", "Producto de Limpieza"]} />
-                    <InputSelect name="primary" select={select} setSelect={setSelect} label="Seccion" options={["Alimentos", "Bebidas", "Producto de Limpieza"]} />
+                    <InputSearch register={form.register("search")} placeholder="Buscar" />
+                    <InputSelect name="category" select={form.select} setSelect={form.setSelect} label="Categoria" options={["Alimentos", "Bebidas", "Producto de Limpieza"]} />
+                    <InputSelect name="primary" select={form.select} setSelect={form.setSelect} label="Seccion" options={["Alimentos", "Bebidas", "Producto de Limpieza"]} />
                 </div>
 
-                <button onClick={toggleCreating} disabled={isOpen === "create"} className="font-medium text-[#008080] disabled:pointer-events-none disabled:opacity-60 transition-base hover:brightness-90 active:brightness-[.50] cursor-pointer mr-2">
+                <button onClick={open.onToggleCreatingMode} disabled={open.isOpen === "create"} className="font-medium text-[#008080] disabled:pointer-events-none disabled:opacity-60 transition-base hover:brightness-90 active:brightness-[.50] cursor-pointer mr-2">
                     <i className="fa-solid fa-plus text-[0.8em]"/> Añadir Categoria
                 </button>
             </div>
@@ -61,24 +35,24 @@ export const ProductScreen = () => {
             <table className="w-full rounded-lg">
                 <thead>
                     <tr>
-                        <ButtonHeadTable label="Nombre de la Categoria" name="name" sortSelected={sortSelected} toggleSortSelected={toggleSortSelected} start />
-                        <ButtonHeadTable label="Categoría" name="category" sortSelected={sortSelected} toggleSortSelected={toggleSortSelected} />
-                        <ButtonHeadTable label="Sección" name="primary" sortSelected={sortSelected} toggleSortSelected={toggleSortSelected} />
-                        <ButtonHeadTable label="Precio" name="price" sortSelected={sortSelected} toggleSortSelected={toggleSortSelected} />
-                        <ButtonHeadTable label="Stock" name="stock" sortSelected={sortSelected} toggleSortSelected={toggleSortSelected} />
+                        <ButtonHeadTable label="Nombre de la Categoria" name="name" sortSelected={sort.sortSelected} toggleSortSelected={sort.toggleSortSelected} start />
+                        <ButtonHeadTable label="Categoría" name="category" sortSelected={sort.sortSelected} toggleSortSelected={sort.toggleSortSelected} />
+                        {/* <ButtonHeadTable label="Sección" name="primary" sortSelected={sort.sortSelected} toggleSortSelected={sort.toggleSortSelected} /> */}
+                        <ButtonHeadTable label="Precio" name="price" sortSelected={sort.sortSelected} toggleSortSelected={sort.toggleSortSelected} />
+                        <ButtonHeadTable textCenter label="Stock" name="currentAmount" sortSelected={sort.sortSelected} toggleSortSelected={sort.toggleSortSelected} />
 
-                        <ButtonHeadTable label="empty" name="empty" sortSelected={sortSelected} toggleSortSelected={toggleSortSelected} empty end />
+                        <ButtonHeadTable label="empty" name="empty" sortSelected={sort.sortSelected} toggleSortSelected={sort.toggleSortSelected} empty end />
                     </tr>
                 </thead>
 
                 <tbody>
                     {
-                        isOpen === "create" ? <ItemAddProduct /> : null
+                        open.isOpen === "create" ? <ItemAddProduct /> : null
                     }
 
                     {
-                        data.map( product => (
-                            <ItemProduct key={product._id} product={product} />
+                        product.data.map( product => (
+                            <ItemProduct setOpen={open.setOpen} isOpen={open.isOpen === product._id} key={product._id} product={product} />
                         ))
                     }
                     {

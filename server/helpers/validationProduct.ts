@@ -26,7 +26,10 @@ export const compareWithValid = (
     otherPath: string,
 ): CustomValidator => {
     return async ( value: number, { req }: any ) => {
-        const otherValue = req.body[otherPath];
+        function getNestedProperty(obj: any, path: string) {
+            return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+            }
+        const otherValue = getNestedProperty(req.body, otherPath);
 
         if (otherValue === undefined || otherValue === null || otherValue === '') {
             throw new Error();

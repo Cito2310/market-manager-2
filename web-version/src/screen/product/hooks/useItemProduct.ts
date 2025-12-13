@@ -1,20 +1,41 @@
-import { startCreateProduct, startUpdateProductById } from './../../../../store/productSlice.ts/thunks';
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { startUpdateProductById } from './../../../../store/productSlice.ts/thunks';
+import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from "react";
 import { useFieldArray, useForm, useFormState } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
-import { initialFormProduct } from "../utils/initialFormProduct";
 import { productAddValidations } from '../utils/productAddValidations';
 import { Product } from '../../../../types/product/Product';
 import { FormProduct } from '../../../../types/product/FormProduct';
 
-export const useItemProduct = (product: Product) => {
+interface props {
+    product: Product,
+    setOpen: Dispatch<SetStateAction<string | null>>;
+    isOpen?: boolean;
+}
+
+
+export const useItemProduct = ({ product, setOpen, isOpen }: props) => {
     const dispatch = useAppDispatch();
     const { status, messageError } = useAppSelector( state => state.product );
     const [lastErrorForm, setLastErrorForm] = useState<any | null>(null)
 
 
+    // Manage height for details menu
+    const [height, setHeight] = useState<number | string>(0)
+    const toggleDetailsMenu = () => {
+        if ( height === 0 ) { setHeight("auto") ; setOpen(product._id) }
+        if ( height !== 0 ) { setHeight(0)      ; setOpen(prev => prev === product._id ? null : prev); reset() }
+    }
+
+    useEffect(() => {
+    if (typeof isOpen === "boolean") {
+        if (isOpen && height === 0) toggleDetailsMenu();
+        if (!isOpen && height !== 0) toggleDetailsMenu();
+    }
+    }, [isOpen]);
+
+
     // Form and field array
-    const { register, handleSubmit, formState, watch, control, getValues } = useForm<FormProduct>({ defaultValues: product });
+    const { register, handleSubmit, formState, watch, control, reset } = useForm<FormProduct>({ defaultValues: product });
 
     const { fields, append, remove } = useFieldArray({ control, name: "expiration.batches" });
     const appendExpiration = useCallback(() => { append({
@@ -100,6 +121,9 @@ export const useItemProduct = (product: Product) => {
     
     // RETURN VALUES AND FUNCTIONS
     return {
+        detailsMenu: {
+            height, toggleDetailsMenu
+        },
         form: {
             register, onSaveData
         },
