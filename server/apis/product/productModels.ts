@@ -3,40 +3,56 @@ import { model, Schema } from "mongoose";
 
 export const productSchema = new Schema({
     options: {
-        hasExpirationControl: { type: Boolean, default: false },
-        hasStockControl: { type: Boolean, default: false },
-        isActive: { type: Boolean, default: true },
+        type: {
+            hasExpirationControl: { type: Boolean, default: false },
+            hasStockControl: { type: Boolean, default: false },
+            isActive: { type: Boolean, default: true },
+        },
+        required: true
     },
 
+
     extrainfo: {
-        priceHistory: [{ date: { type: Date, required: true }, price: { type: Number, required: true } }],
-        associatedProduct: { type: String, default: null },
+        type: {
+            priceHistory: [{ date: { type: Date, required: true }, price: { type: Number, required: true } }],
+            associatedProduct: { type: String, default: null },
+        },
+        required: true
     },
 
     info: {
-        name: { type: String, required: true },
-        category: { type: String, required: true },
-        subcategory: { type: String, required: true },
-        brand: { type: String, required: true },
-        barcode: { type: String, required: true },
-        size: { type: Number, required: true },
-        sizeType: { type: String, enum: ["kg", "g", "oz", "cm3", "l", "ml", "u", "cc"], required: true },
-        price: { type: Number, required: true },
-        unitType: { type: String, enum: ["unit", "weight"], required: true },
-        imgId: { type: String, default: null },
-        primary: { type: String, required: true },
+        type: {
+            name: { type: String, required: true },
+            category: { type: String, required: true },
+            subcategory: { type: String, required: true },
+            brand: { type: String, required: true },
+            barcode: { type: String, required: true },
+            size: { type: Number, required: true },
+            sizeType: { type: String, enum: ["kg", "g", "oz", "cm3", "l", "ml", "u", "cc"], required: true },
+            price: { type: Number, required: true },
+            unitType: { type: String, enum: ["unit", "weight"], required: true },
+            imgId: { type: String, default: null },
+            primary: { type: String, required: true },
+        },
+        required: true
     },
 
     expiration: {
-        batches: { type: [{ expirationDate: String, quantity: Number, addedAt: Date }], default: [] },
-        alertExpiration: { type: Number },
+        type: {
+            batches: { type: [{ expirationDate: String, quantity: Number, addedAt: Date }], default: [] },
+            alertExpiration: { type: Number },
+        },
+        required: true
     },
 
     stock: {
-        currentStock: { type: Number },
-        mediumStockAlert: { type: Number },
-        lowStockAlert: { type: Number },
-        veryLowStockAlert: { type: Number },
+        type: {
+            currentStock: { type: Number },
+            mediumStockAlert: { type: Number },
+            lowStockAlert: { type: Number },
+            veryLowStockAlert: { type: Number },
+        },
+        required: true
     }
 })
 

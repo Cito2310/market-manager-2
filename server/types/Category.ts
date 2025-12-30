@@ -13,7 +13,7 @@ export interface CreateCategoryRequest extends CategoryType {
     __V?: unknown
 }
 
-export interface UpdateCategoryRequest extends CategoryType {
+export interface UpdateCategoryRequest extends Partial<CategoryType> {
     _id?: unknown
     __V?: unknown
 }

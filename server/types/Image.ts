@@ -11,7 +11,7 @@ export interface CreateImageRequest extends ImageType {
     __V?: unknown
 }
 
-export interface UpdateImageRequest extends ImageType {
+export interface UpdateImageRequest extends Partial<ImageType> {
     _id?: unknown
     __V?: unknown
 }
