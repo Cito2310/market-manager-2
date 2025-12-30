@@ -1,4 +1,4 @@
-import { startCreateProduct } from './../../../../store/productSlice.ts/thunks';
+import { startCreateProduct } from './../../../../store/product/thunks';
 import { useCallback, useMemo, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
@@ -12,7 +12,7 @@ export const useItemAddProduct = () => {
 
 
     // Form and field array
-    const { register, handleSubmit, formState, watch, control, getValues } = useForm({ defaultValues: initialFormProduct });
+    const { register, handleSubmit, formState, watch, control, getValues, setValue } = useForm({ defaultValues: initialFormProduct });
 
     const { fields, append, remove } = useFieldArray({ control, name: "expiration.batches" });
     const appendExpiration = useCallback(() => { append({

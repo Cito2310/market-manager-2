@@ -1,6 +1,6 @@
-const Row = ({ children }: { children: React.ReactNode }) => {
+const Row = ({ children, className }: { children: React.ReactNode, className?: string }) => {
     return (
-        <div className="flex flex-row gap-4 w-full">
+        <div className={`flex flex-row gap-4 w-full ${className}`}>
             {children}
         </div>
     )

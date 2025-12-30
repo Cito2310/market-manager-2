@@ -13,6 +13,7 @@ export interface Product {
         price: number,
         unitType: UnitType,
         imgUrl?: string,
+        primary: string,
     },
 
     options: {

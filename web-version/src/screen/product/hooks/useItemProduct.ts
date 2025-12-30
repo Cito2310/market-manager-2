@@ -1,4 +1,4 @@
-import { startUpdateProductById } from './../../../../store/productSlice.ts/thunks';
+import { startUpdateProductById } from './../../../../store/product/thunks';
 import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from "react";
 import { useFieldArray, useForm, useFormState } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";

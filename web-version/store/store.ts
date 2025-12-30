@@ -4,7 +4,8 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import { authSlice } from './auth';
 import { categorySlice } from './category';
-import { productSlice } from './productSlice.ts/productSlice';
+import { productSlice } from './product';
+// import { productSlice } from './product';
 // import { categorySlice } from './category';
 // import { modalSlice } from './modal';
 // import { productSlice } from './product';

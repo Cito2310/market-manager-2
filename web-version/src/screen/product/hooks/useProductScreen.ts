@@ -2,7 +2,7 @@ import { simplifyDataForSort } from './../../../helpers/simplifyDataForSort';
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
-import { startGetProducts } from "../../../../store/productSlice.ts/thunks";
+import { startGetProducts } from "../../../../store/product/thunks";
 import { joinData } from "../../../helpers/joinData";
 
 export const useProductScreen = () => {
