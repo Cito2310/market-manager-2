@@ -23,6 +23,8 @@ export const updateProductMiddlewares = [
     check("info.category").optional().custom(basicValidationsString("info.category")),
 
     check("info.subcategory").optional().custom(basicValidationsString("info.subcategory")),
+    
+    check("info.primary").optional().custom(basicValidationsString("info.primary")),
 
     check("info.brand").optional().custom(basicValidationsString("info.brand")),
 

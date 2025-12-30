@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { Product } from "../../models/productModels";
+import { Product } from "../../productModels";
 
 export const attachProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {

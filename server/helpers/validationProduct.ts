@@ -1,5 +1,5 @@
 import { CustomValidator } from "express-validator";
-import { Product } from "../apis/product/models/productModels";
+import { Product } from "../apis/product/productModels";
 
 export type Operator = "<" | "<=" | ">" | ">=" | "==" | "!=";
 

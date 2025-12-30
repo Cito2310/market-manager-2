@@ -1,8 +1,7 @@
 import { model, Schema } from "mongoose";
-import { ImageMongo } from "../../../types/image/ImageMongo";
 
 
-const imageSchema = new Schema<ImageMongo>({
+export const imageSchema = new Schema({
     nameImage: { type: String, required: true },
     base64: { type: String, required: true },
     uploadedAt: { type: String, required: true },

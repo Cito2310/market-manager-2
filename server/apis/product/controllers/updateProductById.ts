@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { UpdateProductRequest } from "../../../types/products/ProductRequest";
-import { Product } from "../models/productModels";
+import { Product } from "../productModels";
 import merge from "lodash.merge";
 
 

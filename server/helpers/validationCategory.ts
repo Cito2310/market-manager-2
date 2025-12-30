@@ -1,5 +1,5 @@
 import { CustomValidator } from "express-validator";
-import { Category } from "../apis/category/models/categoryModels";
+import { Category } from "../apis/category/categoryModels";
 
 export type Operator = "<" | "<=" | ">" | ">=" | "==" | "!=";
 

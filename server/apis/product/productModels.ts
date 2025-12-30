@@ -1,12 +1,16 @@
 import { model, Schema } from "mongoose";
-import { ProductMongo } from "../../../types/products/ProductMongo";
 
 
-const productSchema = new Schema<ProductMongo>({
+export const productSchema = new Schema({
     options: {
         hasExpirationControl: { type: Boolean, default: false },
         hasStockControl: { type: Boolean, default: false },
         isActive: { type: Boolean, default: true },
+    },
+
+    extrainfo: {
+        priceHistory: [{ date: { type: Date, required: true }, price: { type: Number, required: true } }],
+        associatedProduct: { type: String, default: null },
     },
 
     info: {
@@ -19,11 +23,12 @@ const productSchema = new Schema<ProductMongo>({
         sizeType: { type: String, enum: ["kg", "g", "oz", "cm3", "l", "ml", "u", "cc"], required: true },
         price: { type: Number, required: true },
         unitType: { type: String, enum: ["unit", "weight"], required: true },
-        imgUrl: { type: String },
+        imgId: { type: String, default: null },
+        primary: { type: String, required: true },
     },
 
     expiration: {
-        batches: { type: [{ expirationDate: String, initialQuantity: String, quantity: Number, addedAt: String }], default: [] },
+        batches: { type: [{ expirationDate: String, quantity: Number, addedAt: Date }], default: [] },
         alertExpiration: { type: Number },
     },
 
