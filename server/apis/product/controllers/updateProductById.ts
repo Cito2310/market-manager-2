@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UpdateProductRequest } from "../../../types/products/ProductRequest";
+import { UpdateProductRequest } from "../../../types/Product";
 import { Product } from "../productModels";
 import merge from "lodash.merge";
 

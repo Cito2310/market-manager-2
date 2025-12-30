@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UpdateCategoryRequest } from "../../../types/categories/CategoryRequest";
+import { UpdateCategoryRequest } from "../../../types/Category";
 import { Category } from "../categoryModels";
 import merge from "lodash.merge";
 

@@ -14,6 +14,8 @@ type ExtraInfoWithoutPriceHistory = Omit<ProductType["extrainfo"], "priceHistory
 export type CreateProductRequest = Omit<ProductType, "info" | "extrainfo"> & {
     info: InfoWithoutPrimary;
     extrainfo: ExtraInfoWithoutPriceHistory;
+    _id?: unknown
+    __V?: unknown
 };
 
 

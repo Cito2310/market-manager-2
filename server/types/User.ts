@@ -15,3 +15,8 @@ export interface UpdateUserRequest extends Partial<UserType> {
     _id?: unknown
     __V?: unknown
 }
+
+export interface LoginUserRequest {
+    username: string;
+    password: string;
+}

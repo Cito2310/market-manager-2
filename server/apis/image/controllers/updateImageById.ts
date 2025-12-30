@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import merge from "lodash.merge";
-import { UpdateImageRequest } from "../../../types/image/ImageRequest";
-import { Image } from "../models/imageModels";
+import { UpdateImageRequest } from "../../../types/Image";
+import { Image } from "../imageModels";
 
 
 export const updateImageById = async( req: Request<{}, {}, UpdateImageRequest>, res: Response ) => {

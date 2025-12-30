@@ -1,7 +1,7 @@
 import bcryptjs from 'bcryptjs';
 
-import { User } from '../apis/user/models/userModels';
 import { CustomValidator } from 'express-validator';
+import { User } from '../apis/user/userModels';
 
 // check username exist
 export const usernameExist: CustomValidator = async ( value: string ) => {

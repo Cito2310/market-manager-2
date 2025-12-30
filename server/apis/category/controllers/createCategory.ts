@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CreateCategoryRequest } from "../../../types/categories/CategoryRequest";
+import { CreateCategoryRequest } from "../../../types/Category";
 import { Category } from "../categoryModels";
 
 export const createCategory = async( req: Request<{}, {}, CreateCategoryRequest>, res: Response ) => {

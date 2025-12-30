@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Image } from "../models/imageModels";
+import { Image } from "../imageModels";
 
 export const deleteImageById = async( req: Request, res: Response ) => {
     try {

@@ -14,7 +14,7 @@ export const deleteProductById = async( req: Request, res: Response ) => {
 
         // soft delete - set isActive to false
         if ( !forceDelete ) {
-            product!.options.isActive = false;
+            product!.options!.isActive = false;
             await product!.save();
         }
 

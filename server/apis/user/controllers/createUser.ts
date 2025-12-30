@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { CreateUserRequest } from "../../../types/users/UserRequest";
 import bcryptjs from "bcryptjs";
-import { User } from "../models/userModels";
+import { CreateUserRequest } from "../../../types/User";
+import { User } from "../userModels";
 import { generatorJWT } from "../../../helpers/generatorJWT";
 
 export const createUser = async (req: Request<{}, {}, CreateUserRequest>, res: Response) => {

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { Image } from "../models/imageModels";
-import { CreateImageRequest } from "../../../types/image/ImageRequest";
+import { CreateImageRequest } from "../../../types/Image";
+import { Image } from "../imageModels";
 
 export const createImage = async( req: Request<{}, {}, CreateImageRequest>, res: Response ) => {
     try {

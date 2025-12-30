@@ -1,5 +1,5 @@
 import { CustomValidator } from "express-validator";
-import { Image } from "../apis/image/models/imageModels";
+import { Image } from "../apis/image/imageModels";
 
 export type Operator = "<" | "<=" | ">" | ">=" | "==" | "!=";
 
