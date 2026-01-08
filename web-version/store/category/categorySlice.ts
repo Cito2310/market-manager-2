@@ -50,10 +50,8 @@ export const categorySlice = createSlice({
         updateCategory: ( state, action: { payload: Category } ) => {
             clearError()
 
-            state.data = state.data.map( category => {
-                if ( category._id === action.payload._id ) return action.payload;
-                return category;
-            })
+            const idxCategory = state.data.findIndex( category => category._id === action.payload._id );
+            if ( idxCategory >= 0 ) state.data[idxCategory] = action.payload;
         },
 
         initLoading: ( state ) => { state.status.isLoading = true },

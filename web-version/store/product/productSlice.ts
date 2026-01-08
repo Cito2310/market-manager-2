@@ -49,10 +49,8 @@ export const productSlice = createSlice({
         updateProduct: ( state, action: { payload: Product } ) => {
             clearError()
 
-            state.data = state.data.map( product => {
-                if ( product._id === action.payload._id ) return action.payload;
-                return product;
-            })
+            const idxProduct = state.data.findIndex( product => product._id === action.payload._id );
+            if ( idxProduct >= 0 ) state.data[idxProduct] = action.payload;
         },
 
         initLoading: ( state ) => { state.status.isLoading = true },

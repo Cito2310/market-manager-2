@@ -15,6 +15,14 @@ export const useItemCategory = ({ category, setOpen, isOpen }: props) => {
     const dispatch = useAppDispatch();
     const { status, messageError } = useAppSelector(state => state.category);
 
+    useEffect(() => {
+        reset({
+            name: category.name,
+            primary: category.primary,
+            subcategories: category.subcategories
+        })
+    }, [category])
+    
 
     // Manage height for details menu
     const [height, setHeight] = useState<number | string>(0)
