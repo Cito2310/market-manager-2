@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 interface props {
     selected?: boolean;
-    exampleImg: "mayo.webp" | "cañuelas.jpg" | "cabalgata.png";
+    exampleImg?: "mayo.webp" | "cañuelas.jpg" | "cabalgata.png";
+    base64?: string;
 }
 
-export const ItemImages = ({ selected, exampleImg }: props) => {
+export const ItemImages = ({ selected, exampleImg, base64 }: props) => {
     const [showChildren, setShowChildren] = useState(false);
 
     const buttonDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -30,7 +31,12 @@ export const ItemImages = ({ selected, exampleImg }: props) => {
 
             {/* BOTON DE SELECCION - PRINCIPAL */}
             <button className={"aspect-square bg-white cursor-pointer hover:brightness-95 active:brightness-90"}>
-                <img className="w-full h-full object-contain" src={`/img/${exampleImg}`}></img>
+                {
+                    base64
+                    ? <img className="w-full h-full object-contain" src={base64}></img>
+                    : <img className="w-full h-full object-contain" src={`/img/${exampleImg}`}></img>
+                }
+                
 
                 <p className={`
                     ${selected ? "bg-[#008080]" : "bg-[#00000080]"} 

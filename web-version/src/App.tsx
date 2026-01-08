@@ -15,7 +15,11 @@ export default function App() {
     return (
         <div>
             <Topbar />
-            <ModalImages />
+            {
+                token && <>
+                    <ModalImages />
+                </>
+            }
 
             {
                 token === null 

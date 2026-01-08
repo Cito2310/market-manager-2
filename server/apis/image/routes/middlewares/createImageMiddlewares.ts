@@ -6,7 +6,7 @@ import { basicValidationsString } from "../../../../helpers/basicValidationsStri
 export const createImageMiddlewares = [
     validateJWT,
 
-    check("name").custom(basicValidationsString("name")),
+    check("nameImage").custom(basicValidationsString("nameImage")),
     check("base64").not().isEmpty().withMessage("base64 is required"),
     check("uploadedAt").custom(basicValidationsString("uploadedAt")),
     

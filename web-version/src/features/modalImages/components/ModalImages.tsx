@@ -6,9 +6,13 @@ import { ItemImagesAdd } from "./ItemImagesAdd"
 import { useRef } from "react"
 import { avifBlobToDataUrl, blobToAvifBlob, compressionImage, downloadTxtFile } from "../../../helpers/imageManager"
 import { InputSearch } from "../../../components/InputSeach"
-
+import { useAppDispatch, useAppSelector } from "../../../../store/store"
+import { startCreateImage } from "../../../../store/image"
 
 export const ModalImages = () => {
+    const { data } = useAppSelector( state => state.image );
+
+    const dispatch = useAppDispatch();
 
     const inputRef = useRef<HTMLInputElement>(null);
     const handleImageUpload = async(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,16 +23,17 @@ export const ModalImages = () => {
             const compressedFile = await compressionImage(imageFile);
             const avifBlob = await blobToAvifBlob(compressedFile);
             const base64 = await avifBlobToDataUrl(avifBlob);
-            downloadTxtFile(base64, imageFile.name + "base64.txt");
-
             
-
+            dispatch(startCreateImage({
+                base64: base64,
+                nameImage: imageFile.name,
+                uploadedAt: new Date().getTime()+"",
+                
+            }))
         } catch (error) { console.log(error) }
     };
 
-    const handleButtonClick = () => {
-        inputRef.current?.click();
-    };
+    const handleButtonClick = () => { inputRef.current?.click() };
 
     return (
         <ModalContainer
@@ -65,6 +70,9 @@ export const ModalImages = () => {
                     </div>
                     <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-4 max-h-[50vh]  overflow-y-auto">
                         <ItemImagesAdd onClick={handleButtonClick} />
+                        {
+                            data.map( image => <ItemImages key={image._id} base64={image.base64}  />)
+                        }
                         <ItemImages exampleImg="cabalgata.png" />
                         <ItemImages exampleImg="mayo.webp" selected/>
                         <ItemImages exampleImg="mayo.webp"/>

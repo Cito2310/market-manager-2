@@ -11,7 +11,7 @@ export const updateImageMiddlewares = [
         .isMongoId().withMessage("Invalid image ID")
         .not().custom( uniqueImageId ).withMessage("Image with this ID does not exist"),
 
-    check("name").optional().custom(basicValidationsString("name")),
+    check("nameImage").optional().custom(basicValidationsString("nameImage")),
     check("base64").optional().not().isEmpty().withMessage("base64 is required"),
     check("uploadedAt").optional().custom(basicValidationsString("uploadedAt")),
     
