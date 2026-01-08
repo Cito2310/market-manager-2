@@ -1,15 +1,14 @@
 import { useForm } from "react-hook-form"
-import { ModalContainer } from "../components/ModalContainer"
-import { InputSearch } from "../screen/category/components/InputSearch"
-import { Layout } from "../screen/product/components/Layout"
+import { ModalContainer } from "../../../components/ModalContainer"
+import { Layout } from "../../../screen/product/components/Layout"
 import { ItemImages } from "./ItemImages"
 import { ItemImagesAdd } from "./ItemImagesAdd"
 import { useRef } from "react"
-import { avifBlobToDataUrl, blobToAvifBlob, compressionImage, downloadTxtFile } from "../helpers/imageManager"
+import { avifBlobToDataUrl, blobToAvifBlob, compressionImage, downloadTxtFile } from "../../../helpers/imageManager"
+import { InputSearch } from "../../../components/InputSeach"
 
 
 export const ModalImages = () => {
-    const { register } = useForm();
 
     const inputRef = useRef<HTMLInputElement>(null);
     const handleImageUpload = async(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,6 +20,8 @@ export const ModalImages = () => {
             const avifBlob = await blobToAvifBlob(compressedFile);
             const base64 = await avifBlobToDataUrl(avifBlob);
             downloadTxtFile(base64, imageFile.name + "base64.txt");
+
+            
 
         } catch (error) { console.log(error) }
     };
@@ -51,7 +52,7 @@ export const ModalImages = () => {
                 {/* BODY */}
                 <div className="flex flex-col gap-4">
                     <div className="flex items-center justify-between gap-2">
-                        <InputSearch placeholder="Buscar Imagen" register={register("search")} autofocus />
+                        <InputSearch placeholder="Buscar Imagen" searchFunction={(value) => { console.log("Searching for:", value) }} />
                         <div className="flex items-center gap-2">
                             <button className="w-9 h-9 flex items-center justify-center rounded-md bg-white border border-[#d5e0e0] shadow-sm hover:bg-[#eafbe7] hover:border-[#008080] active:brightness-95 transition disabled:opacity-50">
                                 <i className="fa-solid fa-chevron-left text-[#008080] text-base"></i>

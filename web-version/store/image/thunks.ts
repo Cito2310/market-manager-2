@@ -1,9 +1,9 @@
 import { AppDispatch, RootState } from "../store";
 import { fetchApi } from "../../src/helpers/fecthApi";
-import { clearError, setError, setProducts, createProduct, deleteProductById, initLoading, stopLoading, updateProduct } from './productSlice';
-import { FormProduct } from '../../types/Product';
+import { clearError, setImages, setError, stopLoading, initLoading, updateImage, deleteImageById, createImage } from "./";
+import { FormImage } from "../../types/Image";
 
-export const startGetProducts = () => {
+export const startGetImages = () => {
     return async( dispatch: AppDispatch, getState: () => RootState ) => {
         dispatch( clearError() );
         const { token } = getState().auth;
@@ -11,13 +11,13 @@ export const startGetProducts = () => {
         try {
             const data = await fetchApi({
                 method: "get",
-                path: "api/product",
+                path: "api/image",
                 token: token!
             });
 
-            dispatch( setProducts({ products: data }) );
+            dispatch( setImages({ images: data }) );
 
-        } catch (error) { dispatch( setError("Hubo un error al obtener los productos") ); throw error; } 
+        } catch (error) { dispatch( setError("Hubo un error al obtener las imágenes") ); throw error; } 
         finally { dispatch( stopLoading() ); }
     };
 };
@@ -25,7 +25,7 @@ export const startGetProducts = () => {
 
 
 
-export const startUpdateProductById = ( id: string, dataForm: FormProduct ) => {
+export const startUpdateImageById = ( id: string, dataForm: FormImage ) => {
     return async( dispatch: AppDispatch, getState: () => RootState ) => {
         dispatch( clearError() );
         dispatch( initLoading() );
@@ -35,13 +35,13 @@ export const startUpdateProductById = ( id: string, dataForm: FormProduct ) => {
         try {
             const data = await fetchApi({
                 method: "put",
-                path: `api/product/${ id }`,
+                path: `api/image/${ id }`,
                 token: token!,
                 body: dataForm,
             })
 
-            dispatch( updateProduct( data ) );
-        } catch (error) { dispatch( setError("Hubo un error al actualizar el producto") ); throw error; }
+            dispatch( updateImage( data ) );
+        } catch (error) { dispatch( setError("Hubo un error al actualizar la imagen") ); throw error; }
 
         finally { dispatch( stopLoading() ); }
     };
@@ -50,7 +50,7 @@ export const startUpdateProductById = ( id: string, dataForm: FormProduct ) => {
 
 
 
-export const startDeleteProductById = ( id:string ) => {
+export const startDeleteImageById = ( id:string ) => {
     return async( dispatch: AppDispatch, getState: () => RootState ) => {
         dispatch( clearError() );
         dispatch( initLoading() );
@@ -59,12 +59,12 @@ export const startDeleteProductById = ( id:string ) => {
         try {
             await fetchApi({
                 method: "delete",
-                path: `api/product/${ id }`,
+                path: `api/image/${ id }`,
                 token: token!,
             });
 
-            dispatch( deleteProductById( id ) );
-        } catch (error) { dispatch( setError("Hubo un error al eliminar el producto") ); throw error; }
+            dispatch( deleteImageById( id ) );
+        } catch (error) { dispatch( setError("Hubo un error al eliminar la imagen") ); throw error; }
 
         finally { dispatch( stopLoading() ); }
     };
@@ -73,7 +73,7 @@ export const startDeleteProductById = ( id:string ) => {
 
 
 
-export const startCreateProduct = (dataForm: FormProduct) => {
+export const startCreateImage = (dataForm: FormImage) => {
     return async( dispatch: AppDispatch, getState: () => RootState ) => {
         dispatch( clearError() );
         dispatch( initLoading() );
@@ -83,14 +83,14 @@ export const startCreateProduct = (dataForm: FormProduct) => {
     
             const data = await fetchApi({
                 method: "post",
-                path: `api/product`,
+                path: `api/image`,
                 token: token!,
                 body: dataForm
             })
 
-            dispatch( createProduct( data ) );
+            dispatch( createImage( data ) );
             // @ts-ignore
-        } catch (error) { dispatch( setError("Hubo un error al crear el producto") ); throw error; }
+        } catch (error) { dispatch( setError("Hubo un error al crear la imagen") ); throw error; }
 
         finally { dispatch( stopLoading() ); }
     };

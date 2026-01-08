@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Category } from "../../../../types/category/Category";
+import { Category } from "../../../../types/Category";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { FormCategory } from "../../../../types/category/FormCategory";

@@ -5,7 +5,7 @@ import { useAppSelector } from "../store/store";
 import { CategoryScreen } from "./screen/category/CategoryScreen";
 import { ProductScreen } from "./screen/product/ProductScreen";
 import { useCategoryScreen } from "./screen/category/hooks/useCategoryScreen";
-import { ModalImages } from "./modalImages/ModalImages";
+import { ModalImages } from "./features/modalImages/components/ModalImages";
 
 export default function App() {
     const { auth } = useAppSelector( state => state );
@@ -15,7 +15,7 @@ export default function App() {
     return (
         <div>
             <Topbar />
-            {/* <ModalImages /> */}
+            <ModalImages />
 
             {
                 token === null 

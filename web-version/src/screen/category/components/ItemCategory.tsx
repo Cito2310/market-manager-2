@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import { useItemCategory } from "../hooks/useItemCategory";
 import { InputNameCategory } from "./ItemCategory/InputNameCategory";
 import { SelectSection } from "./ItemCategory/SelectSection";
-import { Category } from "../../../../types/category/Category";
+import { Category } from "../../../../types/Category";
 import { IconButton } from "../../../components/IconButton";
 import { ContainerSubcategory } from "./ContainerSubcategory";
 import { ItemFooter } from "./ItemCategory/ItemFooter";

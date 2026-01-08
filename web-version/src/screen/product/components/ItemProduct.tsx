@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { Product } from "../../../../types/product/Product"
+import { Product } from "../../../../types/Product"
 import { IconButton } from "../../../components/IconButton";
 import { ItemFooter } from "../../category/components/ItemCategory/ItemFooter";
 import { ContainerData } from "./ContainerData";

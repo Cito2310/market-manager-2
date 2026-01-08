@@ -1,8 +1,8 @@
-import { Product } from '../../types/Product';
 import { createSlice } from '@reduxjs/toolkit';
+import { Image } from "../../types/Image";
 
-interface productState {
-    data: Product[];
+interface imageState {
+    data: Image[];
     messageError: string | null;
     wasCalledOnce: boolean;
     status: {
@@ -11,7 +11,7 @@ interface productState {
     }
 }
 
-const initialState: productState = {
+const initialState: imageState = {
     data: [],
     messageError: null,
     wasCalledOnce: false,
@@ -21,36 +21,35 @@ const initialState: productState = {
     }
 }
 
-
-export const productSlice = createSlice({
-    name: 'product',
+export const imageSlice = createSlice({
+    name: 'image',
     initialState,
     reducers: {
 
-        setProducts: ( state, action: { payload: { products: Product[]} } ) => {
+        setImages: ( state, action: { payload: { images: Image[]} } ) => {
             state.wasCalledOnce = true;
             clearError()
 
-            state.data = action.payload.products
+            state.data = action.payload.images
         },
 
-        createProduct: ( state, action: { payload: Product } ) => {
+        createImage: ( state, action: { payload: Image } ) => {
             clearError()
 
             state.data.push( action.payload );
         },
 
-        deleteProductById: ( state, action: { payload: string } ) => {
+        deleteImageById: ( state, action: { payload: string } ) => {
             clearError()
 
-            state.data = state.data.filter( product => product._id !== action.payload );
+            state.data = state.data.filter( image => image._id !== action.payload );
         },
 
-        updateProduct: ( state, action: { payload: Product } ) => {
+        updateImage: ( state, action: { payload: Image } ) => {
             clearError()
 
-            const idxProduct = state.data.findIndex( product => product._id === action.payload._id );
-            if ( idxProduct >= 0 ) state.data[idxProduct] = action.payload;
+            const idxImage = state.data.findIndex( image => image._id === action.payload._id );
+            if ( idxImage >= 0 ) state.data[idxImage] = action.payload;
         },
 
         initLoading: ( state ) => { state.status.isLoading = true },
@@ -67,15 +66,14 @@ export const productSlice = createSlice({
     }
 });
 
-export const { 
-    createProduct,
-    deleteProductById,
-    updateProduct,
-    setProducts,
+export const {
+    createImage,
+    deleteImageById,
+    updateImage,
+    setImages,
 
     initLoading,
-    setError,
     stopLoading,
-    clearError,
-
-} = productSlice.actions;
+    setError,
+    clearError
+} = imageSlice.actions

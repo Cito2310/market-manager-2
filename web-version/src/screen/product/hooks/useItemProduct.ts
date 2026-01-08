@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } f
 import { useFieldArray, useForm, useFormState } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { productAddValidations } from '../utils/productAddValidations';
-import { Product } from '../../../../types/product/Product';
+import { Product } from '../../../../types/Product';
 import { FormProduct } from '../../../../types/product/FormProduct';
 
 interface props {
