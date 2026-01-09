@@ -1,39 +1,12 @@
-import { useForm } from "react-hook-form"
 import { ModalContainer } from "../../../components/ModalContainer"
 import { Layout } from "../../../screen/product/components/Layout"
 import { ItemImages } from "./ItemImages"
 import { ItemImagesAdd } from "./ItemImagesAdd"
-import { useRef } from "react"
-import { avifBlobToDataUrl, blobToAvifBlob, compressionImage, downloadTxtFile } from "../../../helpers/imageManager"
 import { InputSearch } from "../../../components/InputSeach"
-import { useAppDispatch, useAppSelector } from "../../../../store/store"
-import { startCreateImage } from "../../../../store/image"
+import { useModalImages } from "../hooks/useModalImages"
 
 export const ModalImages = () => {
-    const { data } = useAppSelector( state => state.image );
-
-    const dispatch = useAppDispatch();
-
-    const inputRef = useRef<HTMLInputElement>(null);
-    const handleImageUpload = async(e: React.ChangeEvent<HTMLInputElement>) => {
-        const imageFile = e.target.files?.[0];
-        if (!imageFile) return;
-
-        try {
-            const compressedFile = await compressionImage(imageFile);
-            const avifBlob = await blobToAvifBlob(compressedFile);
-            const base64 = await avifBlobToDataUrl(avifBlob);
-            
-            dispatch(startCreateImage({
-                base64: base64,
-                nameImage: imageFile.name,
-                uploadedAt: new Date().getTime()+"",
-                
-            }))
-        } catch (error) { console.log(error) }
-    };
-
-    const handleButtonClick = () => { inputRef.current?.click() };
+    const { functions, image } = useModalImages();
 
     return (
         <ModalContainer
@@ -41,16 +14,16 @@ export const ModalImages = () => {
             closeModal={()=>{}}
             footerButtons={[
                 { label: "Cancelar", onClick:()=>{}, variant: "secondary" },
-                { label: "Seleccionar", onClick:()=>{}, variant: "primary" },
+                { label: "Seleccionar", onClick:()=>{}, variant: "primary", disabled: image.selectedImage === "" },
             ]}
         >
             <Layout.Column className="w-full">
                 {/* HIDDEN INPUT FILE FOR BUTTON ADD */}
                 <input
-                    ref={inputRef}
+                    ref={functions.inputRef}
                     type="file"
                     className="hidden"
-                    onChange={handleImageUpload}
+                    onChange={functions.handleImageUpload}
                     accept="image/*"
                 />
 
@@ -68,26 +41,18 @@ export const ModalImages = () => {
                             </button>
                         </div>
                     </div>
-                    <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-4 max-h-[50vh]  overflow-y-auto">
-                        <ItemImagesAdd onClick={handleButtonClick} />
+                    <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-4 max-h-[50vh] overflow-y-auto">
+                        <ItemImagesAdd onClick={functions.handleButtonClick} />
+
                         {
-                            data.map( image => <ItemImages key={image._id} base64={image.base64}  />)
+                            image.data.map( img => <ItemImages 
+                                key={img._id} 
+                                image={img} 
+                                handleImageDelete={functions.handleImageDelete} 
+                                handleSelectImage={functions.handleSelectImage}
+                                selected={img._id === image.selectedImage }
+                            />)
                         }
-                        <ItemImages exampleImg="cabalgata.png" />
-                        <ItemImages exampleImg="mayo.webp" selected/>
-                        <ItemImages exampleImg="mayo.webp"/>
-                        <ItemImages exampleImg="cabalgata.png" />
-                        <ItemImages exampleImg="cañuelas.jpg" />
-                        <ItemImages exampleImg="cabalgata.png" />
-                        <ItemImages exampleImg="mayo.webp"/>
-                        <ItemImages exampleImg="cañuelas.jpg" />
-                        <ItemImages exampleImg="cañuelas.jpg" />
-                        <ItemImages exampleImg="cañuelas.jpg" />
-                        <ItemImages exampleImg="cañuelas.jpg" />
-                        <ItemImages exampleImg="cabalgata.png" />
-                        <ItemImages exampleImg="cañuelas.jpg" />
-                        <ItemImages exampleImg="cañuelas.jpg" />
-                        <ItemImages exampleImg="cabalgata.png" />
                     </div>
                 </div>
             </Layout.Column>

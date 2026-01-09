@@ -36,7 +36,7 @@ export const imageSlice = createSlice({
         createImage: ( state, action: { payload: Image } ) => {
             clearError()
 
-            state.data.push( action.payload );
+            state.data.unshift( action.payload );
         },
 
         deleteImageById: ( state, action: { payload: string } ) => {

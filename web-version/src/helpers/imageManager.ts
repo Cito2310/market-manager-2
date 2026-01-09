@@ -74,3 +74,13 @@ export const compressionImage = async (imageFile: any) => {
 
     return await imageCompression(imageFile, options);
 };
+
+
+// -- FUNCION DE ARCHIVO A BASE64 --
+export const fileToBase64 = async (imageFile: File): Promise<string> => {
+  const compressedFile = await compressionImage(imageFile);
+  const avifBlob = await blobToAvifBlob(compressedFile);
+  const base64 = await avifBlobToDataUrl(avifBlob);
+
+  return base64;
+}

@@ -12,6 +12,7 @@ interface props {
         variant: "primary" | "secondary" | "danger";
         onClick: () => void;
         className?: string;
+        disabled?: boolean;
     }[]
 }
 
@@ -57,6 +58,7 @@ export const ModalContainer = ({ children, closeModal, title, header = true, foo
                                 variant={button.variant}
                                 onClick={button.onClick}
                                 className={button.className}
+                                disabled={button.disabled}
                             />
                         ))
                     }
