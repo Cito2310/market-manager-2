@@ -6,6 +6,7 @@ import { authSlice } from './auth';
 import { categorySlice } from './category';
 import { productSlice } from './product';
 import { imageSlice } from './image';
+import { modalSlice } from './modal/modalSlice';
 // import { productSlice } from './product';
 // import { categorySlice } from './category';
 // import { modalSlice } from './modal';
@@ -20,6 +21,7 @@ export const store = configureStore({
         auth: authSlice.reducer,
         product: productSlice.reducer,
         image: imageSlice.reducer,
+        modal: modalSlice.reducer,
         // modal: modalSlice.reducer,
         // product: productSlice.reducer,
         // cashRegister: cashRegisterSlice.reducer,

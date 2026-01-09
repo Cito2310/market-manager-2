@@ -10,13 +10,16 @@ interface props {
     footerButtons?: {
         label: string;
         variant: "primary" | "secondary" | "danger";
-        onClick: () => void;
+        onClick?: () => void;
         className?: string;
         disabled?: boolean;
+        isSubmit?: boolean;
     }[]
+    zIndex?: number;
+    width?: number;
 }
 
-export const ModalContainer = ({ children, closeModal, title, header = true, footerButtons }: props) => {
+export const ModalContainer = ({ children, closeModal, title, header = true, footerButtons, zIndex = 120, width = 1000 }: props) => {
     useEffect(() => {
         document.body.style.overflow = 'hidden'
         return () => { document.body.style.overflow = 'auto' }
@@ -24,12 +27,13 @@ export const ModalContainer = ({ children, closeModal, title, header = true, foo
     
 
     return <>
-        <div className="fixed top-0 left-0 w-screen h-screen bg-[#00000041] z-100" />
+        <div style={{zIndex: zIndex-1 }} className="fixed top-0 left-0 w-screen h-screen bg-[#00000041]" />
 
         <div
+            style={{ zIndex: zIndex, width: width }}
             className={`
-                fixed translate-x-[-50%] top-[4%] left-[50%] z-120
-                bg-white font-[Montserrat] py-6 px-10 pb-8 w-[1000px] rounded-md
+                fixed translate-x-[-50%] top-[4%] left-[50%]
+                bg-white font-[Montserrat] py-6 px-10 pb-8 rounded-md
                 flex flex-col gap-4
                 max-h-[90vh] overflow-hidden
                 shadow-2xl
@@ -59,6 +63,7 @@ export const ModalContainer = ({ children, closeModal, title, header = true, foo
                                 onClick={button.onClick}
                                 className={button.className}
                                 disabled={button.disabled}
+                                type={button.isSubmit ? "submit" : "button"}
                             />
                         ))
                     }

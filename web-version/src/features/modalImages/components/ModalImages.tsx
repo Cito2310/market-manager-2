@@ -23,7 +23,7 @@ export const ModalImages = () => {
                     ref={functions.inputRef}
                     type="file"
                     className="hidden"
-                    onChange={functions.handleImageUpload}
+                    onChange={functions.handleSelectFileImage}
                     accept="image/*"
                 />
 

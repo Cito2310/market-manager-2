@@ -6,9 +6,10 @@ import { CategoryScreen } from "./screen/category/CategoryScreen";
 import { ProductScreen } from "./screen/product/ProductScreen";
 import { useCategoryScreen } from "./screen/category/hooks/useCategoryScreen";
 import { ModalImages } from "./features/modalImages/components/ModalImages";
+import { ModalAddImage } from "./features/modalImages/components/ModalAddImage";
 
 export default function App() {
-    const { auth } = useAppSelector( state => state );
+    const { auth, modal } = useAppSelector( state => state );
     const { token } = auth;
     useCategoryScreen();
 
@@ -17,7 +18,8 @@ export default function App() {
             <Topbar />
             {
                 token && <>
-                    <ModalImages />
+                    { modal.currentModal === "addImage" && <ModalAddImage /> }
+                    { ( modal.currentModal === "viewImages" || modal.currentModal === "addImage" ) && <ModalImages />}
                 </>
             }
 
