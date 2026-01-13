@@ -4,9 +4,10 @@ interface props {
     register: UseFormRegisterReturn;
     placeholder: string;
     autofocus?: boolean;
+    id: string;
 }
 
-export const InputModal = ({ register, placeholder, autofocus }: props) => {
+export const InputModal = ({ register, placeholder, autofocus, id }: props) => {
     return (
         <input 
             className={`
@@ -17,6 +18,7 @@ export const InputModal = ({ register, placeholder, autofocus }: props) => {
             {...register} 
             placeholder={placeholder}
             autoFocus={autofocus}
+            id={id}
         />
     )
 }

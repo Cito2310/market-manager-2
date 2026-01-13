@@ -1,36 +1,49 @@
 import { useEffect } from "react"
 import { ItemFooterButton } from "../screen/category/components/ItemCategory/ItemFooterButton";
 import { Layout } from "../screen/product/components/Layout";
+import { ErrorContainer } from "./ErrorContainer";
 
-interface props {
-    children: React.ReactNode
-    closeModal: () => void
-    title?: string;
-    header?: boolean;
-    footerButtons?: {
-        label: string;
-        variant: "primary" | "secondary" | "danger";
-        onClick?: () => void;
-        className?: string;
-        disabled?: boolean;
-        isSubmit?: boolean;
-    }[]
-    zIndex?: number;
-    width?: number;
+interface HeaderModal {
+    title: string;
+    hiddenClose?: boolean;
 }
 
-export const ModalContainer = ({ children, closeModal, title, header = true, footerButtons, zIndex = 120, width = 1000 }: props) => {
+interface FooterModalButton {
+    label: string;
+    variant: "primary" | "secondary" | "danger";
+    onClick?: () => void;
+    className?: string;
+    disabled?: boolean;
+    isSubmit?: boolean;
+}
+
+interface ConfigModal {
+    zIndex?: number;
+    width?: number;
+    closeModal: () => void;
+    hasLoading?: boolean;
+    errorMessage?: string | null;
+}
+
+interface props {
+    header: HeaderModal;
+    footerButtons: FooterModalButton[];
+    config: ConfigModal;
+
+    children: React.ReactNode
+}
+
+export const ModalContainer = ({ children, config, footerButtons, header  }: props) => {
     useEffect(() => {
         document.body.style.overflow = 'hidden'
         return () => { document.body.style.overflow = 'auto' }
     }, [])
     
-
     return <>
-        <div style={{zIndex: zIndex-1 }} className="fixed top-0 left-0 w-screen h-screen bg-[#00000041]" />
+        <div style={{zIndex: ( config?.zIndex ?? 120 ) - 1 }} className="fixed top-0 left-0 w-screen h-screen bg-[#00000041]" />
 
         <div
-            style={{ zIndex: zIndex, width: width }}
+            style={{ zIndex: ( config?.zIndex ?? 120 ), width: ( config?.width ?? 1000 ) }}
             className={`
                 fixed translate-x-[-50%] top-[4%] left-[50%]
                 bg-white font-[Montserrat] py-6 px-10 pb-8 rounded-md
@@ -43,8 +56,8 @@ export const ModalContainer = ({ children, closeModal, title, header = true, foo
             {/* HEADER */}
             { 
                 header && <div className="flex justify-between items-center">
-                    <h2 className="font-medium text-xl">{title}</h2>
-                    <button className="text-[#686868]"><i className="fa-solid fa-xmark text-xl"/></button>
+                    <h2 className="font-medium text-xl">{header.title}</h2>
+                    <button onClick={config.closeModal} type="button" className="text-[#686868] transition-base hover:brightness-110 hover:scale-110 cursor-pointer active:brightness-150 text-xl"><i className="fa-solid fa-xmark "/></button>
                 </div>
             }
 
@@ -53,21 +66,27 @@ export const ModalContainer = ({ children, closeModal, title, header = true, foo
 
             {/* FOOTER */}
             {
-                footerButtons && <Layout.Row className="justify-end">
-                    {
-                        footerButtons.map((button, index) => (
-                            <ItemFooterButton
-                                key={index}
-                                label={button.label}
-                                variant={button.variant}
-                                onClick={button.onClick}
-                                className={button.className}
-                                disabled={button.disabled}
-                                type={button.isSubmit ? "submit" : "button"}
-                            />
-                        ))
-                    }
-                </Layout.Row>
+                footerButtons && 
+                <div>
+                    { config.errorMessage && <ErrorContainer messageError={config.errorMessage} /> }
+                    <Layout.Row className="justify-end">
+                        {
+                            footerButtons.map((button, index) => (
+                                <ItemFooterButton
+                                    key={index}
+                                    label={button.label}
+                                    variant={button.variant}
+                                    onClick={button.onClick}
+                                    className={button.className}
+                                    disabled={button.disabled}
+                                    type={button.isSubmit ? "submit" : "button"}
+                                    loading={config.hasLoading}
+                                />
+                            ))
+                        }
+                    </Layout.Row>
+                </div>
+
             }
         </div>
     </>

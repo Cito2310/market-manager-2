@@ -31,7 +31,7 @@ export const productSlice = createSlice({
             state.wasCalledOnce = true;
             clearError()
 
-            state.data = action.payload.products
+            state.data = action.payload.products.filter( product => product.options.isActive );
         },
 
         createProduct: ( state, action: { payload: Product } ) => {

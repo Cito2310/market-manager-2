@@ -3,13 +3,14 @@ import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { startCreateImage, startDeleteImageById, startGetImages } from "../../../../store/image";
 import { avifBlobToDataUrl, blobToAvifBlob, compressionImage } from "../../../helpers/imageManager";
 import { setAddImageData } from "../../../../store/modal/modalSlice";
+import { usePaginate } from "../../../hooks/usePaginate";
 
 export const useModalImages = () => {
     // Manage load images and show data
     const { data } = useAppSelector( state => state.image );
-    const { currentModal } = useAppSelector( state => state.modal );
     const dispatch = useAppDispatch();
     const [selectedImage, setSelectedImage] = useState("")
+    const { nextPage, prevPage, paginatedData, page, totalPages, isPrevDisabled, isNextDisabled } = usePaginate(data, 14);
 
     useEffect(() => {
         dispatch( startGetImages() )
@@ -31,7 +32,7 @@ export const useModalImages = () => {
             const compressedFile = await compressionImage(imageFile);
             const avifBlob = await blobToAvifBlob(compressedFile);
             const base64 = await avifBlobToDataUrl(avifBlob);
-            console.log( imageFile.name )
+            
             dispatch( setAddImageData({ base64: base64, nameImage: imageFile.name }) );
         } catch (error) { console.log(error) }
     };
@@ -42,8 +43,16 @@ export const useModalImages = () => {
 
     // RETURN VALUES AND FUNCTIONS
     return {
-        image: {
-            data,
+        pagination: {
+            nextPage,
+            prevPage,
+            page,
+            totalPages,
+            isPrevDisabled,
+            isNextDisabled,
+        },
+        data: {
+            images: paginatedData,
             selectedImage,
         },
         functions: {

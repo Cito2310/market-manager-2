@@ -30,7 +30,7 @@ export const imageSlice = createSlice({
             state.wasCalledOnce = true;
             clearError()
 
-            state.data = action.payload.images
+            state.data = action.payload.images.filter( image => image.isActive );
         },
 
         createImage: ( state, action: { payload: Image } ) => {
