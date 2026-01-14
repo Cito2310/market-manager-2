@@ -1,9 +1,12 @@
 import { model, Schema } from "mongoose";
 
 export const categorySchema = new Schema({
-    name: { type: String, required: true },
-    primary: { type: String, required: true },
-    subcategories: [{ name: String, brands: [String] }, { default: [] }],
+    name: { type: String, required: true, lowercase: true },
+    primary: { type: String, required: true, lowercase: true },
+    subcategories: [{ 
+        name: { type: String, required: true, lowercase: true }, 
+        brands: [{ type: String, lowercase: true }]
+    }, { default: [] }],
     isActive: { type: Boolean, default: true }
 });
 
