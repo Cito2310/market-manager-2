@@ -37,7 +37,7 @@ export const ProductScreen = () => {
                     <tr>
                         <ButtonHeadTable label="Nombre de la Categoria" name="name" sortSelected={sort.sortSelected} toggleSortSelected={sort.toggleSortSelected} start />
                         <ButtonHeadTable label="Categoría" name="category" sortSelected={sort.sortSelected} toggleSortSelected={sort.toggleSortSelected} />
-                        {/* <ButtonHeadTable label="Sección" name="primary" sortSelected={sort.sortSelected} toggleSortSelected={sort.toggleSortSelected} /> */}
+                        <ButtonHeadTable label="Sección" name="primary" sortSelected={sort.sortSelected} toggleSortSelected={sort.toggleSortSelected} />
                         <ButtonHeadTable label="Precio" name="price" sortSelected={sort.sortSelected} toggleSortSelected={sort.toggleSortSelected} />
                         <ButtonHeadTable textCenter label="Stock" name="currentAmount" sortSelected={sort.sortSelected} toggleSortSelected={sort.toggleSortSelected} />
 
@@ -54,11 +54,6 @@ export const ProductScreen = () => {
                         product.data.map( product => (
                             <ItemProduct setOpen={open.setOpen} isOpen={open.isOpen === product._id} key={product._id} product={product} />
                         ))
-                    }
-                    {
-                        // fakeProducts.map( product => (
-                        //     <ItemProduct key={product._id} product={product} height={"auto"} />
-                        // ))
                     }
                 </tbody>
             </table>

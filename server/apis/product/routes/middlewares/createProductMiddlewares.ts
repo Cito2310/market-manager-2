@@ -18,8 +18,6 @@ export const createProductMiddlewares = [
 
     check("info.subcategory").custom(basicValidationsString("info.subcategory")),
 
-    check("info.primary").custom(basicValidationsString("info.primary")),
-
     check("info.brand").custom(basicValidationsString("info.brand")),
 
     check("info.size").isNumeric().withMessage("size is required"),

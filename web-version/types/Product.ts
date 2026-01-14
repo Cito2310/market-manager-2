@@ -10,7 +10,7 @@ export interface Product {
         sizeType: SizeType,
         price: number,
         unitType: UnitType,
-        imgUrl?: string,
+        imgUrl: string | null,
         primary: string,
     },
 
@@ -20,7 +20,7 @@ export interface Product {
         isActive: boolean,
     },
 
-    expiration?: {
+    expiration: {
         batches: { 
             expirationDate: string, 
             initialQuantity: string, 
@@ -30,11 +30,16 @@ export interface Product {
         alertExpiration?: number,
     }
 
-    stock?: {
+    stock: {
         currentStock: number,
         mediumStockAlert: number,
         lowStockAlert: number,
         veryLowStockAlert: number,
+    }
+
+    extrainfo: {
+        priceHistory: { date: string, price: number }[],
+        associatedProduct: string | null,
     }
 }
 
@@ -64,20 +69,25 @@ export interface FormProduct {
         hasStockControl: boolean,
     },
 
-    expiration?: {
+    expiration: {
         batches: { 
             expirationDate: string, 
             initialQuantity: string, 
             quantity: number,
             addedAt: string
         }[],
-        alertExpiration?: number,
+        alertExpiration: number,
     }
 
-    stock?: {
+    stock: {
         currentStock: number,
         mediumStockAlert: number,
         lowStockAlert: number,
         veryLowStockAlert: number,
     }
+
+    extrainfo: {
+        associatedProduct: string | null,
+    }
+
 }

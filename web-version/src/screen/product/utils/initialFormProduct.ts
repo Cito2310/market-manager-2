@@ -1,4 +1,4 @@
-import { FormProduct } from "../../../../types/product/FormProduct";
+import { FormProduct } from "../../../../types/Product";
 
 export const initialFormProduct: FormProduct = {
     info: {
@@ -34,4 +34,9 @@ export const initialFormProduct: FormProduct = {
         lowStockAlert: 0,
         veryLowStockAlert: 0,
     },
+
+    extrainfo: {
+        associatedProduct: null,
+    }
+
 }

@@ -24,8 +24,6 @@ export const updateProductMiddlewares = [
 
     check("info.subcategory").optional().custom(basicValidationsString("info.subcategory")),
     
-    check("info.primary").optional().custom(basicValidationsString("info.primary")),
-
     check("info.brand").optional().custom(basicValidationsString("info.brand")),
 
     check("info.size").optional().isNumeric().withMessage("size is required"),

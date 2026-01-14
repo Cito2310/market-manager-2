@@ -15,6 +15,7 @@ export const createProduct = async( req: Request<{}, {}, CreateProductRequest>, 
         newProduct.info.primary = category ? category.primary : "NOT EXIST";
 
         // Add historical price
+        console.log(newProduct);
         newProduct.extrainfo.priceHistory = [{ date: new Date(), price: newProduct.info.price }];
 
         await newProduct.save();

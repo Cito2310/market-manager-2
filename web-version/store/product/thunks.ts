@@ -17,7 +17,7 @@ export const startGetProducts = () => {
 
             dispatch( setProducts({ products: data }) );
 
-        } catch (error) { dispatch( setError("Hubo un error al obtener los productos") ); throw error; } 
+        } catch (error) { console.log(error); dispatch( setError("Hubo un error al obtener los productos") ); throw error; } 
         finally { dispatch( stopLoading() ); }
     };
 };
@@ -41,7 +41,7 @@ export const startUpdateProductById = ( id: string, dataForm: FormProduct ) => {
             })
 
             dispatch( updateProduct( data ) );
-        } catch (error) { dispatch( setError("Hubo un error al actualizar el producto") ); throw error; }
+        } catch (error) { console.log(error); dispatch( setError("Hubo un error al actualizar el producto") ); throw error; }
 
         finally { dispatch( stopLoading() ); }
     };
@@ -64,7 +64,7 @@ export const startDeleteProductById = ( id:string ) => {
             });
 
             dispatch( deleteProductById( id ) );
-        } catch (error) { dispatch( setError("Hubo un error al eliminar el producto") ); throw error; }
+        } catch (error) { console.log(error); dispatch( setError("Hubo un error al eliminar el producto") ); throw error; }
 
         finally { dispatch( stopLoading() ); }
     };
@@ -90,7 +90,7 @@ export const startCreateProduct = (dataForm: FormProduct) => {
 
             dispatch( createProduct( data ) );
             // @ts-ignore
-        } catch (error) { dispatch( setError("Hubo un error al crear el producto") ); throw error; }
+        } catch (error) { console.log(error); dispatch( setError("Hubo un error al crear el producto") ); throw error; }
 
         finally { dispatch( stopLoading() ); }
     };

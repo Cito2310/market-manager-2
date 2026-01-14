@@ -32,7 +32,7 @@ export const ItemProduct = ({ product, setOpen, isOpen }: props) => {
                     </span>
                 </td>
 
-                {/* <td className="px-2 text-[#537e7e] capitalize">{product.info.primary}</td> */}
+                <td className="px-2 text-[#537e7e] capitalize">{product.info.primary}</td>
                 {/* <td className="px-2 text-[#537e7e] capitalize">{product.info.location}</td> */}
                 
                 <td className="px-2 tabular-nums font-semibold text-[#023b3b]">${product.info.price.toLocaleString("es-AR")}</td>

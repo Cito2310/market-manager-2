@@ -9,7 +9,7 @@ interface modalState {
 }
 
 const initialState: modalState = {
-    currentModal: "viewImages",
+    currentModal: "none",
 }
 
 export const modalSlice = createSlice({
