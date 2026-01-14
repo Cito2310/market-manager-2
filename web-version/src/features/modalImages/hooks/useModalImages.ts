@@ -1,11 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
-import { startCreateImage, startDeleteImageById, startGetImages } from "../../../../store/image";
+import { startDeleteImageById } from "../../../../store/image";
 import { avifBlobToDataUrl, blobToAvifBlob, compressionImage } from "../../../helpers/imageManager";
 import { setAddImageData, setCurrentModal } from "../../../../store/modal/modalSlice";
 import { usePaginate } from "../../../hooks/usePaginate";
 import { useSearch } from "../../../hooks/useSearch";
-import { joinData } from "../../../helpers/joinData";
 import { joinArrayData } from "../../../helpers/joinArrayData";
 
 export const useModalImages = () => {
@@ -13,11 +12,6 @@ export const useModalImages = () => {
     const { data } = useAppSelector( state => state.image );
     const dispatch = useAppDispatch();
     const [selectedImage, setSelectedImage] = useState("")
-
-    useEffect(() => {
-        dispatch( startGetImages() )
-    }, [])
-    
 
     // Search input
     const { filterSearch, onSearchSubmit, registerSearch } = useSearch();

@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
-import { startGetCategories } from "../../../../store/category";
 import { useForm } from "react-hook-form";
 import { joinData } from "../../../helpers/joinData";
 
@@ -53,10 +52,6 @@ export const useCategoryScreen = () => {
         })
     , [data, search, select, sortSelected]);
 
-
-    useEffect( () => {
-        if (!wasCalledOnce) dispatch( startGetCategories() );
-    }, [wasCalledOnce])
 
 
     // RETURN VALUES AND FUNCTIONS

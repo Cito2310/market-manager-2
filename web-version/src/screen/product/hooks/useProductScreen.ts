@@ -2,7 +2,6 @@ import { simplifyDataForSort } from './../../../helpers/simplifyDataForSort';
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
-import { startGetProducts } from "../../../../store/product/thunks";
 import { joinData } from "../../../helpers/joinData";
 
 export const useProductScreen = () => {
@@ -57,11 +56,6 @@ export const useProductScreen = () => {
             return 0;
         })
     , [data, search, select, sortSelected]);
-
-
-    useEffect( () => {
-        if (!wasCalledOnce) dispatch( startGetProducts() );
-    }, [wasCalledOnce])
 
 
     // RETURN VALUES AND FUNCTIONS

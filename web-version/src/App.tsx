@@ -7,11 +7,13 @@ import { ProductScreen } from "./screen/product/ProductScreen";
 import { useCategoryScreen } from "./screen/category/hooks/useCategoryScreen";
 import { ModalImages } from "./features/modalImages/components/ModalImages";
 import { ModalAddImage } from "./features/modalImages/components/ModalAddImage";
+import { useInitApp } from "./hooks/useInitApp";
 
 export default function App() {
     const { auth, modal } = useAppSelector( state => state );
     const { token } = auth;
-    useCategoryScreen();
+    
+    useInitApp();
 
     return (
         <div>
