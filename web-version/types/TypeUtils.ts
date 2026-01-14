@@ -1,0 +1,1 @@
+export type TypeJoinData = "category" | "product" | "image";

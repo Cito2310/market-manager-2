@@ -17,7 +17,7 @@ export const ItemImages = ({ selected, image, handleImageDelete, handleSelectIma
             className={`relative aspect-square overflow-hidden shadow-md rounded-md ${selected ? "border-2 border-[#008080]" : ""}`}
         >
             {/* BOTONES DE ADMINISTRACION */}
-            <div className={`${showChildren ? "opacity-100" : "opacity-0"} z-100 absolute right-0 flex flex-col h-[25%] w-10 transition-base`}>
+            <div className={`${showChildren && selected === false ? "opacity-100" : "opacity-0"} z-100 absolute right-0 flex flex-col h-[25%] w-10 transition-base`}>
                 <button
                     disabled={selected}
                     onClick={() => handleImageDelete(image._id)}

@@ -1,4 +1,4 @@
-export const joinData = (type: "category" | "product", data: any): string => {
+export const joinData = (type: "category" | "product" | "image", data: any): string => {
     let result = "";
    
     if (type === "category") {
@@ -7,6 +7,10 @@ export const joinData = (type: "category" | "product", data: any): string => {
 
     if (type === "product") {
         result = `${data.name} ${data._id} ${data.category} ${data.price} ${data.description}`;
+    }
+
+    if (type === "image") {
+        result = `${data.nameImage} ${data._id}`;
     }
 
     return result.toLowerCase().trim();

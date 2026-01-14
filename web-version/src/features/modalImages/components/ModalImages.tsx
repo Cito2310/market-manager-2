@@ -7,7 +7,7 @@ import { useModalImages } from "../hooks/useModalImages"
 import { Pagination } from "../../../components/Pagination"
 
 export const ModalImages = () => {
-    const { functions, data, pagination } = useModalImages();
+    const { functions, data, pagination, search } = useModalImages();
 
     return (
         <ModalContainer
@@ -15,10 +15,10 @@ export const ModalImages = () => {
                 title: "Galería de Imágenes"
             }}
             config={{
-                closeModal: () => {}
+                closeModal: functions.onCloseModal
             }}
             footerButtons={[
-                { label: "Cancelar", onClick:()=>{}, variant: "secondary" },
+                { label: "Cancelar", onClick: functions.onCloseModal, variant: "secondary" },
                 { label: "Seleccionar", onClick:()=>{}, variant: "primary", disabled: data.selectedImage === "" },
             ]}
         >
@@ -35,7 +35,7 @@ export const ModalImages = () => {
                 {/* BODY */}
                 <div className="flex flex-col gap-4">
                     <div className="flex items- justify-between gap-2">
-                        <InputSearch placeholder="Buscar Imagen" searchFunction={(value) => { console.log("Searching for:", value) }} />
+                        <InputSearch placeholder="Buscar Imagen" register={search.registerSearch("search")} onSearch={search.onSearchSubmit} />
                         <Pagination pagination={pagination} />
                     </div>
                     <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-4 max-h-[50vh] overflow-y-auto">
