@@ -22,7 +22,7 @@ export const productSchema = new Schema({
 
     info: {
         type: {
-            name: { type: String, required: true },
+            name: { type: String, required: true, lowercase: true },
             category: { type: String, required: true, lowercase: true },
             subcategory: { type: String, required: true, lowercase: true },
             brand: { type: String, required: true, lowercase: true },
