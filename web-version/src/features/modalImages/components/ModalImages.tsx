@@ -1,9 +1,9 @@
-import { ModalContainer } from "../../../components/ModalContainer"
-import { Layout } from "../../../screen/product/components/Layout"
+import { useModalImages } from "../hooks/useModalImages"
 import { ItemImages } from "./ItemImages"
 import { ItemImagesAdd } from "./ItemImagesAdd"
+import { Layout } from "../../../screen/product/components/Layout"
+import { ModalContainer } from "../../../components/ModalContainer"
 import { InputSearch } from "../../../components/InputSeach"
-import { useModalImages } from "../hooks/useModalImages"
 import { Pagination } from "../../../components/Pagination"
 
 export const ModalImages = () => {

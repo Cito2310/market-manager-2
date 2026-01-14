@@ -1,7 +1,7 @@
+import { useModalAddImages } from "../hooks/useModalAddImages"
 import { ModalContainer } from "../../../components/ModalContainer"
 import { Layout } from "../../../screen/product/components/Layout"
 import { InputModal } from "../../../components/InputModal"
-import { useModalAddImages } from "../hooks/useModalAddImages"
 
 
 export const ModalAddImage = () => {

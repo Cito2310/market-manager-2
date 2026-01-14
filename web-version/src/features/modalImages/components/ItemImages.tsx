@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Image } from "../../../../types/Image";
+
 interface props {
     selected?: boolean;
     handleImageDelete: ( id: string ) => void;
