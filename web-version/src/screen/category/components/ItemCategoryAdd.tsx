@@ -4,6 +4,7 @@ import { InputNameCategory } from "./ItemCategory/InputNameCategory";
 import { IconButton } from "../../../components/IconButton";
 import { useItemAddCategory } from "../hooks/useItemAddCategory";
 import { ContainerSubcategory } from "./ContainerSubcategory";
+import { OptionsPrimary } from "../../../utils/OptionsPrimary";
 
 
 interface props {
@@ -33,12 +34,7 @@ export const ItemCategoryAdd = ({ onToggleCreatingMode }: props) => {
                                     label="Sección"
                                     register={ form.registerPrimary }
                                     defaultValue={ form.getValues("primary")}
-                                    options={[
-                                        {value: "alimentos", label: "Alimentos"},
-                                        {value: "higiene personal", label: "Higiene Personal"},
-                                        {value: "bebidas", label: "Bebidas"},
-                                        {value: "verduleria", label: "Verduleria"},
-                                    ]}
+                                    options={ OptionsPrimary }
                                 />
                             </div>
 

@@ -1,0 +1,15 @@
+export const OptionsPrimary = [
+    {value: "almacen", label: "Almacén"},
+    {value: "limpieza", label: "Limpieza"},
+    {value: "perfumeria", label: "Perfumería"},
+    {value: "lacteos", label: "Lácteos"},
+    {value: "bebidas", label: "Bebidas"},
+    {value: "congelados", label: "Congelados"},
+    {value: "bazar", label: "Bazar"},
+    {value: "polleria", label: "Pollería"},
+    {value: "fiambreria", label: "Fiambrería"},
+    {value: "panaderia", label: "Panadería"},
+    {value: "verduleria", label: "Verdulería"},
+    {value: "carniceria", label: "Carnicería"},
+    {value: "otros", label: "Otros"},
+]

@@ -79,7 +79,7 @@ export const useItemProduct = ({ product, setOpen, isOpen }: props) => {
 
     const categories = useAppSelector( state => state.category.data );
     const subcategories = useMemo(() => categories.find( c => c.name === category )?.subcategories || [], [categories, category]);
-    const primaryData = useMemo(() => categories.find( c => c.name === category )?.primary, [categories, category]);
+    const primary = useMemo(() => categories.find( c => c.name === category )?.primary || "", [categories, category]);
 
     const categoriesOptions = useMemo(() => [emptyOption, ...categories.map( c => toOption(c.name) )], [categories]);
     const subcategoriesOptions = useMemo(() => [emptyOption, ...subcategories.map(sc => toOption(sc.name))], [subcategories]);
@@ -138,7 +138,7 @@ export const useItemProduct = ({ product, setOpen, isOpen }: props) => {
             // @ts-ignore
             messageError: messageErrorForm || messageError,
             status,
-            name, brand, size, sizeType, category, subcategory, price, hasExpirationControl, hasStockControl, primaryData
+            name, brand, size, sizeType, category, subcategory, price, hasExpirationControl, hasStockControl, primary
         }
     }
 }

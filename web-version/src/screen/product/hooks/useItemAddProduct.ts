@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { initialFormProduct } from "../utils/initialFormProduct";
 import { productAddValidations } from '../utils/productAddValidations';
 
-export const useItemAddProduct = () => {
+export const useItemAddProduct = ( onClose: () => void ) => {
     const dispatch = useAppDispatch();
     const { status, messageError } = useAppSelector( state => state.product );
     const [lastErrorForm, setLastErrorForm] = useState<any | null>(null)
@@ -41,6 +41,8 @@ export const useItemAddProduct = () => {
     const onAddProduct = handleSubmit( async data => {
             try {
                 await dispatch( startCreateProduct(data) );
+
+                onClose();
             } catch (error) {}
         }, (error) => { setLastErrorForm(error); }
     );
@@ -56,7 +58,7 @@ export const useItemAddProduct = () => {
 
     const categories = useAppSelector( state => state.category.data );
     const subcategories = useMemo(() => categories.find( c => c.name === category )?.subcategories || [], [categories, category]);
-    const primaryData = useMemo(() => categories.find( c => c.name === category )?.primary, [categories, category]);
+    const primary = useMemo(() => categories.find( c => c.name === category )?.primary || "", [categories, category]);
 
     const categoriesOptions = useMemo(() => [emptyOption, ...categories.map( c => toOption(c.name) )], [categories]);
     const subcategoriesOptions = useMemo(() => [emptyOption, ...subcategories.map(sc => toOption(sc.name))], [subcategories]);
@@ -99,7 +101,7 @@ export const useItemAddProduct = () => {
     // RETURN VALUES AND FUNCTIONS
     return {
         form: {
-            register, onAddProduct
+            register, onAddProduct, onClose
         },
         field: {
             fields, appendExpiration, removeExpiration, control
@@ -112,7 +114,7 @@ export const useItemAddProduct = () => {
             // @ts-ignore
             messageError: messageErrorForm || messageError,
             status,
-            name, brand, size, sizeType, category, subcategory, price, hasExpirationControl, hasStockControl, primaryData
+            name, brand, size, sizeType, category, subcategory, price, hasExpirationControl, hasStockControl, primary
         }
     }
 }

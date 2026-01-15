@@ -5,6 +5,7 @@ import { ButtonHeadTable } from "../../components/ButtonHeadTable"
 import { ItemProduct } from "./components/ItemProduct"
 import { ItemAddProduct } from "./components/ItemAddProduct"
 import { useProductScreen } from "./hooks/useProductScreen"
+import { TableHead } from "./components/TableHead"
 
 export const ProductScreen = () => {
     const { form, open, product, sort } = useProductScreen();
@@ -33,21 +34,11 @@ export const ProductScreen = () => {
 
 
             <table className="w-full rounded-lg">
-                <thead>
-                    <tr>
-                        <ButtonHeadTable label="Nombre de la Categoria" name="name" sortSelected={sort.sortSelected} toggleSortSelected={sort.toggleSortSelected} start />
-                        <ButtonHeadTable label="Categoría" name="category" sortSelected={sort.sortSelected} toggleSortSelected={sort.toggleSortSelected} />
-                        <ButtonHeadTable label="Sección" name="primary" sortSelected={sort.sortSelected} toggleSortSelected={sort.toggleSortSelected} />
-                        <ButtonHeadTable label="Precio" name="price" sortSelected={sort.sortSelected} toggleSortSelected={sort.toggleSortSelected} />
-                        <ButtonHeadTable textCenter label="Stock" name="currentAmount" sortSelected={sort.sortSelected} toggleSortSelected={sort.toggleSortSelected} />
-
-                        <ButtonHeadTable label="empty" name="empty" sortSelected={sort.sortSelected} toggleSortSelected={sort.toggleSortSelected} empty end />
-                    </tr>
-                </thead>
+                <TableHead sort={sort} />
 
                 <tbody>
                     {
-                        open.isOpen === "create" ? <ItemAddProduct /> : null
+                        open.isOpen === "create" ? <ItemAddProduct onClose={open.onCloseCategory} /> : null
                     }
 
                     {
