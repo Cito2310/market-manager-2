@@ -117,12 +117,6 @@ export const productAddValidations = ({ register, getValues }: props) => {
             validateAtLeastOneBatch: value => getValues("options.hasExpirationControl") ? (value.length > 0 || "Debe agregar al menos un lote") : true,
             validateAllBatchesValid: value => getValues("options.hasExpirationControl") ? (
                 value.every(batch => {
-                    const validInitialQuantity =
-                        !isNaN(Number(batch.initialQuantity)) && // Check initialQuantity is a number
-                        Number(batch.initialQuantity).toString().length > 0; // Check initialQuantity is not empty
-                        Number(batch.initialQuantity) >= 0; // Check initialQuantity is non-negative
-                        Number(batch.initialQuantity) <= 9999; // Check initialQuantity is less than or equal to 9999
-
                     const validExpirationDate = 
                         typeof batch.expirationDate === "string" && // Check expirationDate is a string
                         batch.expirationDate.length > 0 &&  // Check expirationDate is not empty
@@ -130,17 +124,16 @@ export const productAddValidations = ({ register, getValues }: props) => {
                         
                     const validCurrentQuantity =
                         !isNaN(Number(batch.quantity)) && // Check quantity is a number
-                        Number(batch.initialQuantity).toString().length > 0; // Check initialQuantity is not empty
+                        Number(batch.quantity).toString().length > 0; // Check initialQuantity is not empty
                         Number(batch.quantity) >= 0 && // Check quantity is non-negative
-                        Number(batch.initialQuantity) <= 9999; // Check initialQuantity is less than or equal to 9999
-                        Number(batch.quantity) <= Number(batch.initialQuantity); // Check quantity is less than or equal to initialQuantity
+                        Number(batch.quantity) <= 9999; // Check initialQuantity is less than or equal to 9999
 
                     const validAddedAtDate =
                         typeof batch.addedAt === "string" && // Check addedAt is a string
                         batch.addedAt.length > 0 &&  // Check addedAt is not empty
                         new Date(batch.addedAt).toString() !== "Invalid Date"; // Check addedAt is a valid date
                     
-                    return validInitialQuantity && validExpirationDate && validCurrentQuantity && validAddedAtDate;
+                    return validExpirationDate && validCurrentQuantity && validAddedAtDate;
                 }) || "Todos los lotes deben ser validos"
             ) : true,
             validateBatchesNotRepeated: value => getValues("options.hasExpirationControl") ? (

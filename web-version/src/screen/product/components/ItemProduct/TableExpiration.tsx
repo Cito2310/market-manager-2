@@ -1,4 +1,5 @@
 import { IconButton } from "../../../../components/IconButton"
+import { v4 as uuidv4 } from 'uuid';
 
 interface props {
     mode: "add" | "edit",
@@ -6,7 +7,7 @@ interface props {
     controls: {
         append: () => void,
         remove: (index: number) => void,
-        fields: { expirationDate: string, quantity: number, addedAt: string, initialQuantity: string }[]
+        fields: { expirationDate: string, quantity: number, addedAt: string }[]
     }
 }
 
@@ -23,7 +24,7 @@ export const TableExpiration = ({ mode, controls, register }: props) => {
             <tbody>
                     {
                         controls.fields.map((field, index) => (
-                            <tr key={field.addedAt} className="border-b border-b-[#00000012]">
+                            <tr key={uuidv4()} className="border-b border-b-[#00000012]">
                                 <td className="py-2">
                                     <input 
                                         type="date" 
@@ -37,8 +38,10 @@ export const TableExpiration = ({ mode, controls, register }: props) => {
 
                                 <td>
                                     <input 
-                                        type="number" value={0} 
-                                        {...register(`expiration.batches.${index}.currentQuantity`)}
+                                        min={0}
+                                        type="number"
+                                        placeholder="Cantidad"
+                                        {...register(`expiration.batches.${index}.quantity`)}
                                         className={`
                                             mx-auto px-4 block rounded-md text-center no-spin py-1
                                             border-b-2 border-white outline-none transition-base focus:border-[#008080]`

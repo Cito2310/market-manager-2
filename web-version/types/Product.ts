@@ -23,7 +23,6 @@ export interface Product {
     expiration: {
         batches: { 
             expirationDate: string, 
-            initialQuantity: string, 
             quantity: number,
             addedAt: string
         }[],
@@ -72,7 +71,6 @@ export interface FormProduct {
     expiration: {
         batches: { 
             expirationDate: string, 
-            initialQuantity: string, 
             quantity: number,
             addedAt: string
         }[],

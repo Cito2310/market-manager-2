@@ -7,6 +7,7 @@ import { TableExpiration } from "./ItemProduct/TableExpiration";
 import { useItemAddProduct } from "../hooks/useItemAddProduct";
 import { FormCardContainer } from "../../../components/FormCardContainer";
 import { ItemProductCard } from "./ItemProductCard";
+import { ImageSelect } from "./ItemProduct/ImageSelect";
 
 interface props {
     onClose: () => void;
@@ -30,7 +31,7 @@ export const ItemAddProduct = ({ onClose }: props) => {
             ]}
             config={{
                 onSubmit: form.onAddProduct,
-                errorMessage: data.messageError,
+                errorMessage: data.msgError,
                 hasLoading: data.status.isLoading,
                 height: "auto"
             }}
@@ -38,18 +39,7 @@ export const ItemAddProduct = ({ onClose }: props) => {
             {/* COLUMNA 1 - IMAGEN */}
             <Layout.Column className="w-[24%]">
                 <ContainerData label="Imagen">
-                    <button onClick={ form.onModalImage } type="button" className="
-                        flex flex-col rounded-md overflow-hidden bg-white shadow-sm 
-                        hover:brightness-[.97] active:brightness-[.94] transition-base cursor-pointer 
-                        border-2 border-transparent hover:border-[#008080]
-                    ">
-                        <img className="w-[full] h-[250px] object-contain" src={data.imgBase64}></img>
-
-                        <div className="flex items-center justify-center gap-3 px-4 py-3 ">
-                            <i className="fa-solid fa-image text-2xl text-[#008080]" />
-                            cañuelas.jpg
-                        </div>
-                    </button>
+                    <ImageSelect data={ data } onModalImage={ form.onModalImage } />
                 </ContainerData>
 
                 <ContainerData label="Opciones">
