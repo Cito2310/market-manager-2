@@ -54,9 +54,10 @@ export const useItemAddProduct = ( onClose: () => void ) => {
     // Function onAddProduct
     const onAddProduct = handleSubmit( async data => {
             try {
-                await dispatch( startCreateProduct(data) );
-
-                onClose();
+                setLastErrorForm(null);
+                // await dispatch( startCreateProduct(data) );
+                console.log("SE CARGO")
+                // onClose();
             } catch (error) {}
         }, (error) => { setLastErrorForm(error); }
     );
@@ -68,7 +69,7 @@ export const useItemAddProduct = ( onClose: () => void ) => {
 
 
     // Validations
-    productAddValidations({ register });
+    productAddValidations({ register, getValues });
 
 
     // Options for selects

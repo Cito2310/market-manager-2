@@ -2,12 +2,12 @@ import { FormProduct } from "../../../../types/Product";
 
 export const initialFormProduct: FormProduct = {
     info: {
-        name: "",
-        barcode: "",
-        category: "",
-        subcategory: "",
-        brand: "",
-        size: 0,
+        name: "da",
+        barcode: "777959424407",
+        category: "gaseosas",
+        subcategory: "gaseosas",
+        brand: "sprite",
+        size: 1,
         sizeType: "kg",
         price: 0,
         unitType: "unit",

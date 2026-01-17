@@ -18,7 +18,7 @@ interface props {
 }
 
 export const FormCardContainer = ({ children, config, footerButtons }: props) => {
-    console.log(config)
+    // console.log(config)
     return (
         <tr>
             <td colSpan={10}>
