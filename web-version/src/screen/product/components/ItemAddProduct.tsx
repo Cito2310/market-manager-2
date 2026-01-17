@@ -38,14 +38,18 @@ export const ItemAddProduct = ({ onClose }: props) => {
             {/* COLUMNA 1 - IMAGEN */}
             <Layout.Column className="w-[24%]">
                 <ContainerData label="Imagen">
-                        <div className="flex flex-col rounded-md overflow-hidden shadow-sm">
-                            <img className="w-[full]" src="/img/cañuelas.jpg"></img>
-                            
-                            <button className="flex items-center justify-center gap-3 bg-white rounded-b-md shadow px-4 py-3 hover:bg-[#eafbe7] transition border-2 border-transparent hover:border-[#008080]">
-                                <i className="fa-solid fa-image text-2xl text-[#008080]" />
-                                cañuelas.jpg
-                            </button>
-                    </div>
+                    <button onClick={ form.onModalImage } type="button" className="
+                        flex flex-col rounded-md overflow-hidden bg-white shadow-sm 
+                        hover:brightness-[.97] active:brightness-[.94] transition-base cursor-pointer 
+                        border-2 border-transparent hover:border-[#008080]
+                    ">
+                        <img className="w-[full] h-[250px] object-contain" src={data.imgBase64}></img>
+
+                        <div className="flex items-center justify-center gap-3 px-4 py-3 ">
+                            <i className="fa-solid fa-image text-2xl text-[#008080]" />
+                            cañuelas.jpg
+                        </div>
+                    </button>
                 </ContainerData>
 
                 <ContainerData label="Opciones">

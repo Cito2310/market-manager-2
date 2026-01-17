@@ -1,14 +1,26 @@
 import { startCreateProduct } from './../../../../store/product/thunks';
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { initialFormProduct } from "../utils/initialFormProduct";
 import { productAddValidations } from '../utils/productAddValidations';
+import { setCurrentModal, setSelectedImageData } from '../../../../store/modal/modalSlice';
 
 export const useItemAddProduct = ( onClose: () => void ) => {
     const dispatch = useAppDispatch();
     const { status, messageError } = useAppSelector( state => state.product );
     const [lastErrorForm, setLastErrorForm] = useState<any | null>(null)
+    const { selectedImageData } = useAppSelector( state => state.modal )
+    const { data } = useAppSelector( state => state.image )
+
+
+    useEffect(() => {
+        if ( selectedImageData ) { setValue("info.imgUrl", selectedImageData.id) }
+        
+        return () => { dispatch( setSelectedImageData({ id: "", reset: true }) )}
+    }, [selectedImageData])
+    
+    
 
 
     // Form and field array
@@ -32,10 +44,12 @@ export const useItemAddProduct = ( onClose: () => void ) => {
     const category = watch("info.category");
     const subcategory = watch("info.subcategory");
     const price = watch("info.price");
+    const imgUrl = watch("info.imgUrl");
 
     const hasExpirationControl = watch("options.hasExpirationControl");
     const hasStockControl = watch("options.hasStockControl");
 
+    const imgBase64 = useMemo(() => data.find(image => image._id === imgUrl)?.base64 || "/img/Image-not-found.png", [ imgUrl ])
 
     // Function onAddProduct
     const onAddProduct = handleSubmit( async data => {
@@ -46,6 +60,11 @@ export const useItemAddProduct = ( onClose: () => void ) => {
             } catch (error) {}
         }, (error) => { setLastErrorForm(error); }
     );
+
+    // Function onModalImage
+    const onModalImage = () => {
+        dispatch( setCurrentModal("viewImages") );
+    }
 
 
     // Validations
@@ -101,7 +120,7 @@ export const useItemAddProduct = ( onClose: () => void ) => {
     // RETURN VALUES AND FUNCTIONS
     return {
         form: {
-            register, onAddProduct, onClose
+            register, onAddProduct, onClose, onModalImage
         },
         field: {
             fields, appendExpiration, removeExpiration, control
@@ -114,7 +133,7 @@ export const useItemAddProduct = ( onClose: () => void ) => {
             // @ts-ignore
             messageError: messageErrorForm || messageError,
             status,
-            name, brand, size, sizeType, category, subcategory, price, hasExpirationControl, hasStockControl, primary
+            name, brand, size, sizeType, category, subcategory, price, hasExpirationControl, hasStockControl, primary, imgBase64
         }
     }
 }

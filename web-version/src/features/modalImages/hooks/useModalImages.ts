@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { startDeleteImageById } from "../../../../store/image";
 import { avifBlobToDataUrl, blobToAvifBlob, compressionImage } from "../../../helpers/imageManager";
-import { setAddImageData, setCurrentModal } from "../../../../store/modal/modalSlice";
+import { setAddImageData, setCurrentModal, setSelectedImageData } from "../../../../store/modal/modalSlice";
 import { usePaginate } from "../../../hooks/usePaginate";
 import { useSearch } from "../../../hooks/useSearch";
 import { joinArrayData } from "../../../helpers/joinArrayData";
@@ -42,6 +42,12 @@ export const useModalImages = () => {
 
     const handleSelectImage = ( id: string ) => { setSelectedImage(id) }; 
 
+    // Funcion to submit selected image
+    const onSubmitSelectedImage = () => {
+        dispatch( setCurrentModal("none") );
+        dispatch( setSelectedImageData({ id: selectedImage }) );
+    }
+
 
     // Function onCloseModal
     const onCloseModal = () => {
@@ -73,6 +79,7 @@ export const useModalImages = () => {
             handleButtonClick,
             handleSelectImage,
             onCloseModal,
+            onSubmitSelectedImage,
             inputRef
         },
         search: {

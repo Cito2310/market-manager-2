@@ -19,7 +19,7 @@ export const ModalImages = () => {
             }}
             footerButtons={[
                 { label: "Cancelar", onClick: functions.onCloseModal, variant: "secondary" },
-                { label: "Seleccionar", onClick:()=>{}, variant: "primary", disabled: data.selectedImage === "" },
+                { label: "Seleccionar", onClick: functions.onSubmitSelectedImage, variant: "primary", disabled: data.selectedImage === "" },
             ]}
         >
             <Layout.Column className="w-full">
