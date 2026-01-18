@@ -1,4 +1,4 @@
-import { startUpdateProductById } from './../../../../store/product/thunks';
+import { startDeleteProductById, startUpdateProductById } from './../../../../store/product/thunks';
 import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from "react";
 import { useFieldArray, useForm, useFormState } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
@@ -77,6 +77,14 @@ export const useItemProduct = ({ product, setOpen, isOpen }: props) => {
         }, (error) => { setError(error); }
     );
 
+    const onDeleteProduct = async () => {
+        try {
+            setError(null);
+            await dispatch( startDeleteProductById(product._id) );
+            toggleDetailsMenu();
+        } catch (error) {}
+    }
+
 
     // Validations
     productAddValidations({ register, getValues });
@@ -107,7 +115,7 @@ export const useItemProduct = ({ product, setOpen, isOpen }: props) => {
             height, toggleDetailsMenu
         },
         form: {
-            register, onSaveData, onModalImage
+            register, onSaveData, onDeleteProduct, onModalImage
         },
         field: {
             fields, appendExpiration, removeExpiration, control

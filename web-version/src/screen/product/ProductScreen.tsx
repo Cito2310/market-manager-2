@@ -5,7 +5,7 @@ import { ButtonHeadTable } from "../../components/ButtonHeadTable"
 import { ItemProduct } from "./components/ItemProduct"
 import { ItemAddProduct } from "./components/ItemAddProduct"
 import { useProductScreen } from "./hooks/useProductScreen"
-import { TableHead } from "./components/TableHead"
+import { TableHeadProduct } from "./components/TableHeadProduct"
 
 export const ProductScreen = () => {
     const { form, open, product, sort } = useProductScreen();
@@ -34,7 +34,7 @@ export const ProductScreen = () => {
 
 
             <table className="w-full rounded-lg">
-                <TableHead sort={sort} />
+                <TableHeadProduct sort={sort} />
 
                 <tbody>
                     {

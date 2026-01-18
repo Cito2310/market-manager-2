@@ -7,8 +7,4 @@ ITEM ADD PRODUCT
 # Hacer que funcione el boton imprimir y guardar IMPOSIBLE
 
 ITEM PRODUCT
-# Hacer que funcione el boton de eliminar 
-# Hacer que funcione el boton de guardar cambios
-# Solucionar error getValues in validations
-# Hacer que funcione imagen y cambiar el estilo
-# Hacer que funcione el expedition batches
+# Hacer que funcione el boton de imprimir

@@ -1,6 +1,6 @@
 import { Product } from "../../../../types/Product";
 import { IconButton } from "../../../components/IconButton";
-import { StockBar } from "./StockBar";
+import { StockBar } from "./ItemProduct/StockBar";
 
 interface props {
     data: {
@@ -17,9 +17,9 @@ interface props {
     openDetailsMenu?: () => void;
 }
 
-export const ItemProductCard = ({ data, product, type, openDetailsMenu }: props) => {
-    if (type === "product" && !product) throw new Error("ItemProductCard: 'product' prop is required when type is 'product'");
-    if (type === "product" && !openDetailsMenu) throw new Error("ItemProductCard: 'openDetailsMenu' prop is required when type is 'product'");
+export const CardProduct = ({ data, product, type, openDetailsMenu }: props) => {
+    if (type === "product" && !product) throw new Error("CardProduct: 'product' prop is required when type is 'product'");
+    if (type === "product" && !openDetailsMenu) throw new Error("CardProduct: 'openDetailsMenu' prop is required when type is 'product'");
 
     return (
         <tr className={`border-slate-400/50 even:bg-slate-50/40 hover:bg-slate-50 transition-colors`}>

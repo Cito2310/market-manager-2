@@ -7,7 +7,7 @@ interface props {
     }
 }
 
-export const TableHead = ({sort}: props) => (
+export const TableHeadProduct = ({sort}: props) => (
     <thead>
         <tr>
             <TableHeadButton label="Nombre de la Categoria" name="name" sortSelected={sort.sortSelected} toggleSortSelected={sort.toggleSortSelected} start />

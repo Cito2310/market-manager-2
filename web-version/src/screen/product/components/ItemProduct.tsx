@@ -4,12 +4,12 @@ import { IconButton } from "../../../components/IconButton";
 import { ItemFooter } from "../../category/components/ItemCategory/ItemFooter";
 import { ContainerData } from "./ContainerData";
 import { InputCheckbox } from "./ItemProduct/InputCheckbox";
-import { InputProduct } from "./InputProduct";
+import { InputProduct } from "./ItemProduct/InputProduct";
 import { Layout } from "./Layout";
-import { StockBar } from "./StockBar";
+import { StockBar } from "./ItemProduct/StockBar";
 import { useItemProduct } from "../hooks/useItemProduct";
 import { TableExpiration } from "./ItemProduct/TableExpiration";
-import { ItemProductCard } from "./ItemProductCard";
+import { CardProduct } from "./CardProduct";
 import { FormCardContainer } from "../../../components/FormCardContainer";
 import { ImageSelect } from "./ItemProduct/ImageSelect";
 
@@ -23,7 +23,7 @@ export const ItemProduct = ({ product, setOpen, isOpen }: props) => {
     const { data, field, form, option, detailsMenu } = useItemProduct({ product, setOpen, isOpen });
 
     return <>
-        <ItemProductCard 
+        <CardProduct 
             data={data}
             type="product"
             openDetailsMenu={detailsMenu.toggleDetailsMenu}
@@ -34,7 +34,7 @@ export const ItemProduct = ({ product, setOpen, isOpen }: props) => {
         <FormCardContainer
             footerButtons={[
                 { label: "Cancelar", variant: "secondary", onClick: detailsMenu.toggleDetailsMenu },
-                { label: "Eliminar", variant: "danger", onClick: () => { console.log("TODO") } },
+                { label: "Eliminar", variant: "danger", onClick: form.onDeleteProduct },
                 { label: "Guardar Cambios", variant: "primary", isSubmit: true }
             ]}
             config={{

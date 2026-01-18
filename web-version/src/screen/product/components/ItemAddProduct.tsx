@@ -1,9 +1,9 @@
 import { ContainerData } from "./ContainerData";
-import { InputProduct } from "./InputProduct";
+import { InputProduct } from "./ItemProduct/InputProduct";
 import { Layout } from "./Layout";
 import { useItemAddProduct } from "../hooks/useItemAddProduct";
 import { FormCardContainer } from "../../../components/FormCardContainer";
-import { ItemProductCard } from "./ItemProductCard";
+import { CardProduct     } from "./CardProduct";
 import { TableExpiration } from "./ItemProduct/TableExpiration";
 import { InputCheckbox } from "./ItemProduct/InputCheckbox";
 import { ImageSelect } from "./ItemProduct/ImageSelect";
@@ -16,7 +16,7 @@ export const ItemAddProduct = ({ onClose }: props) => {
     const { data, field, form, option } = useItemAddProduct( onClose );
 
     return <>
-        <ItemProductCard
+        <CardProduct    
             data={data}
             type="addProduct"
         />
