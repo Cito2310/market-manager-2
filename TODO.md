@@ -5,9 +5,6 @@ MODAL IMAGES
 
 ITEM ADD PRODUCT
 # Hacer que funcione el boton imprimir y guardar IMPOSIBLE
-# Hacer que al submit el addProduct sin algun hasControl, hacer que este vaya en blanco
-# Cambiar el label de stock a unos mas adecuados
-# Refactorizar UseItemAddProduct (Crear nuevos sub hooks)
 
 ITEM PRODUCT
 # Hacer que funcione el boton de eliminar 

@@ -3,7 +3,7 @@ import { startCreateProduct } from './../../../../store/product/thunks';
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
-import { initialFormProduct } from "../utils/initialFormProduct";
+import { clearExpiration, clearStock, initialFormProduct } from "../utils/initialFormProduct";
 import { productAddValidations } from '../utils/productAddValidations';
 import { setCurrentModal, setSelectedImageData } from '../../../../store/modal/modalSlice';
 import { useControlError } from '../../../hooks/useControlError';
@@ -43,6 +43,8 @@ export const useItemAddProduct = ( onClose: () => void ) => {
     const onAddProduct = handleSubmit( async data => {
             try {
                 setError(null);
+                if ( getValues("options.hasExpirationControl") === false ) setValue("expiration", clearExpiration);
+                if ( getValues("options.hasStockControl") === false ) setValue("stock", clearStock);
                 await dispatch( startCreateProduct(data) );
                 onClose();
             } catch (error) {}

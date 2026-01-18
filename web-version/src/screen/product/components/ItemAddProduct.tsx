@@ -1,12 +1,11 @@
-import { ItemFooter } from "../../category/components/ItemCategory/ItemFooter";
 import { ContainerData } from "./ContainerData";
-import { InputCheckbox } from "./InputCheckbox";
 import { InputProduct } from "./InputProduct";
 import { Layout } from "./Layout";
-import { TableExpiration } from "./ItemProduct/TableExpiration";
 import { useItemAddProduct } from "../hooks/useItemAddProduct";
 import { FormCardContainer } from "../../../components/FormCardContainer";
 import { ItemProductCard } from "./ItemProductCard";
+import { TableExpiration } from "./ItemProduct/TableExpiration";
+import { InputCheckbox } from "./ItemProduct/InputCheckbox";
 import { ImageSelect } from "./ItemProduct/ImageSelect";
 
 interface props {
@@ -93,9 +92,9 @@ export const ItemAddProduct = ({ onClose }: props) => {
                                 <InputProduct register={form.register("stock.currentStock")} type="number" label="Stock Actual" />
                             </Layout.Row>
                             <Layout.Row>
-                                <InputProduct register={form.register("stock.mediumStockAlert")} type="number" subfix="Unidades" label="Alerta - Solo Lo Expuesto" />
-                                <InputProduct register={form.register("stock.lowStockAlert")} type="number" subfix="Unidades" label="Alerta - Poca Reserva" />
-                                <InputProduct register={form.register("stock.veryLowStockAlert")} type="number" subfix="Unidades" label="Alerta - Muy Poco" />
+                                <InputProduct register={form.register("stock.mediumStockAlert")} type="number" subfix="Unidades" label="Alerta - Stock Medio" />
+                                <InputProduct register={form.register("stock.lowStockAlert")} type="number" subfix="Unidades" label="Alerta - Poca Stock" />
+                                <InputProduct register={form.register("stock.veryLowStockAlert")} type="number" subfix="Unidades" label="Alerta - Muy Poco Stock" />
                             </Layout.Row>
                         </ContainerData>
                     )

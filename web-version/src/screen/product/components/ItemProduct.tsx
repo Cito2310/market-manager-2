@@ -3,7 +3,7 @@ import { Product } from "../../../../types/Product"
 import { IconButton } from "../../../components/IconButton";
 import { ItemFooter } from "../../category/components/ItemCategory/ItemFooter";
 import { ContainerData } from "./ContainerData";
-import { InputCheckbox } from "./InputCheckbox";
+import { InputCheckbox } from "./ItemProduct/InputCheckbox";
 import { InputProduct } from "./InputProduct";
 import { Layout } from "./Layout";
 import { StockBar } from "./StockBar";
