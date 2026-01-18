@@ -38,9 +38,7 @@ export const updateProductMiddlewares = [
     check("info.unitType").optional().isString().trim().notEmpty().withMessage("unitType is required"),
     check("info.unitType").optional().trim().isIn(["unit", "weight"]).withMessage("unitType invalid [ weight | unit ]"),
 
-    check("info.imgUrl").optional().trim().isURL().withMessage("imgUrl must be a valid URL"),
-    check("info.imgUrl").optional().trim().isLength({max: 2048}).withMessage("imgUrl max length 2048"),
-
+    check("info.imgUrl").optional().isMongoId().withMessage("imgUrl must be a valid MongoID"),
 
 
     // VALIDACIONES OPTIONS

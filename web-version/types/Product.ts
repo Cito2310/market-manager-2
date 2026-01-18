@@ -10,7 +10,7 @@ export interface Product {
         sizeType: SizeType,
         price: number,
         unitType: UnitType,
-        imgUrl: string | null,
+        imgId: string | null,
         primary: string,
     },
 
@@ -26,7 +26,7 @@ export interface Product {
             quantity: number,
             addedAt: string
         }[],
-        alertExpiration?: number,
+        alertExpiration: number,
     }
 
     stock: {
@@ -60,7 +60,7 @@ export interface FormProduct {
         sizeType: SizeType,
         price: number,
         unitType: UnitType,
-        imgUrl?: string,
+        imgId: string | null,
     },
 
     options: {

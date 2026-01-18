@@ -11,6 +11,7 @@ import { useItemProduct } from "../hooks/useItemProduct";
 import { TableExpiration } from "./ItemProduct/TableExpiration";
 import { ItemProductCard } from "./ItemProductCard";
 import { FormCardContainer } from "../../../components/FormCardContainer";
+import { ImageSelect } from "./ItemProduct/ImageSelect";
 
 interface props {
     product: Product;
@@ -38,7 +39,7 @@ export const ItemProduct = ({ product, setOpen, isOpen }: props) => {
             ]}
             config={{
                 onSubmit: form.onSaveData,
-                errorMessage: data.messageError,
+                errorMessage: data.msgError,
                 hasLoading: data.status.isLoading,
                 height: detailsMenu.height
             }}
@@ -46,14 +47,7 @@ export const ItemProduct = ({ product, setOpen, isOpen }: props) => {
             {/* COLUMNA 1 - IMAGEN */}
             <Layout.Column className="w-[24%]">
                 <ContainerData label="Imagen">
-                        <div className="flex flex-col rounded-md overflow-hidden shadow-sm">
-                            <img className="w-[full]" src="/img/cañuelas.jpg"></img>
-                            
-                            <button className="flex items-center justify-center gap-3 bg-white rounded-b-md shadow px-4 py-3 hover:bg-[#eafbe7] transition border-2 border-transparent hover:border-[#008080]">
-                                <i className="fa-solid fa-image text-2xl text-[#008080]" />
-                                cañuelas.jpg
-                            </button>
-                    </div>
+                    <ImageSelect data={ data } onModalImage={ form.onModalImage } />
                 </ContainerData>
 
                 <ContainerData label="Opciones">
@@ -105,9 +99,9 @@ export const ItemProduct = ({ product, setOpen, isOpen }: props) => {
                             <InputProduct register={form.register("stock.currentStock")} type="number" label="Stock Actual" />
                         </Layout.Row>
                         <Layout.Row>
-                            <InputProduct register={form.register("stock.mediumStockAlert")} type="number" subfix="Unidades" label="Alerta - Solo Lo Expuesto" />
-                            <InputProduct register={form.register("stock.lowStockAlert")} type="number" subfix="Unidades" label="Alerta - Poca Reserva" />
-                            <InputProduct register={form.register("stock.veryLowStockAlert")} type="number" subfix="Unidades" label="Alerta - Muy Poco" />
+                            <InputProduct register={form.register("stock.mediumStockAlert")} type="number" subfix="Unidades" label="Alerta - Stock Medio" />
+                            <InputProduct register={form.register("stock.lowStockAlert")} type="number" subfix="Unidades" label="Alerta - Poco Stock" />
+                            <InputProduct register={form.register("stock.veryLowStockAlert")} type="number" subfix="Unidades" label="Alerta - Muy Poco Stock" />
                         </Layout.Row>
                     </ContainerData>
                 }

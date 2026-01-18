@@ -13,7 +13,7 @@ export const useItemAddProduct = ( onClose: () => void ) => {
     const { status, messageError } = useAppSelector( state => state.product );
     const { msgError, setError } = useControlError( messageError );
     const { register, handleSubmit, watch, control, getValues, setValue } = useForm({ defaultValues: initialFormProduct });
-    const { imgBase64, imgName, onModalImage } = useImageSelect( watch("info.imgUrl"), setValue );
+    const { imgBase64, imgName, onModalImage } = useImageSelect( watch("info.imgId"), setValue );
 
 
     // Form and field array

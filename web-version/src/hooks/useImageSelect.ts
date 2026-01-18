@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react"
 import { useAppDispatch, useAppSelector } from "../../store/store"
 import { setCurrentModal, setSelectedImageData } from "../../store/modal/modalSlice"
 
-export const useImageSelect = ( imgUrl: string | undefined, setValue: any ) => {
+export const useImageSelect = ( imgId: string | null, setValue: any ) => {
     const dispatch = useAppDispatch();
     const { selectedImageData } = useAppSelector( state => state.modal )
     const { data } = useAppSelector( state => state.image )
@@ -12,15 +12,15 @@ export const useImageSelect = ( imgUrl: string | undefined, setValue: any ) => {
         dispatch( setCurrentModal("viewImages") );
     }
 
-    // When select image in viewImages, change selectedImageData and set imgUrl in form
+    // When select image in viewImages, change selectedImageData and set imgId in form
     useEffect(() => {
-        if ( selectedImageData ) { setValue("info.imgUrl", selectedImageData.id) }
+        if ( selectedImageData ) { setValue("info.imgId", selectedImageData.id) }
         
         return () => { dispatch( setSelectedImageData({ id: "", reset: true }) )}
     }, [selectedImageData])
 
     // Get base64 and name of selected image
-    const imageData = useMemo(() => data.find(image => image._id === imgUrl), [ imgUrl, data ])
+    const imageData = useMemo(() => data.find(image => image._id === imgId), [ imgId, data ])
 
     return {
         imgBase64: imageData?.base64 || null,
