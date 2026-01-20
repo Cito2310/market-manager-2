@@ -2,6 +2,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { useForm } from "react-hook-form";
 import { joinData } from "../../../helpers/joinData";
+import { useSearch } from "../../../hooks/useSearch";
+import { joinArrayData } from "../../../helpers/joinArrayData";
 
 
 export const useCategoryScreen = () => {
@@ -13,10 +15,9 @@ export const useCategoryScreen = () => {
 
 
     // Manage form search and filters select
-    const { register, watch } = useForm({ defaultValues: { search: "" } });
-    const search = watch("search").trim().toLowerCase();
-
-    const [select, setSelect] = useState<{primary: string}>({primary: ""});
+    const { filterSearch, onSearchSubmit, registerSearch } = useSearch()
+    const { register, watch } = useForm({defaultValues: { primary: "" }})
+    const watchPrimary = watch("primary");
 
 
     // Manage sort selected
@@ -37,10 +38,9 @@ export const useCategoryScreen = () => {
 
 
     // Filter data and sort
-    const splitTermSearch = search.split(/\s+/).map( str => RegExp(str, "i") );
-    const filteredData = useMemo(() => data
-        .filter( category => splitTermSearch.every( regex => regex.test(joinData("category", category)) ) )
-        .filter( category => select.primary ? category.primary === select.primary.toLocaleLowerCase() : true )
+    const filteredData = useMemo(() => 
+        filterSearch( data, joinArrayData("category", data) )
+        .filter( category => watchPrimary ? category.primary === watchPrimary.toLocaleLowerCase() : true )
         .sort( (a, b) => {
             if (!sortSelected) return 0;
             const [field, order] = sortSelected;
@@ -50,12 +50,20 @@ export const useCategoryScreen = () => {
             if (fieldA > fieldB) return order === "asc" ? 1 : -1;
             return 0;
         })
-    , [data, search, select, sortSelected]);
+    , [data, filterSearch, watchPrimary, sortSelected]);
 
 
 
     // RETURN VALUES AND FUNCTIONS
     return {
+        select: {
+            selectedPrimary: watchPrimary,
+            registerSelect: register,
+        },
+        search: {
+            onSearchSubmit,
+            registerSearch
+        },
         sort: {
             sortSelected,
             toggleSortSelected
@@ -65,9 +73,6 @@ export const useCategoryScreen = () => {
             setOpen,
             onToggleCreatingMode: toggleCreating,
             onCloseCategory: closeAll
-        },
-        form: {
-            register, select, setSelect
         },
         category: {
             data: filteredData,

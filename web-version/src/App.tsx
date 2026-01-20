@@ -28,8 +28,8 @@ export default function App() {
             {
                 token === null 
                 ? <LoginScreen />
-                // : <CategoryScreen />
-                : <ProductScreen />
+                : <CategoryScreen />
+                // : <ProductScreen />
             }
         </div>
     )

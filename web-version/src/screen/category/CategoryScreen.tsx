@@ -1,13 +1,14 @@
 import { InputSelect } from "./components/InputSelect"
 import { ButtonTab } from "./components/ButtonTab"
-import { InputSearch } from "./components/InputSearch"
 import { ItemCategory } from "./components/ItemCategory"
 import { ItemCategoryAdd } from "./components/ItemCategoryAdd"
 import { useCategoryScreen } from "./hooks/useCategoryScreen"
+import { InputSearch } from "../../components/InputSeach"
+import { OptionsPrimary } from "../../utils/OptionsPrimary"
+
 
 export const CategoryScreen = () => {
-    const { category, form, open, sort } = useCategoryScreen();
-
+    const { category, open, sort, search, select } = useCategoryScreen();
 
     return (
         <div className="mt-8 p-2 px-10 font-[Montserrat]">
@@ -22,8 +23,11 @@ export const CategoryScreen = () => {
                 <div className="flex items-center my-3 justify-between">
 
                     <div className="flex gap-3">
-                        <InputSearch register={form.register("search")} placeholder="Buscar" />
-                        <InputSelect name="primary" select={form.select} setSelect={form.setSelect} label="Seccion" options={["Alimentos", "Bebidas", "Producto de Limpieza"]} />
+                        <InputSearch onSearch={search.onSearchSubmit} register={search.registerSearch("search")}  placeholder="Buscar" />
+                        <InputSelect 
+                            registerReturn={select.registerSelect("primary")} optionSelected={!!select.selectedPrimary} 
+                            label="Seccion" options={ OptionsPrimary }
+                        />
                     </div>
 
                     <button onClick={open.onToggleCreatingMode} disabled={open.isOpen === "create"} className="font-medium text-[#008080] disabled:pointer-events-none disabled:opacity-60 transition-base hover:brightness-90 active:brightness-[.50] cursor-pointer mr-2">
