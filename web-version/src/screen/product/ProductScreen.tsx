@@ -1,14 +1,15 @@
 import { ButtonTab } from "../category/components/ButtonTab"
-import { InputSearch } from "../category/components/InputSearch"
 import { InputSelect } from "../category/components/InputSelect"
 import { ButtonHeadTable } from "../../components/ButtonHeadTable"
 import { ItemProduct } from "./components/ItemProduct"
 import { ItemAddProduct } from "./components/ItemAddProduct"
 import { useProductScreen } from "./hooks/useProductScreen"
 import { TableHeadProduct } from "./components/TableHeadProduct"
+import { InputSearch } from "../../components/InputSeach"
+import { OptionsPrimary } from "../../utils/OptionsPrimary"
 
 export const ProductScreen = () => {
-    const { form, open, product, sort } = useProductScreen();
+    const { search, select, open, product, sort } = useProductScreen();
 
     return (
         <div className="mt-8 p-2 px-10 font-[Montserrat]">
@@ -22,9 +23,15 @@ export const ProductScreen = () => {
 
             <div className="flex items-center my-3 justify-between">
                 <div className="flex gap-3">
-                    <InputSearch register={form.register("search")} placeholder="Buscar" />
-                    <InputSelect name="category" select={form.select} setSelect={form.setSelect} label="Categoria" options={["Alimentos", "Bebidas", "Producto de Limpieza"]} />
-                    <InputSelect name="primary" select={form.select} setSelect={form.setSelect} label="Seccion" options={["Alimentos", "Bebidas", "Producto de Limpieza"]} />
+                    <InputSearch onSearch={search.onSearchSubmit} register={search.registerSearch("search")} placeholder="Buscar" />
+                    <InputSelect 
+                        registerReturn={select.registerSelect("primary")} optionSelected={!!select.watchPrimary} 
+                        label="Seccion" options={ OptionsPrimary }
+                    />
+                    <InputSelect 
+                        registerReturn={select.registerSelect("category")} optionSelected={!!select.watchCategory} 
+                        label="Categoria" options={ OptionsPrimary }
+                    />
                 </div>
 
                 <button onClick={open.onToggleCreatingMode} disabled={open.isOpen === "create"} className="font-medium text-[#008080] disabled:pointer-events-none disabled:opacity-60 transition-base hover:brightness-90 active:brightness-[.50] cursor-pointer mr-2">

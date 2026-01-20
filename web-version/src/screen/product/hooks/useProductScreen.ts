@@ -3,6 +3,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { joinData } from "../../../helpers/joinData";
+import { useSearch } from '../../../hooks/useSearch';
+import { joinArrayData } from '../../../helpers/joinArrayData';
 
 export const useProductScreen = () => {
     // Manage open state for products and creating mode
@@ -13,10 +15,10 @@ export const useProductScreen = () => {
 
 
     // Manage form search and filters select
-    const { register, watch } = useForm({ defaultValues: { search: "" } });
-    const search = watch("search").trim().toLowerCase();
-
-    const [select, setSelect] = useState<{category: string, primary: string}>({category: "", primary: ""});
+    const { filterSearch, onSearchSubmit, registerSearch } = useSearch()
+    const { register, watch } = useForm({defaultValues: { primary: "", category: "" }})
+    const watchPrimary = watch("primary");
+    const watchCategory = watch("category");
 
 
     // Manage sort selected
@@ -37,11 +39,10 @@ export const useProductScreen = () => {
 
 
     // Filter data and sort
-    const splitTermSearch = search.split(/\s+/).map( str => RegExp(str, "i") );
-    const filteredData = useMemo(() => data
-        .filter( product => splitTermSearch.every( regex => regex.test(joinData("product", product)) ) )
-        // .filter( product => select.primary ? product.primary === select.primary.toLocaleLowerCase() : true )
-        .filter( product => select.category ? product.info.category === select.category.toLocaleLowerCase() : true )
+    const filteredData = useMemo(() =>
+        filterSearch( data, joinArrayData("product", data) )
+        .filter( product => watchPrimary ? product.info.primary === watchPrimary.toLocaleLowerCase() : true )
+        .filter( product => watchCategory ? product.info.category === watchCategory.toLocaleLowerCase() : true )
         .sort( (a, b) => {
             if (!sortSelected) return 0;
             const simplifiedA = simplifyDataForSort("product", a);
@@ -55,11 +56,20 @@ export const useProductScreen = () => {
             if (fieldA > fieldB) return order === "asc" ? 1 : -1;
             return 0;
         })
-    , [data, search, select, sortSelected]);
+    , [data, filterSearch, watchPrimary, watchCategory, sortSelected]);
 
 
     // RETURN VALUES AND FUNCTIONS
     return {
+        search: {
+            onSearchSubmit,
+            registerSearch
+        },
+        select: {
+            watchPrimary,
+            watchCategory,
+            registerSelect: register,
+        },
         sort: {
             sortSelected,
             toggleSortSelected
@@ -69,9 +79,6 @@ export const useProductScreen = () => {
             setOpen,
             onToggleCreatingMode: toggleCreating,
             onCloseCategory: closeAll
-        },
-        form: {
-            register, select, setSelect
         },
         product: {
             data: filteredData,
