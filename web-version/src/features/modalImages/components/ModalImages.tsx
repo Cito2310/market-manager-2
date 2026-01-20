@@ -1,10 +1,10 @@
 import { useModalImages } from "../hooks/useModalImages"
 import { ItemImages } from "./ItemImages"
 import { ItemImagesAdd } from "./ItemImagesAdd"
-import { Layout } from "../../../screen/product/components/Layout"
 import { ModalContainer } from "../../../components/ModalContainer"
 import { InputSearch } from "../../../components/InputSeach"
 import { Pagination } from "../../../components/Pagination"
+import { Layout } from "../../product/components/Layout"
 
 export const ModalImages = () => {
     const { functions, data, pagination, search } = useModalImages();

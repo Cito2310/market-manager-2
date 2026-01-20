@@ -1,6 +1,6 @@
 import { FooterButtonProps } from "../../types/TypeUtils";
-import { ItemFooterButton } from "../screen/category/components/ItemCategory/ItemFooterButton";
-import { Layout } from "../screen/product/components/Layout";
+import { ItemFooterButton } from "../features/category/components/ItemCategory/ItemFooterButton";
+import { Layout } from "../features/product/components/Layout";
 import { ErrorContainer } from "./ErrorContainer";
 
 interface ConfigFormCard {

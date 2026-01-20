@@ -1,7 +1,7 @@
 import { useEffect } from "react"
-import { ItemFooterButton } from "../screen/category/components/ItemCategory/ItemFooterButton";
-import { Layout } from "../screen/product/components/Layout";
 import { ErrorContainer } from "./ErrorContainer";
+import { ItemFooterButton } from "../features/category/components/ItemCategory/ItemFooterButton";
+import { Layout } from "../features/product/components/Layout";
 
 interface HeaderModal {
     title: string;
