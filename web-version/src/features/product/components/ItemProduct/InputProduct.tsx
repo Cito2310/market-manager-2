@@ -1,4 +1,5 @@
 import { UseFormRegisterReturn } from "react-hook-form/dist/types/form";
+import { v4 as uuidv4 } from 'uuid';
 
 interface props {
     label: string;
@@ -36,12 +37,11 @@ export const InputProduct = ({ label, type, prefix, subfix, padding, register, p
     if (type === "select") return (
         <label className="font-medium px-1 flex flex-col w-full text-[#537e7e]">&nbsp;&nbsp;{label}
             <select
-                id="select-ejemplo"
                 className={base}
                 {...register}>
                 {
                     options!.map( option => (
-                        <option key={option.value} value={option.value}>{option.label}</option>
+                        <option key={uuidv4()} value={option.value}>{option.label}</option>
                     ))
                 }
             </select>

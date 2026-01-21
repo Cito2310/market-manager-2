@@ -37,7 +37,7 @@ export const useProductScreen = () => {
     // Manage load categories and show data
     const dispatch = useAppDispatch();
     const { data, messageError, status, wasCalledOnce } = useAppSelector( state => state.product );
-
+    const { data: categoryData } = useAppSelector( state => state.category );
 
     // Filter data and sort
     const sortedAndFilteredData = useMemo(() =>
@@ -61,8 +61,17 @@ export const useProductScreen = () => {
 
     const pagination = usePaginate( sortedAndFilteredData, 15 )
 
+
+    const optionsCategory = useMemo(() => {
+        return categoryData.map( c => ({ label: c.name, value: c.name.toLowerCase() }) );
+    }, [categoryData])
+
+
     // RETURN VALUES AND FUNCTIONS
     return {
+        options: {
+            category: optionsCategory,
+        },
         pagination: pagination,
         search: {
             onSearchSubmit,

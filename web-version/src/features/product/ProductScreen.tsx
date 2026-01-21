@@ -10,7 +10,7 @@ import { OptionsPrimary } from "../../utils/OptionsPrimary"
 import { Pagination } from "../../components/Pagination"
 
 export const ProductScreen = () => {
-    const { search, select, open, product, sort, pagination } = useProductScreen();
+    const { search, select, open, product, sort, pagination, options } = useProductScreen();
 
     return (
         <div className="mt-8 p-2 px-10 font-[Montserrat]">
@@ -31,7 +31,7 @@ export const ProductScreen = () => {
                     />
                     <InputSelect 
                         registerReturn={select.registerSelect("category")} optionSelected={!!select.watchCategory} 
-                        label="Categoria" options={ OptionsPrimary }
+                        label="Categoria" options={ options.category }
                     />
                 </div>
 
