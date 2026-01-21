@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { joinData } from "../../../helpers/joinData";
 import { useSearch } from "../../../hooks/useSearch";
 import { joinArrayData } from "../../../helpers/joinArrayData";
+import { usePaginate } from "../../../hooks/usePaginate";
 
 
 export const useCategoryScreen = () => {
@@ -38,7 +39,7 @@ export const useCategoryScreen = () => {
 
 
     // Filter data and sort
-    const filteredData = useMemo(() => 
+    const sortedAndFilteredData = useMemo(() => 
         filterSearch( data, joinArrayData("category", data) )
         .filter( category => watchPrimary ? category.primary === watchPrimary.toLocaleLowerCase() : true )
         .sort( (a, b) => {
@@ -52,6 +53,10 @@ export const useCategoryScreen = () => {
         })
     , [data, filterSearch, watchPrimary, sortSelected]);
 
+
+    
+    // Paginate Data
+    const paginate = usePaginate(sortedAndFilteredData, 15);
 
 
     // RETURN VALUES AND FUNCTIONS
@@ -75,10 +80,11 @@ export const useCategoryScreen = () => {
             onCloseCategory: closeAll
         },
         category: {
-            data: filteredData,
+            data: paginate.paginatedData,
             messageError,
             status,
             wasCalledOnce
-        }
+        },
+        paginate: paginate,
     }
 }

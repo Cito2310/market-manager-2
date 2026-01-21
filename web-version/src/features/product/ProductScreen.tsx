@@ -7,9 +7,10 @@ import { useProductScreen } from "./hooks/useProductScreen"
 import { TableHeadProduct } from "./components/TableHeadProduct"
 import { InputSearch } from "../../components/InputSeach"
 import { OptionsPrimary } from "../../utils/OptionsPrimary"
+import { Pagination } from "../../components/Pagination"
 
 export const ProductScreen = () => {
-    const { search, select, open, product, sort } = useProductScreen();
+    const { search, select, open, product, sort, pagination } = useProductScreen();
 
     return (
         <div className="mt-8 p-2 px-10 font-[Montserrat]">
@@ -21,7 +22,7 @@ export const ProductScreen = () => {
             </div>
 
 
-            <div className="flex items-center my-3 justify-between">
+            <div className="flex my-3 justify-between">
                 <div className="flex gap-3">
                     <InputSearch onSearch={search.onSearchSubmit} register={search.registerSearch("search")} placeholder="Buscar" />
                     <InputSelect 
@@ -34,9 +35,14 @@ export const ProductScreen = () => {
                     />
                 </div>
 
-                <button onClick={open.onToggleCreatingMode} disabled={open.isOpen === "create"} className="font-medium text-[#008080] disabled:pointer-events-none disabled:opacity-60 transition-base hover:brightness-90 active:brightness-[.50] cursor-pointer mr-2">
-                    <i className="fa-solid fa-plus text-[0.8em]"/> Añadir Categoria
-                </button>
+                <div className="flex gap-3">
+                    <Pagination pagination={pagination}/>
+
+                    <button onClick={open.onToggleCreatingMode} disabled={open.isOpen === "create"} className="font-medium text-[#008080] disabled:pointer-events-none disabled:opacity-60 transition-base hover:brightness-90 active:brightness-[.50] cursor-pointer mr-2">
+                        <i className="fa-solid fa-plus text-[0.8em]"/> Añadir Categoria
+                    </button>
+                </div>
+
             </div>
 
 

@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { joinData } from "../../../helpers/joinData";
 import { useSearch } from '../../../hooks/useSearch';
 import { joinArrayData } from '../../../helpers/joinArrayData';
+import { usePaginate } from '../../../hooks/usePaginate';
 
 export const useProductScreen = () => {
     // Manage open state for products and creating mode
@@ -39,7 +40,7 @@ export const useProductScreen = () => {
 
 
     // Filter data and sort
-    const filteredData = useMemo(() =>
+    const sortedAndFilteredData = useMemo(() =>
         filterSearch( data, joinArrayData("product", data) )
         .filter( product => watchPrimary ? product.info.primary === watchPrimary.toLocaleLowerCase() : true )
         .filter( product => watchCategory ? product.info.category === watchCategory.toLocaleLowerCase() : true )
@@ -58,9 +59,11 @@ export const useProductScreen = () => {
         })
     , [data, filterSearch, watchPrimary, watchCategory, sortSelected]);
 
+    const pagination = usePaginate( sortedAndFilteredData, 15 )
 
     // RETURN VALUES AND FUNCTIONS
     return {
+        pagination: pagination,
         search: {
             onSearchSubmit,
             registerSearch
@@ -81,7 +84,7 @@ export const useProductScreen = () => {
             onCloseCategory: closeAll
         },
         product: {
-            data: filteredData,
+            data: pagination.paginatedData,
             messageError,
             status,
             wasCalledOnce
