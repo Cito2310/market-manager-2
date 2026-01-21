@@ -40,8 +40,8 @@ export const InputProduct = ({ label, type, prefix, subfix, padding, register, p
                 className={base}
                 {...register}>
                 {
-                    options!.map( option => (
-                        <option key={uuidv4()} value={option.value}>{option.label}</option>
+                    options!.map( (option, index) => (
+                        <option key={option.value+index} value={option.value}>{option.label}</option>
                     ))
                 }
             </select>
