@@ -6,6 +6,9 @@ import { useInitApp } from "./hooks/useInitApp";
 import { LoginScreen } from "./features/login/LoginScreen";
 import { CategoryScreen } from "./features/category/CategoryScreen";
 import { ProductScreen } from "./features/product/ProductScreen";
+import { POSScreen } from "./features/pointOfSale/POSScreen";
+
+// import { ModalAddProduct } from "../DELETE_THIS/ModalDesigns/ModalAddProduct";
 
 export default function App() {
     const { auth, modal } = useAppSelector( state => state );
@@ -16,6 +19,8 @@ export default function App() {
     return (
         <div>
             <Topbar />
+
+            {/* <ModalAddProduct /> */}
             {
                 token && <>
                     { modal.currentModal === "addImage" && <ModalAddImage /> }
@@ -26,8 +31,9 @@ export default function App() {
             {
                 token === null 
                 ? <LoginScreen />
+                : <POSScreen />
                 // : <CategoryScreen />
-                : <ProductScreen />
+                // : <ProductScreen />
             }
         </div>
     )

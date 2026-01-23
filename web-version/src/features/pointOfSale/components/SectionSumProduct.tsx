@@ -1,19 +1,30 @@
 import { ItemProductPos } from "./sidebar-components/ItemProductPos";
 
-export const SectionSumProduct = () => (
-    <div className={`
-        mt-8 h-[calc(100vh-2rem)] overflow-y-auto bg-gray-100
-        flex flex-col w-[60%] justify-between
+const POSTableHeadItem = ({ label, width, className }: {label: string, width?: string, className?: string}) => <th
+    className={`py-1.5 text-[#004C4C] bg-[#CDECEC] font-normal ${className}`}
+    style={{ width }}
+>
+    { label }
+</th>
+
+interface props {
+    widthPercentaje: number;
+}
+
+export const SectionSumProduct = ({ widthPercentaje }: props) => (
+    <div style={{ width: widthPercentaje + "%" }} className={`
+        mt-8 h-[calc(100vh-2rem)] overflow-y-auto
+        flex flex-col justify-between
     `}>
         <div className="">
             <table className="w-full">
-                <thead className="bg-[#d5e0e0] text-[#7e9292]">
+                <thead className="">
                     <tr>
-                        <th className="text-left px-4 py-2">PRODUCTOS</th>
-                        <th className="py-2 w-[16%]">CANTIDAD</th>
-                        <th className="py-2 w-[16%]">P. UNIDAD</th>
-                        <th className="py-2 w-[16%]">P. TOTAL</th>
-                        <th className="py-2 w-[4%]"></th>
+                        <POSTableHeadItem label="Producto" className="text-left px-4" />
+                        <POSTableHeadItem label="Cantidad" width="16%" />
+                        <POSTableHeadItem label="P. Unidad" width="16%" />
+                        <POSTableHeadItem label="P. Total" width="16%" />
+                        <POSTableHeadItem label="" width="4%" />
                     </tr>
                 </thead>
 
@@ -36,6 +47,6 @@ export const SectionSumProduct = () => (
             </table>
         </div>
 
-        <h2 className="sticky bottom-0 w-full font-medium text-right text-3xl py-2 px-4 border-t border-[#7e9292] bg-white">$ 12.400,00</h2>
+        <h2 className="sticky bottom-0 w-full font-medium text-right text-3xl py-2 px-4 bg-slate-100 border-t border-slate-200 text-[#023b3b]">$ 12.400,00</h2>
     </div>
 )

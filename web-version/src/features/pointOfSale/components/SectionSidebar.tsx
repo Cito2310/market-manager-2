@@ -2,10 +2,14 @@ import { BtnBottomSidebar } from "./sidebar-components/BtnBottomSidebar";
 import { BtnSidebar } from "./sidebar-components/BtnSidebar";
 import { InputSidebar } from "./sidebar-components/InputSidebar";
 
-export const SectionSidebar = () => (
-    <div className={`
+interface props {
+    widthPercentaje: number;
+}
+
+export const SectionSidebar = ({ widthPercentaje }: props) => (
+    <div style={{ width: widthPercentaje+ "%", left: (100 - widthPercentaje) + "%" }} className={`
         fixed top-8 z-40
-        h-[calc(100vh-2rem)] w-[40%] left-[60%]
+        h-[calc(100vh-2rem)]
 
         border-l-2 border-[#7e9292]
         justify-between gap-4 flex flex-col p-4
