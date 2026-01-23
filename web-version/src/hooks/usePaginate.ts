@@ -3,6 +3,11 @@ import { useState, useMemo } from 'react';
 export const usePaginate = <T>( data: T[] = [], pageSize: number = 15 ) => {
     const [page, setPage] = useState(1);
 
+    // When detect change in data or pageSize, reset to first page
+    useMemo(() => {
+        setPage(1);
+    }, [data, pageSize]);
+
     const paginatedData = useMemo(() => {
         return data.reduce((acc, item, index) => {
             if ( index % pageSize === 0 ) acc.push( [] );
