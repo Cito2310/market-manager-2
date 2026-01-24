@@ -27,7 +27,7 @@ interface ConfigModal {
 
 interface props {
     header: HeaderModal;
-    footerButtons: FooterModalButton[];
+    footerButtons?: FooterModalButton[];
     config: ConfigModal;
 
     children: React.ReactNode

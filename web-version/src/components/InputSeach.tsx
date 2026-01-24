@@ -5,9 +5,10 @@ interface props {
     autofocus?: boolean;
     onSearch: () => void;
     register: UseFormRegisterReturn<any>;
+    wFull?: boolean;
 }
 
-export const InputSearch = ({ placeholder, autofocus, onSearch, register }: props) => {
+export const InputSearch = ({ placeholder, autofocus, onSearch, register, wFull }: props) => {
 
     return (
         <form 
@@ -17,7 +18,7 @@ export const InputSearch = ({ placeholder, autofocus, onSearch, register }: prop
             <input
                 {...register}
                 autoFocus={autofocus}
-                className="px-3 py-1.5 focus:outline-none"
+                className={`px-3 py-1.5 focus:outline-none ${wFull ? "w-full" : ""}`}
                 placeholder={placeholder}
             />
             

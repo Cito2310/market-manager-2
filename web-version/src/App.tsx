@@ -7,6 +7,7 @@ import { LoginScreen } from "./features/login/LoginScreen";
 import { CategoryScreen } from "./features/category/CategoryScreen";
 import { ProductScreen } from "./features/product/ProductScreen";
 import { POSScreen } from "./features/pointOfSale/POSScreen";
+import { ModalAddProduct } from "./features/modals/addProduct/ModalAddProduct";
 
 // import { ModalAddProduct } from "../DELETE_THIS/ModalDesigns/ModalAddProduct";
 
@@ -20,11 +21,11 @@ export default function App() {
         <div>
             <Topbar />
 
-            {/* <ModalAddProduct /> */}
             {
                 token && <>
                     { modal.currentModal === "addImage" && <ModalAddImage /> }
                     { ( modal.currentModal === "viewImages" || modal.currentModal === "addImage" ) && <ModalImages />}
+                    { modal.currentModal === "none" && <ModalAddProduct /> }
                 </>
             }
 
