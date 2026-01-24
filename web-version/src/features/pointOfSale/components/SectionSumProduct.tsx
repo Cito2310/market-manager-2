@@ -1,19 +1,15 @@
 import { POSProduct } from "../../../../types/POSProduct";
-import { ItemProductPos } from "./sidebar-components/ItemProductPos";
+import { POSProductItem } from "./POSProductItem";
+import { POSTableHeadItem } from "./POSTableHeadItem";
 
-const POSTableHeadItem = ({ label, width, className }: {label: string, width?: string, className?: string}) => <th
-    className={`py-1.5 text-[#004C4C] bg-[#CDECEC] font-normal ${className}`}
-    style={{ width }}
->
-    { label }
-</th>
 
 interface props {
     widthPercentaje: number;
     posProducts: POSProduct[];
+    totalSum: number;
 }
 
-export const SectionSumProduct = ({ widthPercentaje, posProducts }: props) => (
+export const SectionSumProduct = ({ widthPercentaje, posProducts, totalSum }: props) => (
     <div style={{ width: widthPercentaje + "%" }} className={`
         mt-8 h-[calc(100vh-2rem)] overflow-y-auto
         flex flex-col justify-between
@@ -32,21 +28,15 @@ export const SectionSumProduct = ({ widthPercentaje, posProducts }: props) => (
 
 
                 <tbody>
-                    {
-                        posProducts.map( ( posProduct ) => (
-                            <ItemProductPos
-                                key={ posProduct.product._id }
-                                productName={posProduct.product.info.name}
-                                unit={posProduct.quantity}
-                                priceUnit={`$ ${posProduct.product.info.price}`}
-                                priceTotal={`$ ${posProduct.product.info.price * posProduct.quantity}`}
-                            />
-                        ))
-                    }
+                    { posProducts.map( ( posProduct ) => (
+                            <POSProductItem POSProduct={posProduct} />
+                    ))}
                 </tbody>
             </table>
         </div>
 
-        <h2 className="sticky bottom-0 w-full font-medium text-right text-3xl py-2 px-4 bg-slate-100 border-t border-slate-200 text-[#023b3b]">$ 12.400,00</h2>
+        <h2 className="sticky bottom-0 w-full font-medium text-right text-3xl py-2 px-4 bg-slate-100 border-t border-slate-200 text-[#023b3b]">
+            $ {totalSum.toLocaleString("es-AR")}
+        </h2>
     </div>
 )

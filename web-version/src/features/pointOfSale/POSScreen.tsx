@@ -4,8 +4,10 @@ import { SectionSidebar } from "./components/SectionSidebar"
 import { SectionSumProduct } from "./components/SectionSumProduct"
 
 export const POSScreen = () => {
-    const { tabs } = useAppSelector( state => state.pointOfSale )
-    const currentTab = tabs[0]
+    const { tabs, currentTabIndex } = useAppSelector( state => state.pointOfSale );
+    const currentTab = tabs[currentTabIndex];
+
+    const totalSum = currentTab.POSProducts.reduce( ( total, POSProduct ) => total + ( POSProduct.product.info.price * POSProduct.quantity ), 0 );
 
 
     return (
@@ -15,7 +17,7 @@ export const POSScreen = () => {
             <div className="flex w-full">
                 <SectionSidebar widthPercentaje={40} />
 
-                <SectionSumProduct posProducts={currentTab.POSProducts} widthPercentaje={60} />
+                <SectionSumProduct posProducts={currentTab.POSProducts} widthPercentaje={60} totalSum={totalSum} />
             </div>
 
         
