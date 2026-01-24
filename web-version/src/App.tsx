@@ -25,7 +25,7 @@ export default function App() {
                 token && <>
                     { modal.currentModal === "addImage" && <ModalAddImage /> }
                     { ( modal.currentModal === "viewImages" || modal.currentModal === "addImage" ) && <ModalImages />}
-                    { modal.currentModal === "none" && <ModalAddProduct /> }
+                    { modal.currentModal === "addPOSProduct" && <ModalAddProduct /> }
                 </>
             }
 

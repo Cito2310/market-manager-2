@@ -1,3 +1,4 @@
+import { POSProduct } from "../../../../types/POSProduct";
 import { ItemProductPos } from "./sidebar-components/ItemProductPos";
 
 const POSTableHeadItem = ({ label, width, className }: {label: string, width?: string, className?: string}) => <th
@@ -9,9 +10,10 @@ const POSTableHeadItem = ({ label, width, className }: {label: string, width?: s
 
 interface props {
     widthPercentaje: number;
+    posProducts: POSProduct[];
 }
 
-export const SectionSumProduct = ({ widthPercentaje }: props) => (
+export const SectionSumProduct = ({ widthPercentaje, posProducts }: props) => (
     <div style={{ width: widthPercentaje + "%" }} className={`
         mt-8 h-[calc(100vh-2rem)] overflow-y-auto
         flex flex-col justify-between
@@ -30,19 +32,17 @@ export const SectionSumProduct = ({ widthPercentaje }: props) => (
 
 
                 <tbody>
-                    <ItemProductPos productName="Morixe Harina" unit={3} priceUnit="$ 800" priceTotal="$ 3.200" />
-                    <ItemProductPos productName="Cañuelas Aceite de Girasol" unit={2} priceUnit="$ 2.400" priceTotal="$ 4.800" />
-                    <ItemProductPos productName="Cabalgata Gaseosa Cola" unit={1} priceUnit="$ 1.700" priceTotal="$ 1.700" />
-                    <ItemProductPos productName="Cabalgata Gaseosa Lima" unit={2} priceUnit="$ 1.700" priceTotal="$ 3.400" />
-                    <ItemProductPos productName="Cabalgata Gaseosa Lima" unit={2} priceUnit="$ 1.700" priceTotal="$ 3.400" />
-                    <ItemProductPos productName="Cabalgata Gaseosa Lima" unit={2} priceUnit="$ 1.700" priceTotal="$ 3.400" />
-                    <ItemProductPos productName="Cabalgata Gaseosa Lima" unit={2} priceUnit="$ 1.700" priceTotal="$ 3.400" />
-                    <ItemProductPos productName="Cabalgata Gaseosa Lima" unit={2} priceUnit="$ 1.700" priceTotal="$ 3.400" />
-                    <ItemProductPos productName="Cabalgata Gaseosa Lima" unit={2} priceUnit="$ 1.700" priceTotal="$ 3.400" />
-                    <ItemProductPos productName="Cabalgata Gaseosa Lima" unit={2} priceUnit="$ 1.700" priceTotal="$ 3.400" />
-                    <ItemProductPos productName="Cabalgata Gaseosa Lima" unit={2} priceUnit="$ 1.700" priceTotal="$ 3.400" />
-                    <ItemProductPos productName="Cabalgata Gaseosa Lima" unit={2} priceUnit="$ 1.700" priceTotal="$ 3.400" />
-                    <ItemProductPos productName="Cabalgata Gaseosa Lima" unit={2} priceUnit="$ 1.700" priceTotal="$ 5.400" />
+                    {
+                        posProducts.map( ( posProduct ) => (
+                            <ItemProductPos
+                                key={ posProduct.product._id }
+                                productName={posProduct.product.info.name}
+                                unit={posProduct.quantity}
+                                priceUnit={`$ ${posProduct.product.info.price}`}
+                                priceTotal={`$ ${posProduct.product.info.price * posProduct.quantity}`}
+                            />
+                        ))
+                    }
                 </tbody>
             </table>
         </div>

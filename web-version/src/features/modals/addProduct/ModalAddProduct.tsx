@@ -2,27 +2,33 @@ import { useForm } from "react-hook-form"
 import { InputSearch } from "../../../components/InputSeach"
 import { ModalContainer } from "../../../components/ModalContainer"
 import { InputProduct } from "../../product/components/ItemProduct/InputProduct"
-import { useAppSelector } from "../../../../store/store"
+import { useAppDispatch, useAppSelector } from "../../../../store/store"
 import { useSearch } from "../../../hooks/useSearch"
 import { useMemo } from "react"
+import { addProduct } from "../../../../store/pointOfSale/pointOfSaleSlice"
+import { setNoneModal } from "../../../../store/modal/modalSlice"
 
 export const ModalAddProduct = () => {
+    const dispatch = useAppDispatch();
+    const { data } = useAppSelector( state => state.product );
+
     const { filterSearch, onSearchSubmit, registerSearch } = useSearch();
 
-    const { data } = useAppSelector( state => state.product )
     const sortedAndFilteredData = useMemo(() => 
         filterSearch( data, data.map( product => JSON.stringify(product) ) )
         , [ data, filterSearch ]);
 
     const onSelectProduct = ( productId: string ) => {
-        console.log("Selected product:", productId);
-        console.log("TODO: Close modal and add product to POS");
+        const findProduct = data.find( product => product._id === productId );
+
+        dispatch( addProduct({ product: findProduct!, quantity: 1 }) );
+        dispatch( setNoneModal() );
     }
 
     return (
         <ModalContainer
             header={{ title: "Añadir Producto" }}
-            config={{ closeModal: () => console.log("TODO CloseModal"), width: 600  }}
+            config={{ closeModal: () => dispatch(setNoneModal()), width: 600  }}
         >
             <InputSearch wFull register={registerSearch("search")} onSearch={onSearchSubmit} placeholder="Buscar Producto" autofocus />
 

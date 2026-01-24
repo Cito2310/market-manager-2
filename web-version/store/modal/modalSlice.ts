@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { set } from 'react-hook-form';
 
 interface modalState {
-    currentModal: "none" | "addImage" | "viewImages";
+    currentModal: "none" | "addImage" | "viewImages" | "addPOSProduct";
     addImageData?: {
         base64: string;
         nameImage: string;
@@ -13,7 +12,7 @@ interface modalState {
 }
 
 const initialState: modalState = {
-    currentModal: "none",
+    currentModal: "addPOSProduct",
 }
 
 export const modalSlice = createSlice({
@@ -21,7 +20,7 @@ export const modalSlice = createSlice({
     initialState,
     reducers: {
 
-        setCurrentModal: ( state, action: { payload: "none" | "addImage" | "viewImages" } ) => {
+        setCurrentModal: ( state, action: { payload: "none" | "addImage" | "viewImages" | "addPOSProduct" } ) => {
             state.currentModal = action.payload
         },
 

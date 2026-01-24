@@ -1,30 +1,29 @@
+import { POSProduct } from './../../types/POSProduct';
 import { createSlice } from '@reduxjs/toolkit';
 import { Product } from "../../types/Product";
 
-interface POSProduct {
-    product: Product;
-    quantity: number;
-}
 
 interface pointOfSaleState {
     tabs: [
         { POSProducts: POSProduct[] }
     ];
+    currentTabIndex: number;
 }
 
 const initialState: pointOfSaleState = {
     tabs: [
         { POSProducts: [] }
     ],
+    currentTabIndex: 0,
 }
 
 export const pointOfSaleSlice = createSlice({
     name: 'pointOfSale',
     initialState,
     reducers: {
-        addProduct: ( state, action: { payload: { product: Product; quantity: number, tab: number } } ) => {
-            const { product, quantity, tab } = action.payload;
-            const currentTab = state.tabs[tab];
+        addProduct: ( state, action: { payload: { product: Product; quantity: number } } ) => {
+            const { product, quantity } = action.payload;
+            const currentTab = state.tabs[state.currentTabIndex];
 
             const existProductInTabIndex = currentTab.POSProducts.findIndex( posProduct => posProduct.product._id === product._id );
 
@@ -39,9 +38,9 @@ export const pointOfSaleSlice = createSlice({
             }
         },
 
-        changeQuantity: ( state, action: { payload: { productId: string; quantity: number; tab: number } } ) => {
-            const { productId, quantity, tab } = action.payload;
-            const currentTab = state.tabs[tab];
+        changeQuantity: ( state, action: { payload: { productId: string; quantity: number } } ) => {
+            const { productId, quantity } = action.payload;
+            const currentTab = state.tabs[state.currentTabIndex];
         
             const productIndex = currentTab.POSProducts.findIndex( posProduct => posProduct.product._id === productId );
         
@@ -50,9 +49,9 @@ export const pointOfSaleSlice = createSlice({
             }
         },
 
-        removeProduct: ( state, action: { payload: { productId: string; tab: number } } ) => {
-            const { productId, tab } = action.payload;
-            const currentTab = state.tabs[tab];
+        removeProduct: ( state, action: { payload: { productId: string } } ) => {
+            const { productId } = action.payload;
+            const currentTab = state.tabs[state.currentTabIndex];
 
             currentTab.POSProducts = currentTab.POSProducts.filter( posProduct => posProduct.product._id !== productId );
         },
