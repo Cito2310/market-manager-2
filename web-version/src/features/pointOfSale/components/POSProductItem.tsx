@@ -16,7 +16,7 @@ export const POSProductItem = ({ POSProduct, deletePOSProduct }: props) => {
     const dispatch = useAppDispatch();
     const { watch, reset, register, getValues } = useForm({ defaultValues: { quantity: quantity } });
     useEffect(() => { reset({ quantity }) }, [quantity]);
-    useEffect(() => { dispatch( changeQuantity({ productId: product._id, quantity: getValues("quantity") }) ) }, [watch("quantity")]);
+    useEffect(() => { dispatch( changeQuantity({ productId: product._id, quantity: Number(getValues("quantity")) }) ) }, [watch("quantity")]);
 
     return (
         <tr className=" [&>td]:py-2 text-[#023b3b] font-medium

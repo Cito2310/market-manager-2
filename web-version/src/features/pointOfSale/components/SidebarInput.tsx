@@ -1,18 +1,22 @@
+import { UseFormRegisterReturn } from "react-hook-form";
+
 interface props {
     label: string;
-    value: string;
-    onChange: (value: string) => void;
     width?: string
+    id: string;
+    registerReturn: UseFormRegisterReturn;
+    placeholder: string;
 }
 
-export const SidebarInput = ({ label, value, onChange, width }: props) => {
+export const SidebarInput = ({ label, width, id, registerReturn, placeholder }: props) => {
     return (
         <div className={`flex flex-col ${width || "w-full"}`}>
-            <label className="font-medium px-1">{label}</label>
+            <label htmlFor={id} className="font-medium px-1">{label}</label>
             <input 
-                onChange={(e) => onChange(e.target.value)} 
-                className="border-b-2 w-full border-[#d5e0e0] px-1 pt-1 outline-none focus:border-[#7e9292] transition-base" 
-                value={value}
+                id={id}
+                {...registerReturn}
+                placeholder={placeholder}
+                className="border-b w-full border-[#d5e0e0] px-1 pt-1 outline-none focus:border-[#008080] transition-base" 
             />
         </div>
     )
