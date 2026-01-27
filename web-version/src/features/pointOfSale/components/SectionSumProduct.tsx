@@ -7,9 +7,10 @@ interface props {
     widthPercentaje: number;
     posProducts: POSProduct[];
     totalSum: number;
+    deletePOSProduct: ( id: string ) => void;
 }
 
-export const SectionSumProduct = ({ widthPercentaje, posProducts, totalSum }: props) => (
+export const SectionSumProduct = ({ widthPercentaje, posProducts, totalSum, deletePOSProduct }: props) => (
     <div style={{ width: widthPercentaje + "%" }} className={`
         mt-8 h-[calc(100vh-2rem)] overflow-y-auto
         flex flex-col justify-between
@@ -29,7 +30,7 @@ export const SectionSumProduct = ({ widthPercentaje, posProducts, totalSum }: pr
 
                 <tbody>
                     { posProducts.map( ( posProduct ) => (
-                            <POSProductItem POSProduct={posProduct} />
+                        <POSProductItem POSProduct={posProduct} deletePOSProduct={deletePOSProduct} />
                     ))}
                 </tbody>
             </table>

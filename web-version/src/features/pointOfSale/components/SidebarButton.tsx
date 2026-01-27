@@ -5,12 +5,11 @@ interface props {
     onClick?: () => void;
     disabled?: boolean;
     className?: string;
-    variant?: "primary" | "secondary" | "danger";
 }
 
-export const BtnBottomSidebar = ({ children, onClick, disabled, className, variant = "secondary" }: props) => {
+export const SidebarButton = ({ children, onClick, disabled, className }: props) => {
 
-    const base = "rounded-md basis-0 grow px-2 py-6 shadow transition-base";
+    const base = "rounded-md basis-0 grow bg-[#d5e0e0] px-4 py-2 shadow transition-base";
 
     const state = disabled
         ? 'disabled:opacity-60 cursor-default'
@@ -18,13 +17,8 @@ export const BtnBottomSidebar = ({ children, onClick, disabled, className, varia
             hover:brightness-95 hover:shadow-none
             cursor-pointer`;
 
-        const variants = {
-            "primary": "bg-[#008080] text-white",
-            "secondary": "bg-[#d5e0e0] text-black",
-            "danger": "bg-[#dd656f] text-black",
-        }
-
-    const classes = `${base} ${state} ${variants[variant]} ${className || ''}`;
+            
+    const classes = `${base} ${state} ${className || ''}`;
 
 
     return (

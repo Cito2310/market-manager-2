@@ -5,7 +5,7 @@ interface props {
     width?: string
 }
 
-export const InputSidebar = ({ label, value, onChange, width }: props) => {
+export const SidebarInput = ({ label, value, onChange, width }: props) => {
     return (
         <div className={`flex flex-col ${width || "w-full"}`}>
             <label className="font-medium px-1">{label}</label>
