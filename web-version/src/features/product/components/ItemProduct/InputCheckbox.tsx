@@ -3,7 +3,7 @@ import { UseFormRegisterReturn } from "react-hook-form/dist/types/form";
 interface props {
     label: string;
     register: UseFormRegisterReturn<string>;
-    icon: "boxes-stacked" | "calendar-days"
+    icon: "boxes-stacked" | "calendar-days" | "percent" | "receipt" | "file-lines" | "sack-dollar"
 }
 
 export const InputCheckbox = ({ label, register, icon }: props) => {

@@ -9,7 +9,7 @@ import { ProductScreen } from "./features/product/ProductScreen";
 import { POSScreen } from "./features/pointOfSale/POSScreen";
 import { ModalAddProduct } from "./features/modals/addProduct/ModalAddProduct";
 
-// import { ModalAddProduct } from "../DELETE_THIS/ModalDesigns/ModalAddProduct";
+import { ModalPay } from "./features/modals/pay/ModalPay";
 
 export default function App() {
     const { auth, modal } = useAppSelector( state => state );
@@ -26,6 +26,7 @@ export default function App() {
                     { modal.currentModal === "addImage" && <ModalAddImage /> }
                     { ( modal.currentModal === "viewImages" || modal.currentModal === "addImage" ) && <ModalImages />}
                     { modal.currentModal === "addPOSProduct" && <ModalAddProduct /> }
+                    { modal.currentModal === "none" && <ModalPay /> }
                 </>
             }
 
