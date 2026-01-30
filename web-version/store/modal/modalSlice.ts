@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { ProductTicket } from '../../types/POSProduct';
 
 interface modalState {
-    currentModal: "none" | "addImage" | "viewImages" | "addPOSProduct";
+    currentModal: "none" | "addImage" | "viewImages" | "addPOSProduct" | "pay";
     addImageData?: {
         base64: string;
         nameImage: string;
@@ -9,10 +10,15 @@ interface modalState {
     selectedImageData?: {
         id: string;
     }
+    payData?: {
+        payMethod: "cash" | "transference" | "credit" | "debit";
+        totalPrice: number;
+        products: ProductTicket[];
+    }
 }
 
 const initialState: modalState = {
-    currentModal: "addPOSProduct",
+    currentModal: "none",
 }
 
 export const modalSlice = createSlice({
@@ -20,7 +26,7 @@ export const modalSlice = createSlice({
     initialState,
     reducers: {
 
-        setCurrentModal: ( state, action: { payload: "none" | "addImage" | "viewImages" | "addPOSProduct" } ) => {
+        setCurrentModal: ( state, action: { payload: "none" | "addImage" | "viewImages" | "addPOSProduct" | "pay" } ) => {
             state.currentModal = action.payload
         },
 
@@ -46,7 +52,22 @@ export const modalSlice = createSlice({
             }
 
             state.selectedImageData = action.payload
-        }
+        },
+
+        setPayData: ( state, action: { payload: { payMethod: "cash" | "transference" | "credit" | "debit"; totalPrice: number; products: ProductTicket[]; reset?: boolean } } ) => {
+            if ( action.payload.reset ) {
+                state.payData = undefined;
+                return;
+            }
+
+            state.payData = {
+                payMethod: action.payload.payMethod,
+                totalPrice: action.payload.totalPrice,
+                products: action.payload.products,
+            }
+
+            state.currentModal = "pay"
+        },
     }
 });
 
@@ -56,4 +77,5 @@ export const {
     setAddImageData,
     setNoneModal,
     setSelectedImageData,
+    setPayData,
 } = modalSlice.actions

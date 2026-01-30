@@ -26,7 +26,7 @@ export default function App() {
                     { modal.currentModal === "addImage" && <ModalAddImage /> }
                     { ( modal.currentModal === "viewImages" || modal.currentModal === "addImage" ) && <ModalImages />}
                     { modal.currentModal === "addPOSProduct" && <ModalAddProduct /> }
-                    { modal.currentModal === "none" && <ModalPay /> }
+                    { modal.currentModal === "pay" && <ModalPay /> }
                 </>
             }
 

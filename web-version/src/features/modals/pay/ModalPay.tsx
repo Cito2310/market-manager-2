@@ -1,6 +1,6 @@
 import { useFieldArray, useForm } from "react-hook-form";
 import { setNoneModal } from "../../../../store/modal/modalSlice";
-import { useAppDispatch } from "../../../../store/store";
+import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { ModalContainer } from "../../../components/ModalContainer"
 import { ContainerData } from "../../product/components/ContainerData";
 import { Layout } from "../../product/components/Layout";
@@ -9,8 +9,9 @@ import { InputCheckbox } from "../../product/components/ItemProduct/InputCheckbo
 
 export const ModalPay = () => {
     const dispatch = useAppDispatch();
+    const { payData } = useAppSelector( state => state.modal );
     const { control, register, watch } = useForm({ defaultValues: { 
-        payMethods: [{ method: "cash", quantity: "0" }], 
+        payMethods: [{ method: payData?.payMethod, quantity: payData?.totalPrice }], 
         discount: false,
         print: false,
         report: false,
@@ -34,7 +35,7 @@ export const ModalPay = () => {
             ]}
         >
             <Layout.Row>
-                <Layout.Column className="w-[65%]">
+                <Layout.Column className="w-[65%] overflow-y-auto max-h-[380px]">
                     <ContainerData label="Metodo de Pago">
                         <TableMethodPay appendField={append} removeField={remove} fields={fields} register={register} />
                     </ContainerData>
@@ -121,7 +122,7 @@ export const ModalPay = () => {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>20 Producto</td><td className="text-center">${ Number(20000).toLocaleString("es-AR") }</td>
+                                    <td>{ payData?.products.length } Producto</td><td className="text-center">${ Number(payData?.totalPrice).toLocaleString("es-AR") }</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -131,18 +132,18 @@ export const ModalPay = () => {
                         <div className="flex flex-col justify-between py-2 border-t border-[#00000012]">
                             <div className="flex justify-between w-full">
                                 <p className="font-medium text-[#008080]">TOTAL</p>
-                                <p className="font-semibold text-[#008080]">$ 14.230</p>
+                                <p className="font-semibold text-[#008080]">$ { Number(payData?.totalPrice).toLocaleString("es-AR") }</p>
                             </div>
 
                             <ul className="ml-4 flex flex-col gap-0.5 text-sm">
-                                <li className="flex justify-between gap-2">
-                                    <span className="text-[#008080]">• Efectivo</span>
-                                    <span className="text-[#536464]">$72.400</span>
-                                </li>
-                                <li className="flex justify-between gap-2">
-                                    <span className="text-[#008080]">• Debito</span>
-                                    <span className="text-[#536464]">$29.756</span>
-                                </li>
+                                {
+                                    fields.map( ( field, index ) => (
+                                        <li key={field.id} className="flex justify-between gap-2">
+                                            <span className="text-[#008080]">• { field.method === "cash" ? "Efectivo" : field.method === "debit" ? "Debito" : field.method === "credit" ? "Credito" : "Transferencia" }</span>
+                                            <span className="text-[#536464]">${ Number(watch(`payMethods.${index}.quantity`)).toLocaleString("es-AR") }</span>
+                                        </li>
+                                    ) )
+                                }
                             </ul>
                         </div>
                     </ContainerData>

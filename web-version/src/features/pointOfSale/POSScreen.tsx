@@ -1,5 +1,5 @@
 import { useFieldArray, useForm } from "react-hook-form"
-import { setCurrentModal } from "../../../store/modal/modalSlice"
+import { setCurrentModal, setPayData } from "../../../store/modal/modalSlice"
 import { removeProduct } from "../../../store/pointOfSale/pointOfSaleSlice"
 import { useAppDispatch, useAppSelector } from "../../../store/store"
 import { Topbar } from "../../components/Topbar"
@@ -42,6 +42,8 @@ export const POSScreen = () => {
             quantity: posProduct.quantity,
         }))
 
+        dispatch( setPayData({ payMethod: "cash", totalPrice: totalSum, products: productsForTicket }) )
+
 
         console.log({
             idTicket: uuidv4(),
@@ -56,7 +58,7 @@ export const POSScreen = () => {
             <Topbar />
 
             <div className="flex w-full">
-                <SectionSidebar cashChange={cashChange} register={ register } buttons={{ addPOSProduct: onModalAddPOSProduct, onPayModal: onPayModal }} widthPercentaje={40} />
+                <SectionSidebar disabled={currentTab.POSProducts.length === 0} cashChange={cashChange} register={ register } buttons={{ addPOSProduct: onModalAddPOSProduct, onPayModal: onPayModal }} widthPercentaje={40} />
 
                 <SectionSumProduct posProducts={currentTab.POSProducts} widthPercentaje={60} totalSum={totalSum} deletePOSProduct={deletePOSProduct} />
             </div>

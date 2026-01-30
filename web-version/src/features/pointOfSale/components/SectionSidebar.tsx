@@ -11,9 +11,10 @@ interface props {
     }
     register: UseFormRegister<any>;
     cashChange: number;
+    disabled?: boolean;
 }
 
-export const SectionSidebar = ({ widthPercentaje, buttons, register, cashChange }: props) => (
+export const SectionSidebar = ({ widthPercentaje, buttons, register, cashChange, disabled }: props) => (
     <div style={{ width: widthPercentaje+ "%", left: (100 - widthPercentaje) + "%" }} className={`
         fixed top-8 z-40
         h-[calc(100vh-2rem)]
@@ -40,8 +41,8 @@ export const SectionSidebar = ({ widthPercentaje, buttons, register, cashChange 
             </div>
 
             <div className="flex gap-4">
-                <SidebarButtonBottom variant="danger">F5 - Cancelar</SidebarButtonBottom>
-                <SidebarButtonBottom variant="primary" onClick={buttons.onPayModal}>F1 - Pagar</SidebarButtonBottom>
+                <SidebarButtonBottom disabled={disabled} variant="danger">F5 - Cancelar</SidebarButtonBottom>
+                <SidebarButtonBottom disabled={disabled} variant="primary" onClick={buttons.onPayModal}>F1 - Pagar</SidebarButtonBottom>
             </div>
         </div>
     </div>
