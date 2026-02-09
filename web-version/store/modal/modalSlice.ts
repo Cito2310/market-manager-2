@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { ProductTicket } from '../../types/POSProduct';
 
 interface modalState {
-    currentModal: "none" | "addImage" | "viewImages" | "addPOSProduct" | "pay";
+    currentModal: "none" | "addImage" | "viewImages" | "addPOSProduct" | "pay" | "cancelSells" | "lastSells";
     addImageData?: {
         base64: string;
         nameImage: string;
@@ -26,7 +26,7 @@ export const modalSlice = createSlice({
     initialState,
     reducers: {
 
-        setCurrentModal: ( state, action: { payload: "none" | "addImage" | "viewImages" | "addPOSProduct" | "pay" } ) => {
+        setCurrentModal: ( state, action: { payload: "none" | "addImage" | "viewImages" | "addPOSProduct" | "pay" | "cancelSells" | "lastSells" } ) => {
             state.currentModal = action.payload
         },
 

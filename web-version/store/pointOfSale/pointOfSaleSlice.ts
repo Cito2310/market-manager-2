@@ -55,6 +55,12 @@ export const pointOfSaleSlice = createSlice({
 
             currentTab.POSProducts = currentTab.POSProducts.filter( posProduct => posProduct.product._id !== productId );
         },
+
+        resetCurrentTab: ( state ) => {
+            const currentTab = state.tabs[state.currentTabIndex];
+            
+            currentTab.POSProducts = [];
+        }
     }
 })
 
@@ -62,4 +68,5 @@ export const {
     addProduct,
     removeProduct,
     changeQuantity,
+    resetCurrentTab
 } = pointOfSaleSlice.actions;

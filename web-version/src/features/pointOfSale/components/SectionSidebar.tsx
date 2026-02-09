@@ -8,6 +8,7 @@ interface props {
     buttons: {
         addPOSProduct: () => void;
         onPayModal: () => void;
+        onCancelSell: () => void;
     }
     register: UseFormRegister<any>;
     cashChange: number;
@@ -41,7 +42,7 @@ export const SectionSidebar = ({ widthPercentaje, buttons, register, cashChange,
             </div>
 
             <div className="flex gap-4">
-                <SidebarButtonBottom disabled={disabled} variant="danger">F5 - Cancelar</SidebarButtonBottom>
+                <SidebarButtonBottom disabled={disabled} variant="danger" onClick={buttons.onCancelSell}>F5 - Cancelar</SidebarButtonBottom>
                 <SidebarButtonBottom disabled={disabled} variant="primary" onClick={buttons.onPayModal}>F1 - Pagar</SidebarButtonBottom>
             </div>
         </div>

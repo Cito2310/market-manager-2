@@ -15,6 +15,7 @@ interface FooterModalButton {
     className?: string;
     disabled?: boolean;
     isSubmit?: boolean;
+    autofocus?: boolean;
 }
 
 interface ConfigModal {
@@ -81,6 +82,7 @@ export const ModalContainer = ({ children, config, footerButtons, header  }: pro
                                     disabled={button.disabled}
                                     type={button.isSubmit ? "submit" : "button"}
                                     loading={config.hasLoading}
+                                    autofocus={button.autofocus}
                                 />
                             ))
                         }

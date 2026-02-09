@@ -6,11 +6,11 @@ interface props {
     className?: string;
     variant?: "primary" | "secondary" | "danger";
     type?: "button" | "submit";
+    autofocus?: boolean;
 }
 
 
-export const ItemFooterButton = ({ label, onClick, disabled, className, variant, type, loading }: props) => {
-
+export const ItemFooterButton = ({ label, onClick, disabled, className, variant, type, loading, autofocus }: props) => {
 
 
     const baseStyle = `
@@ -34,7 +34,7 @@ export const ItemFooterButton = ({ label, onClick, disabled, className, variant,
     const classes = `${baseStyle} ${disabledStyle} ${activeStyle} ${hoverStyle}  ${variants[variant || "secondary"]} ${className || ''}`;
 
     return (
-        <button disabled={disabled || loading} type={type || "button"} onClick={onClick} className={classes}>
+        <button disabled={disabled || loading} type={type || "button"} onClick={onClick} className={classes} autoFocus={autofocus}>
             {
                 loading
                 ? <>
