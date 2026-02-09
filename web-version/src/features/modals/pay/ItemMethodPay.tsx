@@ -3,9 +3,10 @@ interface props {
     register: any;
     fieldIndex: number;
     index: number;
+    options: { value: string; label: string }[]
 }
 
-export const ItemMethodPay = ({ removeField, fieldIndex, index, register }: props) => {
+export const ItemMethodPay = ({ removeField, fieldIndex, index, register, options }: props) => {
     return (
         <div className="flex gap-2">
             <button disabled={ fieldIndex === 1 } onClick={() => removeField(index)} className="
@@ -20,13 +21,7 @@ export const ItemMethodPay = ({ removeField, fieldIndex, index, register }: prop
                 p-1.5 bg-white rounded-md shadow-sm border-b-2 border-[#d5e0e0] outline-none
                 hover:brightness-[.97] active:brightness-[.94] transition-base cursor-pointer
             ">
-                <option value="cash">Efectivo</option>
-                <option value="transference-juan">Transferencia - Juan</option>
-                <option value="transference-raul">Transferencia - Raul</option>
-                <option value="transference-ale">Transferencia - Ale</option>
-                <option value="debit">Debito</option>
-                <option value="credit">Credito</option>
-                <option value="qr">QR</option>
+                { options.map( option => <option value={option.value} key={option.value} >{option.label}</option> ) }
             </select>
 
             <div className="relative h-full flex items-center grow">

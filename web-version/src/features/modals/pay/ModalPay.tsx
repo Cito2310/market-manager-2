@@ -6,12 +6,14 @@ import { ContainerData } from "../../product/components/ContainerData";
 import { Layout } from "../../product/components/Layout";
 import { TableMethodPay } from "./TableMethodPay";
 import { InputCheckbox } from "../../product/components/ItemProduct/InputCheckbox";
+import { Ticket } from "../../../../types/ticket";
+import { v4 as uuid } from "uuid";
 
 export const ModalPay = () => {
     const dispatch = useAppDispatch();
     const { payData } = useAppSelector( state => state.modal );
     const { control, register, watch } = useForm({ defaultValues: { 
-        payMethods: [{ method: payData?.payMethod, quantity: payData?.totalPrice }], 
+        payMethods: [{ method: payData?.payMethod || "cash", quantity: payData?.totalPrice || 0 }], 
         discount: false,
         print: false,
         report: false,
@@ -22,8 +24,37 @@ export const ModalPay = () => {
             debt: { amount: 0, client: "", against: false }
         }
     } });
-    const { append, remove, fields } = useFieldArray({ control, name: "payMethods" });
 
+    const onPayAndSubmitTicket = (): Ticket => {
+        const date = new Date();
+        const simplifyDate = `${date.getDate().toString().padStart(2, "0")}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getFullYear().toString().slice(2)}`;
+        const simplifyTime = `${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`;
+        const simplifyDateTime = `${simplifyDate} ${simplifyTime}`;
+
+        console.log("TODO")
+
+        return {
+            id: uuid(),
+            createdAt: simplifyDateTime,
+            numberDate: date.getTime().toString(),
+            products: payData!.products,
+            totalPrice: payData!.totalPrice,
+            payMethods: watch("payMethods"),
+            optionals: {
+                discount: watch("discount") ? watch("options.discount") : 0,
+                print: watch("print"),
+                report: watch("report") ? watch("options.reportTxt") : "",
+                debt: watch("debt") ? {
+                    amount: watch("options.debt.amount"),
+                    clientName: watch("options.debt.client"),
+                    against: watch("options.debt.against")
+                } : null
+            }
+        }
+    }
+
+    const { append, remove, fields } = useFieldArray({ control, name: "payMethods" });
+    const allOptions = [{ value: "cash", label: "Efectivo" }, { value: "transfer-juan", label: "Transferencia - Juan" }, { value: "transfer-raul", label: "Transferencia - Raul" }, { value: "transfer-ale", label: "Transferencia - Ale" }, { value: "debit", label: "Debito" }, { value: "credit", label: "Credito" }, { value: "qr", label: "QR" }]
 
     return (
         <ModalContainer
@@ -31,13 +62,13 @@ export const ModalPay = () => {
             config={{ closeModal: () => dispatch(setNoneModal()), width: 1000  }}
             footerButtons={[
                 {label: "Cancelar", variant: "secondary", onClick: () => dispatch(setNoneModal()), className: "w-full"},
-                {label: "Cobrar", variant: "primary", onClick: () => console.log("TODO"), className: "w-full"}
+                {label: "Cobrar", variant: "primary", onClick: () => console.log(onPayAndSubmitTicket()), className: "w-full"}
             ]}
         >
             <Layout.Row>
                 <Layout.Column className="w-[65%] overflow-y-auto max-h-[380px]">
                     <ContainerData label="Metodo de Pago">
-                        <TableMethodPay appendField={append} removeField={remove} fields={fields} register={register} />
+                        <TableMethodPay appendField={append} removeField={remove} fields={fields} register={register} options={allOptions} />
                     </ContainerData>
 
                     <ContainerData label="Opciones">

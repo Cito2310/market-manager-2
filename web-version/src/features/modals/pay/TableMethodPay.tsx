@@ -6,14 +6,15 @@ interface props {
     appendField: any;
     fields: any[];
     register: UseFormRegister<any>;
+    options: { value: string; label: string }[]
 }
 
-export const TableMethodPay = ({ removeField, appendField, fields, register }: props) => {
+export const TableMethodPay = ({ removeField, appendField, fields, register, options }: props) => {
     return (
         <div className="flex flex-col gap-3">
             {
                 fields.map((field, index) => (
-                    <ItemMethodPay register={ register } key={field.id} fieldIndex={ fields.length } index={index} removeField={removeField} />
+                    <ItemMethodPay register={ register } key={field.id} fieldIndex={ fields.length } index={index} removeField={removeField} options={options} />
                 ))
             }
 

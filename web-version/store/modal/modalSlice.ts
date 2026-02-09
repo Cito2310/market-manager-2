@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ProductTicket } from '../../types/POSProduct';
+import { ProductTicket } from '../../types/ticket';
 
 interface modalState {
     currentModal: "none" | "addImage" | "viewImages" | "addPOSProduct" | "pay" | "cancelSells" | "lastSells";
@@ -11,7 +11,7 @@ interface modalState {
         id: string;
     }
     payData?: {
-        payMethod: "cash" | "transference" | "credit" | "debit";
+        payMethod: "cash" | "transfer-juan" | "transfer-ale" | "transfer-raul" | "qr" | "credit" | "debit";
         totalPrice: number;
         products: ProductTicket[];
     }
@@ -54,7 +54,12 @@ export const modalSlice = createSlice({
             state.selectedImageData = action.payload
         },
 
-        setPayData: ( state, action: { payload: { payMethod: "cash" | "transference" | "credit" | "debit"; totalPrice: number; products: ProductTicket[]; reset?: boolean } } ) => {
+        setPayData: ( state, action: { payload: { 
+            payMethod: "cash" | "transfer-juan" | "transfer-ale" | "transfer-raul" | "qr" | "credit" | "debit"; 
+            totalPrice: number; 
+            products: ProductTicket[]; 
+            reset?: boolean
+        } } ) => {
             if ( action.payload.reset ) {
                 state.payData = undefined;
                 return;

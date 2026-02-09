@@ -13,7 +13,7 @@ export interface Ticket {
     numberDate: string;
     
     payMethods: {
-        method: "cash" | "debit" | "credit" | "transfer-juan" | "transfer-raul" | "transfer-ale";
+        method: "cash" | "debit" | "credit" | "transfer-juan" | "transfer-raul" | "transfer-ale" | "qr";
         quantity: number;
     }[]
 
@@ -25,6 +25,6 @@ export interface Ticket {
             amount: number;
             against: boolean;
             clientName: string;
-        }
+        } | null;
     }
 }
