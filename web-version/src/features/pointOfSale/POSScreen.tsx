@@ -30,6 +30,10 @@ export const POSScreen = () => {
         dispatch( setCurrentModal( "cancelSells" ) )
     }
 
+    const onModalLastSells = () => {
+        dispatch( setCurrentModal( "lastSells" ) )
+    }
+
     const onPayModal = () => {
         const newDate = new Date();
         const month = (newDate.getMonth() + 1).toString().padStart(2, '0');
@@ -62,7 +66,7 @@ export const POSScreen = () => {
             <Topbar />
 
             <div className="flex w-full">
-                <SectionSidebar disabled={currentTab.POSProducts.length === 0} cashChange={cashChange} register={ register } buttons={{ addPOSProduct: onModalAddPOSProduct, onPayModal: onPayModal, onCancelSell: onModalCancelSells }} widthPercentaje={40} />
+                <SectionSidebar disabled={currentTab.POSProducts.length === 0} cashChange={cashChange} register={ register } buttons={{ addPOSProduct: onModalAddPOSProduct, onPayModal: onPayModal, onCancelSell: onModalCancelSells, onLastSells: onModalLastSells }} widthPercentaje={40} />
 
                 <SectionSumProduct posProducts={currentTab.POSProducts} widthPercentaje={60} totalSum={totalSum} deletePOSProduct={deletePOSProduct} />
             </div>

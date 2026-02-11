@@ -9,6 +9,7 @@ interface props {
         addPOSProduct: () => void;
         onPayModal: () => void;
         onCancelSell: () => void;
+        onLastSells: () => void;
     }
     register: UseFormRegister<any>;
     cashChange: number;
@@ -26,7 +27,7 @@ export const SectionSidebar = ({ widthPercentaje, buttons, register, cashChange,
         <div className="flex flex-col gap-4">
             <div className="flex gap-4">
                 <SidebarButton onClick={ buttons.addPOSProduct }>Agregar Producto</SidebarButton>
-                <SidebarButton>Ultimas Ventas</SidebarButton>
+                <SidebarButton onClick={ buttons.onLastSells }>Ultimas Ventas</SidebarButton>
                 <SidebarButton>Administrar Caja</SidebarButton>
             </div>
         </div>
